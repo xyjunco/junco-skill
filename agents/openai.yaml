@@ -1,0 +1,4 @@
+interface:
+  display_name: "Junco"
+  short_description: "按 Junco 方法完成需求分析、建模与 PRD 输出"
+  default_prompt: "Use $junco to analyze a product request and draft a high-quality PRD."
