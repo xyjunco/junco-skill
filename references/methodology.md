@@ -1,4 +1,4 @@
-# Junco Demand-to-PRD Methodology
+# Junco Demand-to-Product-Design Methodology
 
 ## Core Mental Model
 
@@ -8,15 +8,15 @@ A good product solves a real problem with minimum sufficient cost, follows a thi
 
 Use this chain:
 
-`Problem -> Minimum-cost goal -> User thinking path -> Human motivation -> Concept definition -> Domain model -> Role x model user stories -> First-principles challenge -> Product architecture -> Game rules / boundaries -> Tangible interactions -> Delivery plan -> PRD`
+`Problem -> Minimum-cost goal -> User thinking path -> Human motivation -> Concept definition -> Domain model -> Role x model user stories -> First-principles challenge -> Product architecture -> Game rules / boundaries -> Tangible interactions -> Delivery plan -> PRD artifact`
 
 For medium or complex platform requirements, diagram before writing long prose:
 
 `Concept relationship -> System boundary -> Data / responsibility flow -> User / system sequence -> State machine`
 
-Before drafting, calibrate depth:
+Before designing, calibrate depth:
 
-- Full PRD: default for complex platform, system, workflow, governance, and operations products.
+- Full product design: default for complex platform, system, workflow, governance, and operations products; deliver as a PRD artifact when a document is needed.
 - Outline: only when the user explicitly asks for a brief.
 - Review: lead with gaps, risks, and concrete fixes.
 
@@ -26,7 +26,7 @@ If context is incomplete, do not shrink the PRD into generic bullets. Write assu
 
 Use this as the mental source map when analyzing a demand:
 
-| Method Point | Meaning For PRD Work | Failure Mode |
+| Method Point | Meaning For Product Design | Failure Mode |
 | --- | --- | --- |
 | Solve problems | The root purpose of product work is to solve real user problems efficiently. | Writing slogans, pages, or technology plans before proving the problem. |
 | Minimum cost | Use the smallest sufficient solution that closes the problem. | Over-designing, adding workflow, approvals, dashboards, or automation because they are easy to imagine. |
@@ -216,8 +216,8 @@ Useful architecture patterns:
 
 - Minimal kernel + scenario plugins: for generic task/workflow platforms.
 - Metadata layer + management/control layer + runtime delivery layer: for high-read or high-risk systems.
-- Business view + architecture/resource view: for CMDB and resource management systems.
-- First manage, then govern: for risk, quota, storage, audit, or lifecycle platforms.
+- Business view + architecture/resource view: for products where users need both business ownership and resource/architecture mental models.
+- First manage, then govern: for risk, capacity, storage, audit, or lifecycle platforms.
 - Control plane above baseline capability: for gray release, emergency block, rollback, or high-risk governance.
 
 When multiple solutions exist, compare:

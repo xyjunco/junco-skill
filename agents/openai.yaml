@@ -1,4 +1,4 @@
 interface:
   display_name: "Junco"
-  short_description: "按 Junco 方法做第一性原理需求反思、建模与 PRD 输出"
-  default_prompt: "Use $junco to reflect on a product request from first principles, model the domain, and draft a high-quality PRD."
+  short_description: "按 Junco 方法做第一性原理需求反思、建模与产品设计"
+  default_prompt: "Use $junco to reflect on a product request from first principles, model the domain, design a high-quality product solution, and deliver it as a PRD."

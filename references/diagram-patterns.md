@@ -68,7 +68,7 @@ graph LR
 - Keep diagrams concise. Split into multiple diagrams when relationships, flow, and state compete for space, or when a graph grows beyond roughly 16 meaningful nodes.
 - Keep the visual layout tidy: use one dominant direction, group related nodes with `subgraph`, avoid long crossing arrows, and keep labels similar in length.
 - Keep node labels business-readable. Use product nouns, not implementation-only variable names unless the PRD is API-facing.
-- Quote labels with Chinese text or punctuation: `A["结算单元"]`.
+- Quote labels with Chinese text or punctuation: `A["业务对象"]`.
 - Label edges with verbs: `-- "申请" -->`, `-- "归属到" -->`, `-- "调用" -->`.
 - Separate management-side concepts from runtime-side concepts.
 - Use subgraphs for layers, ownership boundaries, or systems.
@@ -84,23 +84,23 @@ Use this after concept definitions and before detailed functions. It should make
 
 ```mermaid
 graph LR
-  User["算法 RD"] -- "提交" --> Job["训练任务"]
-  Job -- "生成" --> Checkpoint["Checkpoint"]
-  Checkpoint -- "写入" --> Path["规范路径"]
-  Path -- "归属到" --> ResourceGroup["资源组"]
-  ResourceGroup -- "隶属于" --> SettlementUnit["结算单元"]
-  SettlementUnit -- "拥有" --> QuotaPool["Quota 池"]
-  QuotaPool -- "受控于" --> Watermark["水位规则"]
-  QuotaPool -- "变更产生" --> Audit["审计记录"]
-  Scheduler["调度平台"] -- "提交前校验" --> Admission["准入校验"]
-  Admission -- "读取" --> QuotaPool
-  Admission -- "返回 pass / queue / reject" --> Scheduler
+  User["业务用户"] -- "发起" --> Request["业务请求"]
+  Request -- "作用于" --> CoreObject["核心对象"]
+  CoreObject -- "关联" --> Resource["关联资源"]
+  CoreObject -- "归属到" --> Owner["责任主体"]
+  Owner -- "受控于" --> Policy["规则策略"]
+  Policy -- "判断" --> Decision{"处理结果"}
+  Decision -- "通过" --> Runtime["执行系统"]
+  Decision -- "阻断" --> Exception["异常处理"]
+  CoreObject -- "变更产生" --> Audit["审计记录"]
+  DataSource["数据源"] -- "提供事实" --> CoreObject
 
   class User actor;
-  class Job,Checkpoint,Path core;
-  class ResourceGroup,SettlementUnit,QuotaPool data;
-  class Watermark,Admission control;
-  class Scheduler runtime;
+  class Request,CoreObject,Resource core;
+  class Owner,DataSource,Audit data;
+  class Policy,Decision control;
+  class Runtime runtime;
+  class Exception risk;
   class Audit data;
 
   classDef actor fill:#FFCC99,stroke:#CC6600,color:#333333;
@@ -125,44 +125,44 @@ Use this when a PRD depends on multiple systems or needs to clarify what the pro
 ```mermaid
 graph LR
   subgraph Users["用户与角色"]
-    POC["业务 POC"]
-    SRE["平台 SRE"]
-    RD["算法 RD"]
+    BusinessUser["业务用户"]
+    Operator["运营 / 管理员"]
+    PlatformOwner["平台负责人"]
   end
 
-  subgraph Product["本产品：HDFS Quota 管理"]
-    Overview["Quota 总览"]
-    Request["Quota 申请"]
-    Admission["准入判断"]
-    Watermark["水位管理"]
+  subgraph Product["本产品"]
+    Overview["总览"]
+    Request["申请 / 配置"]
+    Rule["规则判断"]
+    Execution["执行编排"]
     Audit["审计"]
   end
 
   subgraph Upstream["上游数据源"]
-    CMDB["CMDB：结算单元 / 资源组 / Owner"]
-    HDFS["HDFS / QuotaService：容量与 Quota API"]
+    Directory["组织 / 权限目录"]
+    Inventory["对象 / 资源清单"]
   end
 
   subgraph Downstream["下游协作系统"]
-    Scheduler["调度平台"]
-    BPM["审批系统"]
-    Ckpt["Checkpoint 管理"]
+    Workflow["审批 / 工单系统"]
+    Runtime["执行系统"]
+    Notify["通知系统"]
   end
 
-  POC -- "申请 / 查看 / 腾挪" --> Product
-  SRE -- "配置规则 / 全局治理" --> Product
-  RD -- "提交任务时感知结果" --> Scheduler
-  Product -- "读取元数据" --> CMDB
-  Product -- "查询 / 设置 Quota" --> HDFS
-  Scheduler -- "调用准入接口" --> Product
-  Product -- "创建审批单" --> BPM
-  Product -- "跳转治理" --> Ckpt
+  BusinessUser -- "查看 / 申请 / 操作" --> Product
+  Operator -- "处理 / 维护" --> Product
+  PlatformOwner -- "配置规则 / 治理" --> Product
+  Product -- "读取身份与权限" --> Directory
+  Product -- "读取对象事实" --> Inventory
+  Product -- "创建 / 回调" --> Workflow
+  Product -- "触发执行" --> Runtime
+  Product -- "发送结果" --> Notify
 
-  class POC,SRE,RD actor;
-  class Overview,Request core;
-  class Admission,Watermark,Audit control;
-  class CMDB,HDFS data;
-  class Scheduler,BPM,Ckpt runtime;
+  class BusinessUser,Operator,PlatformOwner actor;
+  class Overview,Request,Execution core;
+  class Rule,Audit control;
+  class Directory,Inventory data;
+  class Workflow,Runtime,Notify runtime;
 
   classDef actor fill:#FFCC99,stroke:#CC6600,color:#333333;
   classDef core fill:#CCFFFF,stroke:#0066CC,color:#333333;
@@ -180,35 +180,35 @@ Use this for platform products, especially when separating metadata, control, an
 ```mermaid
 graph TD
   subgraph Runtime["运行层"]
-    Job["训练任务"]
-    Framework["训练框架 / Dump 服务"]
-    HDFS["HDFS 存储"]
+    UserAction["用户操作"]
+    Worker["后台任务"]
+    TargetSystem["目标系统"]
   end
 
   subgraph Control["控制面"]
-    Quota["Quota 管理服务"]
+    Management["管理服务"]
     Admission["准入校验"]
-    Watermark["水位规则"]
+    Policy["规则策略"]
     Audit["审计"]
   end
 
   subgraph Metadata["元数据层"]
-    CMDB["结算单元 / 资源组 / Owner"]
-    Policy["审批规则 / 权限"]
+    ObjectMeta["对象元数据"]
+    Permission["权限 / 归属"]
   end
 
-  CMDB --> Quota
-  Policy --> Quota
-  Job --> Admission
-  Admission --> Quota
-  Quota --> Watermark
-  Quota --> HDFS
-  Framework --> HDFS
-  Quota --> Audit
+  ObjectMeta --> Management
+  Permission --> Management
+  UserAction --> Admission
+  Admission --> Management
+  Management --> Policy
+  Management --> TargetSystem
+  Worker --> TargetSystem
+  Management --> Audit
 
-  class Job,Framework,HDFS runtime;
-  class Quota,Admission,Watermark,Audit control;
-  class CMDB,Policy data;
+  class UserAction,Worker,TargetSystem runtime;
+  class Management,Admission,Policy,Audit control;
+  class ObjectMeta,Permission data;
 
   classDef actor fill:#FFCC99,stroke:#CC6600,color:#333333;
   classDef core fill:#CCFFFF,stroke:#0066CC,color:#333333;
@@ -227,39 +227,39 @@ Use this for write paths, read paths, approval paths, task submission, config pu
 
 ```mermaid
 sequenceDiagram
-  participant User as "业务 POC"
-  participant Product as "Quota 管理"
-  participant BPM as "审批系统"
-  participant HDFS as "HDFS QuotaService"
+  participant User as "业务用户"
+  participant Product as "本产品"
+  participant Workflow as "审批 / 工单系统"
+  participant Runtime as "执行系统"
   participant Audit as "审计"
 
-  User->>Product: "提交扩容申请"
-  Product->>Product: "校验结算单元、容量、权限"
-  Product->>BPM: "创建审批单"
-  BPM-->>Product: "审批通过"
-  Product->>HDFS: "设置新的 Quota"
-  HDFS-->>Product: "返回成功"
+  User->>Product: "提交业务请求"
+  Product->>Product: "校验对象、规则、权限"
+  Product->>Workflow: "创建审批或处理单"
+  Workflow-->>Product: "审批通过"
+  Product->>Runtime: "触发执行"
+  Runtime-->>Product: "返回结果"
   Product->>Audit: "记录变更前后值和原因"
-  Product-->>User: "扩容生效"
+  Product-->>User: "反馈处理结果"
 ```
 
 Use `alt` for branching:
 
 ```mermaid
 sequenceDiagram
-  participant Scheduler as "调度平台"
-  participant Quota as "Quota 管理"
-  participant HDFS as "HDFS QuotaService"
+  participant Caller as "调用方"
+  participant Rule as "规则服务"
+  participant Resource as "资源系统"
 
-  Scheduler->>Quota: "提交准入校验"
-  Quota->>HDFS: "查询已用量"
-  HDFS-->>Quota: "返回 used / total"
-  alt "余量充足"
-    Quota-->>Scheduler: "pass + 规范路径"
-  else "达到预警线"
-    Quota-->>Scheduler: "warn_pass + 提示"
-  else "容量不足"
-    Quota-->>Scheduler: "queue / reject + 处理入口"
+  Caller->>Rule: "提交准入校验"
+  Rule->>Resource: "查询资源状态"
+  Resource-->>Rule: "返回当前状态"
+  alt "满足规则"
+    Rule-->>Caller: "通过 + 下一步"
+  else "触发提醒"
+    Rule-->>Caller: "有条件通过 + 提示"
+  else "不满足规则"
+    Rule-->>Caller: "阻断 + 处理入口"
   end
 ```
 
@@ -273,8 +273,8 @@ stateDiagram-v2
   Draft --> PendingApproval: "提交"
   PendingApproval --> Approved: "审批通过"
   PendingApproval --> Rejected: "审批驳回"
-  Approved --> Effective: "底层 Quota 设置成功"
-  Approved --> Failed: "底层 Quota 设置失败"
+  Approved --> Effective: "执行成功"
+  Approved --> Failed: "执行失败"
   Failed --> Approved: "重试"
   Effective --> [*]
   Rejected --> [*]
@@ -298,30 +298,30 @@ After the diagram, add an operations table:
 
 ## Pattern 6: Business View And Architecture View Tree
 
-Use this for CMDB, resource management, quota, topology, or other products where users need different navigation views.
+Use this when the same objects need to support different mental models, such as business ownership, operational responsibility, architecture hierarchy, or resource topology.
 
 ```mermaid
 graph TD
   Business["业务视图"] --> BU["预算单元"]
-  BU --> Settlement["结算单元"]
-  Settlement --> RG["资源组"]
-  RG --> Model["模型"]
-  Model --> Instance["模型实例"]
+  BU --> Team["团队"]
+  Team --> ProductLine["产品线"]
+  ProductLine --> ObjectGroup["对象分组"]
+  ObjectGroup --> BusinessObject["业务对象"]
 
   Architecture["架构视图"] --> IaaS["IaaS 层"]
   Architecture --> PaaS["PaaS 层"]
   Architecture --> SaaS["SaaS 层"]
-  IaaS --> Server["服务器"]
-  IaaS --> Package["套餐"]
-  PaaS --> HDFS["HDFS"]
-  PaaS --> PS["PS"]
-  SaaS --> Job["训练任务"]
-  SaaS --> Checkpoint["Checkpoint"]
+  IaaS --> Host["基础资源"]
+  IaaS --> Network["网络资源"]
+  PaaS --> Service["平台服务"]
+  PaaS --> Storage["存储 / 数据服务"]
+  SaaS --> Application["业务应用"]
+  SaaS --> Task["业务任务"]
 
-  class Business,BU,Settlement,RG,Model actor;
-  class Instance,Job,Checkpoint core;
+  class Business,BU,Team,ProductLine actor;
+  class ObjectGroup,BusinessObject,Application,Task core;
   class Architecture,IaaS,PaaS,SaaS control;
-  class Server,Package,HDFS,PS runtime;
+  class Host,Network,Service,Storage runtime;
 
   classDef actor fill:#FFCC99,stroke:#CC6600,color:#333333;
   classDef core fill:#CCFFFF,stroke:#0066CC,color:#333333;
@@ -340,20 +340,20 @@ Use this for validations, admission checks, approval decisions, fallback logic, 
 
 ```mermaid
 flowchart TD
-  Start["任务提交"] --> Identify["识别结算单元 / 资源组"]
-  Identify --> HasQuota{"是否存在 Quota 池？"}
-  HasQuota -- "否" --> RejectNoQuota["拒绝：无 Quota 配置"]
-  HasQuota -- "是" --> Query["查询已用量和预留量"]
-  Query --> Enough{"预计写入后是否超限？"}
-  Enough -- "否" --> Pass["放行并返回规范路径"]
-  Enough -- "达到预警线" --> Warn["放行并发送预警"]
-  Enough -- "达到熔断线" --> Block["排队或拒绝"]
+  Start["提交请求"] --> Identify["识别对象与归属"]
+  Identify --> HasPolicy{"是否存在适用规则？"}
+  HasPolicy -- "否" --> RejectNoPolicy["阻断：缺少规则配置"]
+  HasPolicy -- "是" --> Query["查询对象状态和资源条件"]
+  Query --> Allowed{"是否满足执行条件？"}
+  Allowed -- "满足" --> Pass["通过并返回下一步"]
+  Allowed -- "需提醒" --> Warn["有条件通过并提示"]
+  Allowed -- "不满足" --> Block["阻断并给出处理入口"]
 
   class Start,Identify core;
-  class HasQuota,Enough control;
+  class HasPolicy,Allowed control;
   class Query data;
   class Pass runtime;
-  class Warn,Block,RejectNoQuota risk;
+  class Warn,Block,RejectNoPolicy risk;
 
   classDef actor fill:#FFCC99,stroke:#CC6600,color:#333333;
   classDef core fill:#CCFFFF,stroke:#0066CC,color:#333333;
