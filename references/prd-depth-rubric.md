@@ -8,7 +8,7 @@ A short outline may be acceptable for early brainstorming only. A full PRD is ex
 
 | Dimension | Outline | Full PRD |
 | --- | --- | --- |
-| Problem | Lists pain points | Separates current process, root cause, impact, scope, evidence |
+| Problem | Lists pain points | Separates user request, surface symptom, first-principles problem, current process, root cause, impact, scope, evidence |
 | Concepts | Defines a few nouns | Defines nouns, boundaries, source of truth, lifecycle, relationships |
 | Model | Light entity list | Entity IDs, fields, ownership, states, cardinality, data source |
 | Rules | General statements | Deterministic decisions, validation, conflicts, permissions, audit, exceptions |
@@ -19,21 +19,25 @@ A short outline may be acceptable for early brainstorming only. A full PRD is ex
 
 A platform/system PRD is not ready unless it answers these questions:
 
-1. What are the core nouns, and how do they relate?
-2. Which system owns each noun and field?
-3. What is the source of truth for read and write paths?
-4. What lifecycle states exist, and what operations are allowed in each state?
-5. What decision, priority, validation, and conflict rules produce deterministic outcomes?
-6. What happens when upstream/downstream dependencies fail?
-7. What does each role see, change, approve, or audit?
-8. What exact fields appear on the key list/detail/form surfaces?
-9. What audit, notification, rollback, and recovery path exists for risky operations?
-10. How will QA verify main paths, permission paths, exception paths, and data consistency?
+1. What did the user ask for on the surface, and what first-principles problem is hidden behind it?
+2. Which assumptions in the requested path are real constraints, and which are inherited habits or workarounds?
+3. What simpler, more universal, or more model-level solutions were considered before choosing the final path?
+4. What are the core nouns, and how do they relate?
+5. Which system owns each noun and field?
+6. What is the source of truth for read and write paths?
+7. What lifecycle states exist, and what operations are allowed in each state?
+8. What decision, priority, validation, and conflict rules produce deterministic outcomes?
+9. What happens when upstream/downstream dependencies fail?
+10. What does each role see, change, approve, or audit?
+11. What exact fields appear on the key list/detail/form surfaces?
+12. What audit, notification, rollback, and recovery path exists for risky operations?
+13. How will QA verify main paths, permission paths, exception paths, and data consistency?
 
 ## Required Artifacts For Complex PRDs
 
 Include these unless clearly not applicable:
 
+- Demand reflection table: user request, surface symptom, first-principles problem, challenged assumptions, alternatives, chosen conclusion.
 - Concept relationship diagram.
 - System boundary or layered architecture diagram.
 - Core decision flow or sequence diagram.
@@ -64,6 +68,7 @@ Before finalizing, scan the PRD and mark each item as pass/fail:
 
 | Gate | Pass / Fail | Fix If Failed |
 | --- | --- | --- |
+| Demand is reflected from first principles |  | Add user request, surface symptom, root problem, challenged assumptions, alternatives, chosen conclusion |
 | Problem is reframed with root cause and impact |  | Add current process, root cause, impact, scope |
 | Concepts and relationships are diagrammed |  | Add concept relationship diagram and entity table |
 | Core rules are deterministic |  | Add decision, validation, conflict, and fallback rules |

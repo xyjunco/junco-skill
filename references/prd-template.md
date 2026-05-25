@@ -4,7 +4,7 @@ Use this template for high-quality PRDs. Remove sections that are genuinely irre
 
 Expression rule: 能图不表，能表不文. Use concise Mermaid diagrams for relationships, flows, boundaries, states, and decisions; use tables for repeated attributes and rule rows; use prose for rationale and conclusions. Mermaid diagrams should be visually tidy. For `graph`, `flowchart`, and `stateDiagram`, include web-safe `classDef` and `class` statements.
 
-Depth rule: a full PRD must not stop at background, goals, glossary, CRUD bullets, permissions, and phases. It must expose the implementation contract: domain model, decision rules, lifecycle, fields, operations, states, dependencies, exceptions, audit, and acceptance.
+Depth rule: a full PRD must not stop at background, goals, glossary, CRUD bullets, permissions, and phases. It must expose demand reflection and the implementation contract: first-principles problem, challenged assumptions, domain model, decision rules, lifecycle, fields, operations, states, dependencies, exceptions, audit, and acceptance.
 
 ## 0. Document Information
 
@@ -19,7 +19,35 @@ Depth rule: a full PRD must not stop at background, goals, glossary, CRUD bullet
 | RD / FE / QA / Design / Ops |  |
 | Related docs |  |
 
-## 1. Background And Problem Definition
+## 1. Demand Reflection And First-Principles Interpretation
+
+### User Request
+
+Describe the user's original request faithfully, including the proposed path, feature, page, workflow, rule, or automation.
+
+### Reflection
+
+| Item | Content |
+| --- | --- |
+| Surface request |  |
+| Surface symptom |  |
+| First-principles problem |  |
+| Human driver |  |
+| Real constraints |  |
+| Inherited assumptions to challenge |  |
+| Simpler / more universal alternatives |  |
+| Chosen conclusion |  |
+
+### Solution Path Judgment
+
+| Candidate Path | Level | Why It May Work | Why It May Fail | Decision |
+| --- | --- | --- | --- | --- |
+| Requested implementation | Feature / UI / Workflow |  |  | Accept / Transform / Reject |
+| Model-level solution | Concept / Entity / Ownership |  |  |  |
+| Rule-level solution | Default / Validation / Permission / Policy |  |  |  |
+| Data/process solution | Data correction / Integration / Ops agreement |  |  |  |
+
+## 2. Background And Problem Definition
 
 ### Background
 
@@ -45,7 +73,7 @@ This PRD does not solve:
 
 - 
 
-## 2. Goals And Success Metrics
+## 3. Goals And Success Metrics
 
 | Goal Type | Goal | Metric / Verification |
 | --- | --- | --- |
@@ -54,13 +82,13 @@ This PRD does not solve:
 | Business |  |  |
 | Delivery |  |  |
 
-## 3. Concepts And Glossary
+## 4. Concepts And Glossary
 
 | Concept | Definition | Example | Boundary / Distinction |
 | --- | --- | --- | --- |
 |  |  |  |  |
 
-## 4. User Roles And Scenarios
+## 5. User Roles And Scenarios
 
 | Role | Profile | Daily Behavior | Need | Risk / Concern | Corresponding Capability |
 | --- | --- | --- | --- | --- | --- |
@@ -70,7 +98,7 @@ This PRD does not solve:
 | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |
 
-## 5. Product Positioning And System Boundary
+## 6. Product Positioning And System Boundary
 
 ### Positioning
 
@@ -96,7 +124,7 @@ This product only references:
 
 - 
 
-## 6. Domain Model And Key Rules
+## 7. Domain Model And Key Rules
 
 ### Concept Relationship Diagram
 
@@ -179,7 +207,7 @@ stateDiagram-v2
 
 - 
 
-## 7. Product Solution Overview
+## 8. Product Solution Overview
 
 ### System Boundary / Layered Architecture
 
@@ -260,7 +288,7 @@ sequenceDiagram
 | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |
 
-## 8. Detailed Module Design
+## 9. Detailed Module Design
 
 Repeat this section for each module.
 
@@ -312,7 +340,7 @@ Describe major areas and information priority.
 | Validation failed |  |  |  |  |
 | Dependency unavailable |  |  |  |  |
 
-## 9. Permissions, Audit, Data, And Dependencies
+## 10. Permissions, Audit, Data, And Dependencies
 
 ### Permission Matrix
 
@@ -343,7 +371,7 @@ Audit must record:
 | --- | --- | --- | --- | --- | --- |
 |  |  |  |  |  |  |
 
-## 10. Milestones And Priority
+## 11. Milestones And Priority
 
 ### Priority
 
@@ -361,7 +389,7 @@ Audit must record:
 | M2 |  |  |  |  |
 | M3 |  |  |  |  |
 
-## 11. Risks, TODOs, And Open Questions
+## 12. Risks, TODOs, And Open Questions
 
 | Type | Item | Impact | Owner | Due Date | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -369,7 +397,7 @@ Audit must record:
 | TODO |  |  |  |  |  |
 | Open question |  |  |  |  |  |
 
-## 12. Acceptance Criteria
+## 13. Acceptance Criteria
 
 | Scenario | Preconditions | Operation | Expected Result | Verification |
 | --- | --- | --- | --- | --- |

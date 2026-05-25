@@ -1,13 +1,15 @@
 ---
 name: junco
-description: Product requirement analysis and PRD writing methodology based on Junco's "make a good product" approach. Use when Codex needs to help product managers turn raw needs, stakeholder requests, operational pain points, platform/system ideas, or vague feature asks into high-quality full-depth PRDs through problem framing, user path analysis, concept definition, domain modeling, Mermaid concept relationship diagrams, system boundary diagrams, process flows, interaction rules, milestones, and acceptance criteria. Also use when reviewing or improving PRDs for clarity, model quality, diagrams, boundaries, permissions, risks, depth, and delivery readiness.
+description: Product requirement analysis and PRD writing methodology based on Junco's "make a good product" approach. Use when an AI assistant or product practitioner needs to turn raw needs, stakeholder requests, operational pain points, platform/system ideas, or vague feature asks into high-quality full-depth PRDs through first-principles demand reflection, problem framing, user path analysis, concept definition, domain modeling, Mermaid concept relationship diagrams, system boundary diagrams, process flows, interaction rules, milestones, and acceptance criteria. Also use when reviewing or improving PRDs for clarity, model quality, diagrams, boundaries, permissions, risks, depth, and delivery readiness.
 ---
 
 # Junco
 
 ## Overview
 
-Use this skill to turn a raw demand into a rigorous PRD. Treat product work as: solving a real problem, matching the user's thinking path, abstracting a clean model, and making the solution tangible through rules, flows, pages, and delivery plans.
+Use this skill to turn a raw demand into a rigorous PRD. Treat product work as: solving a real problem with minimal necessary cost, matching the user's thinking path, abstracting a clean model, defining the operating rules of the product world, and making the solution tangible through rules, flows, pages, and delivery plans.
+
+When receiving a user demand, do not assume the user's stated path is the right path. Treat it as a surface signal. First ask what first-principles problem, invariant constraint, user motivation, or system model issue is hidden behind it, then decide whether the requested implementation is still the simplest sufficient answer.
 
 Default to Chinese output unless the user asks otherwise.
 
@@ -21,9 +23,17 @@ Default to full PRD mode for complex platform, system, workflow, governance, or 
 
 Do not start from pages or features. Start from the problem.
 
+Do not start from the user's proposed implementation path either. A stakeholder may ask for a button, workflow, dashboard, approval step, bulk edit, alert, or automation because that is the visible workaround available to them. The product job is to recover the underlying problem and find the simplest general solution that makes the workaround unnecessary when possible.
+
 Use this product definition as the anchor:
 
 > A product is the tangible expression of a thinking path for solving a problem.
+
+A good product should meet three standards:
+
+- It solves a real problem with the minimum sufficient cost.
+- Its thinking path is universal enough that users can act naturally without excessive explanation.
+- Its solution is perceptible or touchable: rules, interactions, objects, and feedback can be experienced by users and understood by teams.
 
 A good PRD should let business, product, design, engineering, QA, and operations share the same understanding of:
 
@@ -33,6 +43,82 @@ A good PRD should let business, product, design, engineering, QA, and operations
 - What users do in each scenario
 - What rules, permissions, states, and exceptions govern the product
 - What is in scope now, what is later, and how delivery is verified
+
+## Methodology Summary
+
+Use the full method from "make a good product", not a narrow keyword checklist.
+
+1. Solve the actual problem.
+   - The product's root purpose is problem solving. Do not confuse slogans, technologies, AI concepts, or stakeholder wishes with a solved user problem.
+   - "Minimum cost" is not "fewest features"; it is the smallest solution that fully closes the real problem without unnecessary complexity.
+
+2. Recover the user's thinking path.
+   - A good product feels natural because its path overlaps with how the user already understands and solves the problem.
+   - Different users may choose different paths under different information, constraints, and contexts. Preserve valuable mental models and remove accidental complexity.
+   - Distinguish the core path from surprise, polish, or secondary delight. Delight cannot replace the core path.
+
+3. Look through behavior to human motivation.
+   - Empathy means capturing the user's thinking path from the inside, not merely listing user roles.
+   - Surface functional requests often hide psychological, emotional, responsibility, trust, control, efficiency, or safety needs.
+   - When demand is vague or contradictory, infer the human driver before designing the feature.
+
+4. Abstract models before stitching functions.
+   - Simple tools can follow a linear path, but complex systems need concepts, entities, relationships, ownership, states, and boundaries.
+   - Feature-by-feature stitching creates products that feel fragmented, coupled, and hard to understand.
+   - Concepts are the shared language for product, engineering, design, operations, and users. Do not make teams pay coordination cost because nouns are vague.
+
+5. Derive user stories from role x model.
+   - User stories are concrete thinking paths produced from roles acting on domain objects.
+   - They must remain independent, negotiable, valuable, estimable, small enough when possible, and testable.
+   - Validate stories with interviews, prototype tests, A/B tests, data, or operational review where relevant.
+
+6. Apply first principles.
+   - Return to the most basic conditions, decompose the problem, and rebuild the solution from what must be true.
+   - Challenge inherited assumptions such as existing entry points, process steps, physical controls, org habits, default states, and old system constraints.
+   - Sometimes the solution is outside the current path or even the current dimension of the problem; broaden the search with cross-domain mental models.
+
+7. Define the product's game rules.
+   - The more complex the product, the more boundary conditions, exceptions, protections, and state rules it needs.
+   - Rules are not decoration. They determine whether users know what to do, whether systems behave predictably, and whether risk is controlled.
+
+8. Express logic efficiently.
+   - Product work is not "drawing screens". A prototype, diagram, table, or prose is only good if it lets each role know what should happen in each situation.
+   - Use diagram > table > prose. Avoid dumping unprocessed information or writing long text when a relationship diagram or rule table carries the logic more clearly.
+
+## First-Principles Demand Reflection
+
+Run this reflection before drafting a solution, PRD, or review conclusion.
+
+1. Separate signal from essence.
+   - Surface request: What did the user explicitly ask to build or change?
+   - Symptom: What pain, complaint, inefficiency, risk, or confusion is visible?
+   - Root problem: What basic condition causes the symptom to exist?
+   - Impact: Who pays the cost, how often, and how severely?
+
+2. Return to first principles.
+   - What is the most basic user goal in this scenario?
+   - What must be true for the problem to disappear?
+   - Which constraints are real constraints: law, security, physics, organizational responsibility, data availability, cost, latency, or user cognition?
+   - Which constraints are only inherited assumptions from the current process, old system, org habit, or implementation history?
+   - What human motivation or fear drives the current behavior?
+
+3. Challenge the requested path.
+   - If the requested feature could not be built, how else could the problem be solved?
+   - Is the request automating an accidental workaround rather than fixing the model?
+   - Is the current path too local, while a more universal capability would solve multiple scenarios?
+   - Can the solution be made smaller by changing concept definitions, data ownership, defaults, rules, or feedback timing instead of adding UI and process?
+   - Is the simplest answer a product feature, a rule change, a data correction, a governance mechanism, an integration, an operational playbook, or doing nothing?
+
+4. Seek the simplest general solution.
+   - Prefer the solution that closes the core problem with the fewest concepts, states, permissions, and user steps.
+   - Avoid overfitting to a single stakeholder's workflow when a more universal model can serve the same need.
+   - Do not pursue cleverness for its own sake. The result should feel natural, obvious, and low-friction after the root problem is understood.
+   - Use "大道至简" as a design pressure: reduce accidental complexity, but keep essential rules, boundaries, and risk controls explicit.
+
+5. Record the reflection.
+   - For PRDs, include a short demand reflection before goals: user request, surface symptom, first-principles problem, challenged assumptions, alternative solution paths, and chosen conclusion.
+   - For reviews, call out when the PRD follows the user's requested path too literally and misses a simpler or more general solution.
+   - If the user's path is still correct, explain why it is the simplest sufficient path after reflection.
 
 ## Interaction Rule Abstraction
 
@@ -102,6 +188,8 @@ Follow this sequence when helping with requirements or PRDs.
 1. Reframe the request as a problem.
    - Identify the requester, context, current workaround, pain, impact, and root cause.
    - Treat the user's requested feature as a possible solution, not the requirement itself.
+   - Apply first-principles reflection: distinguish visible symptom, real constraint, inherited assumption, and the smallest condition that must change.
+   - Challenge whether the user's proposed implementation path is necessary, or whether a simpler general rule, model, data, or process change solves the same problem.
    - Write explicit goals and non-goals.
 
 2. Capture user thinking paths.
@@ -130,6 +218,7 @@ Follow this sequence when helping with requirements or PRDs.
    - Define product positioning, system boundaries, upstream/downstream dependencies, reused capabilities, and new capabilities.
    - Prefer layered designs for complex platforms: kernel, scenario layer, control plane, delivery/runtime layer.
    - State solution tradeoffs and the chosen conclusion when multiple options exist.
+   - Compare at least one simpler or more universal alternative when the user proposes a concrete implementation path.
    - Use Mermaid diagrams to express system boundaries, layered architecture, data flow, and core sequence flows.
    - Before writing a diagram, decide its question and ensure it includes enough nodes and relationships to answer that question without becoming a generic placeholder.
 
@@ -161,16 +250,17 @@ Load these files only when needed:
 
 When drafting a PRD, produce a structured document with these sections unless the user asks for a lighter output:
 
-1. Background and problem definition
-2. Goals and non-goals
-3. Concepts and glossary
-4. User roles and scenarios
-5. Product positioning and system boundaries
-6. Domain model and key rules
-7. Product solution overview
-8. Detailed module design
-9. Permissions, audit, data, and dependencies
-10. Milestones, priorities, risks, and acceptance criteria
+1. Demand reflection and first-principles interpretation
+2. Background and problem definition
+3. Goals and non-goals
+4. Concepts and glossary
+5. User roles and scenarios
+6. Product positioning and system boundaries
+7. Domain model and key rules
+8. Product solution overview
+9. Detailed module design
+10. Permissions, audit, data, and dependencies
+11. Milestones, priorities, risks, and acceptance criteria
 
 For a shareable PRD, each section must contain domain-specific content, not generic placeholder language. Do not leave a diagram section as "shown below" without an actual diagram. If a section is not applicable, write why it is not applicable.
 
@@ -203,6 +293,7 @@ A strong PRD should create four kinds of certainty:
 - User certainty: what each role does in each scenario.
 - Engineering certainty: model, states, rules, interfaces, permissions, and boundaries are implementable.
 - Delivery certainty: scope, phases, risks, and acceptance criteria are explicit.
+- First-principles certainty: the solution addresses the underlying problem rather than merely implementing the user's visible workaround.
 
 It should also have high information density: use diagrams instead of tables when relationships matter, tables instead of prose when rows and columns communicate faster, and concise prose only where judgment is needed.
 
