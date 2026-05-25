@@ -26,14 +26,14 @@ Diagram template:
 
 ```mermaid
 graph LR
-  Core["最小集内核"] -- "提供" --> CommonFields["通用字段"]
-  Core -- "提供" --> CommonState["通用状态"]
-  Core -- "提供" --> CommonAction["通用动作"]
-  Scenario["业务场景"] -- "扩展" --> Extension["场景扩展"]
-  Extension -- "补充" --> SceneFields["场景字段"]
-  Extension -- "补充" --> SceneRules["场景规则"]
-  Core -- "承载" --> Task["具体对象 / 任务"]
-  Extension -- "解释" --> Task
+  Core["Minimal Kernel"] -- "provides" --> CommonFields["Common Fields"]
+  Core -- "provides" --> CommonState["Common State"]
+  Core -- "provides" --> CommonAction["Common Actions"]
+  Scenario["Business Scenario"] -- "extends" --> Extension["Scenario Extension"]
+  Extension -- "adds" --> SceneFields["Scenario Fields"]
+  Extension -- "adds" --> SceneRules["Scenario Rules"]
+  Core -- "carries" --> Task["Specific Object / Task"]
+  Extension -- "explains" --> Task
 
   class Core,CommonFields,CommonState,CommonAction core;
   class Scenario,Extension actor;
@@ -72,15 +72,15 @@ Diagram template:
 
 ```mermaid
 graph TD
-  Business["业务视图"] --> Owner["业务归属"]
-  Owner --> Object["业务对象"]
-  Object --> Instance["实例 / 任务"]
+  Business["Business View"] --> Owner["Business Ownership"]
+  Owner --> Object["Business Object"]
+  Object --> Instance["Instance / Task"]
 
-  Architecture["架构视图"] --> Layer["架构层级"]
-  Layer --> Component["组件"]
-  Component --> Resource["资源实例"]
+  Architecture["Architecture View"] --> Layer["Architecture Layer"]
+  Layer --> Component["Component"]
+  Component --> Resource["Resource Instance"]
 
-  Object -- "映射到" --> Resource
+  Object -- "maps to" --> Resource
 
   class Business,Owner actor;
   class Object,Instance core;
@@ -118,22 +118,22 @@ Diagram template:
 
 ```mermaid
 graph TD
-  subgraph Metadata["元数据层"]
-    Identity["对象标识"]
-    Ownership["归属 / Owner"]
-    Relationship["关联关系"]
+  subgraph Metadata["Metadata Layer"]
+    Identity["Object Identity"]
+    Ownership["Ownership / Owner"]
+    Relationship["Relationships"]
   end
 
-  subgraph Control["管控层"]
-    Permission["权限"]
-    Rule["规则"]
-    Audit["审计"]
+  subgraph Control["Control Layer"]
+    Permission["Permissions"]
+    Rule["Rule"]
+    Audit["Audit"]
   end
 
-  subgraph Runtime["运行层"]
-    Execution["执行对象"]
-    Status["运行状态"]
-    Callback["回调 / 结果"]
+  subgraph Runtime["Runtime Layer"]
+    Execution["Execution Object"]
+    Status["Runtime State"]
+    Callback["Callback / Result"]
   end
 
   Metadata --> Control
@@ -161,13 +161,13 @@ State machine template:
 
 ```mermaid
 stateDiagram-v2
-  [*] --> Draft: "创建"
-  Draft --> Active: "提交 / 生效"
-  Active --> Paused: "停用"
-  Paused --> Active: "启用"
-  Active --> Failed: "执行失败"
-  Failed --> Active: "重试成功"
-  Active --> Archived: "归档"
+  [*] --> Draft: "create"
+  Draft --> Active: "submit / become effective"
+  Active --> Paused: "pause"
+  Paused --> Active: "enable"
+  Active --> Failed: "execution failed"
+  Failed --> Active: "retry succeeded"
+  Active --> Archived: "archive"
   Archived --> [*]
 
   class Draft,Paused control;
@@ -198,16 +198,16 @@ Decision flow template:
 
 ```mermaid
 flowchart TD
-  Start["发起动作"] --> Identify["识别对象、角色、上下文"]
-  Identify --> Permission{"是否有权限？"}
-  Permission -- "否" --> NoPermission["拒绝并提示原因"]
-  Permission -- "是" --> Validate["校验字段、状态、依赖"]
-  Validate --> Conflict{"是否存在冲突？"}
-  Conflict -- "是" --> Block["阻断并展示处理建议"]
-  Conflict -- "否" --> Execute["执行动作"]
-  Execute --> Result{"是否成功？"}
-  Result -- "成功" --> Success["反馈成功并写审计"]
-  Result -- "失败" --> Fail["反馈失败并提供重试 / 回滚入口"]
+  Start["initiate action"] --> Identify["identify object, role, and context"]
+  Identify --> Permission{"has permission?"}
+  Permission -- "no" --> NoPermission["reject and show reason"]
+  Permission -- "yes" --> Validate["validate fields, state, and dependencies"]
+  Validate --> Conflict{"conflict exists?"}
+  Conflict -- "yes" --> Block["block and show handling guidance"]
+  Conflict -- "no" --> Execute["execute action"]
+  Execute --> Result{"succeeded?"}
+  Result -- "success" --> Success["show success and write audit"]
+  Result -- "failure" --> Fail["show failure with retry / rollback entry"]
 
   class Start,Identify,Execute core;
   class Permission,Validate,Conflict,Result control;

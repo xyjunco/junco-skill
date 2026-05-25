@@ -2,7 +2,7 @@
 
 Use this template for high-quality PRDs. Remove sections that are genuinely irrelevant, but do not skip problem, concept, model, rules, and acceptance thinking. If a section is not applicable, state why.
 
-Expression rule: 能图不表，能表不文. Use concise Mermaid diagrams for relationships, flows, boundaries, states, and decisions; use tables for repeated attributes and rule rows; use prose for rationale and conclusions. Mermaid diagrams should be visually tidy. For `graph`, `flowchart`, and `stateDiagram`, include web-safe `classDef` and `class` statements.
+Expression rule: diagrams over tables, tables over prose. Use concise Mermaid diagrams for relationships, flows, boundaries, states, and decisions; use tables for repeated attributes and rule rows; use prose for rationale and conclusions. Mermaid diagrams should be visually tidy. For `graph`, `flowchart`, and `stateDiagram`, include web-safe `classDef` and `class` statements.
 
 Depth rule: a full PRD must not stop at background, goals, glossary, CRUD bullets, permissions, and phases. It must expose demand reflection and the implementation contract: first-principles problem, challenged assumptions, domain model, decision rules, lifecycle, fields, operations, states, dependencies, exceptions, audit, and acceptance.
 
@@ -132,15 +132,15 @@ Explain the core nouns and relationships before listing fields. Keep the diagram
 
 ```mermaid
 graph LR
-  Actor["角色 / Owner"] -- "发起 / 维护" --> Entry["入口 / 场景"]
-  Entry -- "操作" --> Core["核心对象"]
-  Core -- "关联" --> Related["关联对象"]
-  Data["数据源 / SOT"] -- "提供" --> Core
-  Core -- "受控于" --> Rule["规则 / 策略"]
-  Rule -- "判断" --> Decision{"决策结果"}
-  Decision -- "通过" --> Runtime["下游执行 / 生效"]
-  Decision -- "阻断" --> Risk["异常 / 风险处理"]
-  Core -- "变更产生" --> Audit["审计记录"]
+  Actor["Role / Owner"] -- "initiate / maintain" --> Entry["Entry / Scenario"]
+  Entry -- "operates on" --> Core["Core Object"]
+  Core -- "links to" --> Related["Related Object"]
+  Data["Data Source / SOT"] -- "provides" --> Core
+  Core -- "governed by" --> Rule["Rule / Policy"]
+  Rule -- "evaluates" --> Decision{"Decision Result"}
+  Decision -- "passes" --> Runtime["Downstream Execution / Effective State"]
+  Decision -- "blocks" --> Risk["Exception / Risk Handling"]
+  Core -- "creates audit for" --> Audit["Audit Record"]
 
   class Actor actor;
   class Entry,Core,Related core;
@@ -181,11 +181,11 @@ graph LR
 ```mermaid
 stateDiagram-v2
   [*] --> Draft
-  Draft --> Pending: "提交"
-  Pending --> Effective: "生效"
-  Pending --> Rejected: "驳回"
-  Pending --> Failed: "执行失败"
-  Failed --> Pending: "重试"
+  Draft --> Pending: "submit"
+  Pending --> Effective: "become effective"
+  Pending --> Rejected: "reject"
+  Pending --> Failed: "execution failed"
+  Failed --> Pending: "retry"
   Effective --> [*]
 
   class Draft,Pending control;
@@ -215,37 +215,37 @@ Use this diagram to show ownership and dependency boundaries, not every implemen
 
 ```mermaid
 graph LR
-  subgraph Users["用户与角色"]
-    UserA["角色 A"]
-    UserB["角色 B"]
+  subgraph Users["Users And Roles"]
+    UserA["Role A"]
+    UserB["Role B"]
   end
 
-  subgraph Product["本产品"]
-    View["视图 / 入口"]
-    Manage["管理能力"]
-    Rule["规则 / 管控"]
-    Audit["审计 / 通知"]
+  subgraph Product["This Product"]
+    View["View / Entry"]
+    Manage["Management Capability"]
+    Rule["Rule / Control"]
+    Audit["Audit / Notification"]
   end
 
-  subgraph Upstream["上游数据源"]
-    Meta["元数据"]
-    Permission["权限 / 归属"]
+  subgraph Upstream["Upstream Data Sources"]
+    Meta["Metadata"]
+    Permission["Permission / Ownership"]
   end
 
-  subgraph Downstream["下游系统"]
-    Runtime["运行系统"]
-    Workflow["审批 / 工单"]
+  subgraph Downstream["Downstream Systems"]
+    Runtime["Runtime System"]
+    Workflow["Approval / Ticket"]
   end
 
-  UserA -- "查看 / 操作" --> View
-  UserB -- "维护 / 审批" --> Manage
+  UserA -- "view / operate" --> View
+  UserB -- "maintain / approve" --> Manage
   View --> Manage
   Manage --> Rule
   Rule --> Audit
-  Meta -- "提供对象数据" --> Product
-  Permission -- "提供权限范围" --> Product
-  Product -- "调用 / 写入" --> Runtime
-  Product -- "创建 / 回调" --> Workflow
+  Meta -- "provides object data" --> Product
+  Permission -- "provides permission scope" --> Product
+  Product -- "call / write" --> Runtime
+  Product -- "create / callback" --> Workflow
 
   class UserA,UserB actor;
   class View,Manage core;
@@ -272,15 +272,21 @@ Describe the main user flow and system flow. Prefer a sequence diagram or flowch
 
 ```mermaid
 sequenceDiagram
-  participant User as "用户"
-  participant Product as "本产品"
-  participant External as "外部系统"
-  User->>Product: "发起操作"
-  Product->>Product: "校验权限和规则"
-  Product->>External: "调用外部能力"
-  External-->>Product: "返回结果"
-  Product-->>User: "反馈结果"
+  participant User as "User"
+  participant Product as "This Product"
+  participant External as "External System"
+  User->>Product: "initiate action"
+  Product->>Product: "validate permissions and rules"
+  Product->>External: "call external capability"
+  External-->>Product: "return result"
+  Product-->>User: "return result"
 ```
+
+Diagram Quick Read:
+- Purpose: explain the responsibility chain from user initiation to system feedback.
+- Main path: after the user submits an action, this product validates permissions and rules, calls the external capability, and returns the result.
+- Key branches: validation failure should block the action and explain the reason; external system failure should enter retry, rollback, or manual handling.
+- Responsibility boundary: this product owns validation, orchestration, and user feedback; the external system owns the execution result of the called capability.
 
 ### Solution Tradeoffs
 

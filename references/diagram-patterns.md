@@ -2,7 +2,7 @@
 
 Use diagrams to express concept relationships, system boundaries, flows, and rules. The goal is not decoration. A diagram should reduce ambiguity faster than prose.
 
-Use the expression priority: 能图不表，能表不文.
+Use the expression priority: diagrams over tables, tables over prose.
 
 1. Use diagrams for relationships, ownership, system boundaries, layers, lifecycle, decisions, and flows.
 2. Use tables for fields, permissions, validations, rule rows, priorities, milestones, and acceptance criteria.
@@ -28,10 +28,10 @@ Recommended class definitions:
 
 ```mermaid
 graph LR
-  User["用户"] --> Product["核心产品"]
-  Product --> Data["数据源"]
-  Product --> Rule["规则"]
-  Product --> Risk["风险"]
+  User["User"] --> Product["Core Product"]
+  Product --> Data["Data Source"]
+  Product --> Rule["Rule"]
+  Product --> Risk["Risk"]
 
   class User actor;
   class Product core;
@@ -61,6 +61,28 @@ graph LR
 | Explain entities, keys, and cardinality | `erDiagram` | What are the entities and relationship cardinalities? |
 | Explain business / architecture view tree | `graph TD` | How does the user navigate from high-level business to resources? |
 
+## Rendering Compatibility
+
+Mermaid source is not the same as a rendered preview. Many model tools preserve the fenced code block but do not render it inline. The PRD should remain reviewable in both cases.
+
+- Always use a fenced code block with the language tag `mermaid`.
+- Do not state that a visual preview has been generated unless the current environment actually renders, embeds, or attaches one.
+- When preview support is unknown, add `Diagram Quick Read` after each non-trivial diagram.
+- Keep `Diagram Quick Read` short: 3-5 bullets covering diagram purpose, main path, critical branch/exception, and ownership or source-of-truth boundary.
+- If a sequence diagram is used, `Diagram Quick Read` is required because sequence diagrams usually have limited styling and are harder to scan as source.
+- If rendering tools are available and the user explicitly needs a visual preview, generate SVG/PNG from the Mermaid source and include it with the source code.
+- Prefer renderer-stable syntax for cross-tool documents: `graph`, `flowchart`, `sequenceDiagram`, `stateDiagram-v2`, and `erDiagram`. Avoid experimental Mermaid syntax, raw HTML labels, emoji-only nodes, and complex init directives.
+
+Recommended text fallback:
+
+```markdown
+Diagram Quick Read:
+- Purpose: state [the question answered by this diagram].
+- Main path: [Role/System A] -> [Product Capability] -> [Result].
+- Key branches: explain how pass, failure, and exception paths close.
+- Responsibility boundary: identify which system or role owns facts, rules, execution, or audit.
+```
+
 ## Mermaid Rules
 
 - Prefer one clear diagram per question. Do not put every detail into one huge diagram.
@@ -68,11 +90,12 @@ graph LR
 - Keep diagrams concise. Split into multiple diagrams when relationships, flow, and state compete for space, or when a graph grows beyond roughly 16 meaningful nodes.
 - Keep the visual layout tidy: use one dominant direction, group related nodes with `subgraph`, avoid long crossing arrows, and keep labels similar in length.
 - Keep node labels business-readable. Use product nouns, not implementation-only variable names unless the PRD is API-facing.
-- Quote labels with Chinese text or punctuation: `A["业务对象"]`.
-- Label edges with verbs: `-- "申请" -->`, `-- "归属到" -->`, `-- "调用" -->`.
+- Quote labels with spaces or punctuation: `A["Business Object"]`.
+- Label edges with verbs: `-- "request" -->`, `-- "belongs to" -->`, `-- "calls" -->`.
 - Separate management-side concepts from runtime-side concepts.
 - Use subgraphs for layers, ownership boundaries, or systems.
 - Add a short paragraph before each diagram explaining what the reader should learn.
+- Add `Diagram Quick Read` after important diagrams when the PRD may be read in tools that do not render Mermaid.
 - Add tables after diagrams for fields, permissions, validations, and exceptions.
 - For `graph`, `flowchart`, and `stateDiagram`, always add `classDef` and `class` statements from the web-safe palette. Do not output default monochrome diagrams.
 - For `sequenceDiagram` and `erDiagram`, use clear participant/entity grouping; if renderer styling is limited, pair the sequence or ERD with a colored concept, boundary, or decision diagram when color semantics matter.
@@ -84,16 +107,16 @@ Use this after concept definitions and before detailed functions. It should make
 
 ```mermaid
 graph LR
-  User["业务用户"] -- "发起" --> Request["业务请求"]
-  Request -- "作用于" --> CoreObject["核心对象"]
-  CoreObject -- "关联" --> Resource["关联资源"]
-  CoreObject -- "归属到" --> Owner["责任主体"]
-  Owner -- "受控于" --> Policy["规则策略"]
-  Policy -- "判断" --> Decision{"处理结果"}
-  Decision -- "通过" --> Runtime["执行系统"]
-  Decision -- "阻断" --> Exception["异常处理"]
-  CoreObject -- "变更产生" --> Audit["审计记录"]
-  DataSource["数据源"] -- "提供事实" --> CoreObject
+  User["Business User"] -- "initiates" --> Request["Business Request"]
+  Request -- "applies to" --> CoreObject["Core Object"]
+  CoreObject -- "links to" --> Resource["Related Resource"]
+  CoreObject -- "belongs to" --> Owner["Responsible Owner"]
+  Owner -- "governed by" --> Policy["Rule Policy"]
+  Policy -- "evaluates" --> Decision{"Processing Result"}
+  Decision -- "passes" --> Runtime["Execution System"]
+  Decision -- "blocks" --> Exception["Exception Handling"]
+  CoreObject -- "creates audit for" --> Audit["Audit Record"]
+  DataSource["Data Source"] -- "provides facts" --> CoreObject
 
   class User actor;
   class Request,CoreObject,Resource core;
@@ -124,39 +147,39 @@ Use this when a PRD depends on multiple systems or needs to clarify what the pro
 
 ```mermaid
 graph LR
-  subgraph Users["用户与角色"]
-    BusinessUser["业务用户"]
-    Operator["运营 / 管理员"]
-    PlatformOwner["平台负责人"]
+  subgraph Users["Users And Roles"]
+    BusinessUser["Business User"]
+    Operator["Operations / Admin"]
+    PlatformOwner["Platform Owner"]
   end
 
-  subgraph Product["本产品"]
-    Overview["总览"]
-    Request["申请 / 配置"]
-    Rule["规则判断"]
-    Execution["执行编排"]
-    Audit["审计"]
+  subgraph Product["This Product"]
+    Overview["Overview"]
+    Request["Request / Configuration"]
+    Rule["Rule Decision"]
+    Execution["Execution Orchestration"]
+    Audit["Audit"]
   end
 
-  subgraph Upstream["上游数据源"]
-    Directory["组织 / 权限目录"]
-    Inventory["对象 / 资源清单"]
+  subgraph Upstream["Upstream Data Sources"]
+    Directory["Organization / Permission Directory"]
+    Inventory["Object / Resource Inventory"]
   end
 
-  subgraph Downstream["下游协作系统"]
-    Workflow["审批 / 工单系统"]
-    Runtime["执行系统"]
-    Notify["通知系统"]
+  subgraph Downstream["Downstream Collaboration Systems"]
+    Workflow["Approval / Ticket System"]
+    Runtime["Execution System"]
+    Notify["Notification System"]
   end
 
-  BusinessUser -- "查看 / 申请 / 操作" --> Product
-  Operator -- "处理 / 维护" --> Product
-  PlatformOwner -- "配置规则 / 治理" --> Product
-  Product -- "读取身份与权限" --> Directory
-  Product -- "读取对象事实" --> Inventory
-  Product -- "创建 / 回调" --> Workflow
-  Product -- "触发执行" --> Runtime
-  Product -- "发送结果" --> Notify
+  BusinessUser -- "view / request / operate" --> Product
+  Operator -- "handle / maintain" --> Product
+  PlatformOwner -- "configure rules / govern" --> Product
+  Product -- "read identity and permissions" --> Directory
+  Product -- "read object facts" --> Inventory
+  Product -- "create / callback" --> Workflow
+  Product -- "trigger execution" --> Runtime
+  Product -- "send results" --> Notify
 
   class BusinessUser,Operator,PlatformOwner actor;
   class Overview,Request,Execution core;
@@ -179,22 +202,22 @@ Use this for platform products, especially when separating metadata, control, an
 
 ```mermaid
 graph TD
-  subgraph Runtime["运行层"]
-    UserAction["用户操作"]
-    Worker["后台任务"]
-    TargetSystem["目标系统"]
+  subgraph Runtime["Runtime Layer"]
+    UserAction["User Action"]
+    Worker["Background Job"]
+    TargetSystem["Target System"]
   end
 
-  subgraph Control["控制面"]
-    Management["管理服务"]
-    Admission["准入校验"]
-    Policy["规则策略"]
-    Audit["审计"]
+  subgraph Control["Control Plane"]
+    Management["Management Service"]
+    Admission["Admission Check"]
+    Policy["Rule Policy"]
+    Audit["Audit"]
   end
 
-  subgraph Metadata["元数据层"]
-    ObjectMeta["对象元数据"]
-    Permission["权限 / 归属"]
+  subgraph Metadata["Metadata Layer"]
+    ObjectMeta["Object Metadata"]
+    Permission["Permission / Ownership"]
   end
 
   ObjectMeta --> Management
@@ -227,39 +250,39 @@ Use this for write paths, read paths, approval paths, task submission, config pu
 
 ```mermaid
 sequenceDiagram
-  participant User as "业务用户"
-  participant Product as "本产品"
-  participant Workflow as "审批 / 工单系统"
-  participant Runtime as "执行系统"
-  participant Audit as "审计"
+  participant User as "Business User"
+  participant Product as "This Product"
+  participant Workflow as "Approval / Ticket System"
+  participant Runtime as "Execution System"
+  participant Audit as "Audit"
 
-  User->>Product: "提交业务请求"
-  Product->>Product: "校验对象、规则、权限"
-  Product->>Workflow: "创建审批或处理单"
-  Workflow-->>Product: "审批通过"
-  Product->>Runtime: "触发执行"
-  Runtime-->>Product: "返回结果"
-  Product->>Audit: "记录变更前后值和原因"
-  Product-->>User: "反馈处理结果"
+  User->>Product: "submit business request"
+  Product->>Product: "validate object, rules, and permissions"
+  Product->>Workflow: "create approval or handling ticket"
+  Workflow-->>Product: "approval passed"
+  Product->>Runtime: "trigger execution"
+  Runtime-->>Product: "return result"
+  Product->>Audit: "record before/after values and reason"
+  Product-->>User: "return processing result"
 ```
 
 Use `alt` for branching:
 
 ```mermaid
 sequenceDiagram
-  participant Caller as "调用方"
-  participant Rule as "规则服务"
-  participant Resource as "资源系统"
+  participant Caller as "Caller"
+  participant Rule as "Rule Service"
+  participant Resource as "Resource System"
 
-  Caller->>Rule: "提交准入校验"
-  Rule->>Resource: "查询资源状态"
-  Resource-->>Rule: "返回当前状态"
-  alt "满足规则"
-    Rule-->>Caller: "通过 + 下一步"
-  else "触发提醒"
-    Rule-->>Caller: "有条件通过 + 提示"
-  else "不满足规则"
-    Rule-->>Caller: "阻断 + 处理入口"
+  Caller->>Rule: "submit admission check"
+  Rule->>Resource: "query resource state"
+  Resource-->>Rule: "return current state"
+  alt "rules satisfied"
+    Rule-->>Caller: "pass + next step"
+  else "trigger warning"
+    Rule-->>Caller: "conditional pass + notice"
+  else "rules not satisfied"
+    Rule-->>Caller: "block + handling entry"
   end
 ```
 
@@ -269,13 +292,13 @@ Use this when actions depend on status. PRD text should map each state to visibl
 
 ```mermaid
 stateDiagram-v2
-  [*] --> Draft: "创建申请"
-  Draft --> PendingApproval: "提交"
-  PendingApproval --> Approved: "审批通过"
-  PendingApproval --> Rejected: "审批驳回"
-  Approved --> Effective: "执行成功"
-  Approved --> Failed: "执行失败"
-  Failed --> Approved: "重试"
+  [*] --> Draft: "create request"
+  Draft --> PendingApproval: "submit"
+  PendingApproval --> Approved: "approval passed"
+  PendingApproval --> Rejected: "approval rejected"
+  Approved --> Effective: "execution succeeded"
+  Approved --> Failed: "execution failed"
+  Failed --> Approved: "retry"
   Effective --> [*]
   Rejected --> [*]
 
@@ -302,21 +325,21 @@ Use this when the same objects need to support different mental models, such as 
 
 ```mermaid
 graph TD
-  Business["业务视图"] --> BU["预算单元"]
-  BU --> Team["团队"]
-  Team --> ProductLine["产品线"]
-  ProductLine --> ObjectGroup["对象分组"]
-  ObjectGroup --> BusinessObject["业务对象"]
+  Business["Business View"] --> BU["Budget Unit"]
+  BU --> Team["Team"]
+  Team --> ProductLine["Product Line"]
+  ProductLine --> ObjectGroup["Object Group"]
+  ObjectGroup --> BusinessObject["Business Object"]
 
-  Architecture["架构视图"] --> IaaS["IaaS 层"]
-  Architecture --> PaaS["PaaS 层"]
-  Architecture --> SaaS["SaaS 层"]
-  IaaS --> Host["基础资源"]
-  IaaS --> Network["网络资源"]
-  PaaS --> Service["平台服务"]
-  PaaS --> Storage["存储 / 数据服务"]
-  SaaS --> Application["业务应用"]
-  SaaS --> Task["业务任务"]
+  Architecture["Architecture View"] --> IaaS["IaaS Layer"]
+  Architecture --> PaaS["PaaS Layer"]
+  Architecture --> SaaS["SaaS Layer"]
+  IaaS --> Host["Infrastructure Resource"]
+  IaaS --> Network["Network Resource"]
+  PaaS --> Service["Platform Service"]
+  PaaS --> Storage["Storage / Data Service"]
+  SaaS --> Application["Business Application"]
+  SaaS --> Task["Business Task"]
 
   class Business,BU,Team,ProductLine actor;
   class ObjectGroup,BusinessObject,Application,Task core;
@@ -340,14 +363,14 @@ Use this for validations, admission checks, approval decisions, fallback logic, 
 
 ```mermaid
 flowchart TD
-  Start["提交请求"] --> Identify["识别对象与归属"]
-  Identify --> HasPolicy{"是否存在适用规则？"}
-  HasPolicy -- "否" --> RejectNoPolicy["阻断：缺少规则配置"]
-  HasPolicy -- "是" --> Query["查询对象状态和资源条件"]
-  Query --> Allowed{"是否满足执行条件？"}
-  Allowed -- "满足" --> Pass["通过并返回下一步"]
-  Allowed -- "需提醒" --> Warn["有条件通过并提示"]
-  Allowed -- "不满足" --> Block["阻断并给出处理入口"]
+  Start["submit request"] --> Identify["identify object and ownership"]
+  Identify --> HasPolicy{"applicable rule exists?"}
+  HasPolicy -- "no" --> RejectNoPolicy["block: missing rule configuration"]
+  HasPolicy -- "yes" --> Query["query object state and resource conditions"]
+  Query --> Allowed{"execution conditions satisfied?"}
+  Allowed -- "satisfied" --> Pass["pass and return next step"]
+  Allowed -- "warning needed" --> Warn["conditional pass with notice"]
+  Allowed -- "not satisfied" --> Block["block and provide handling entry"]
 
   class Start,Identify core;
   class HasPolicy,Allowed control;

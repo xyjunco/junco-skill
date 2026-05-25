@@ -103,7 +103,7 @@ Analyze:
 - What actions are high-frequency and must be prominent?
 - What actions are risky and must be slowed down?
 - Which existing mental models should be preserved?
-- Which parts of the current path feel "顺理成章", and which parts require explanation or training?
+- Which parts of the current path feel "self-evident", and which parts require explanation or training?
 - Which needs are functional, and which are psychological: certainty, control, trust, safety, recognition, curiosity, or reduced anxiety?
 
 For platform tools, existing operational paths often matter more than visual novelty. Preserve valuable paths, but remove accidental complexity.

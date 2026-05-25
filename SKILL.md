@@ -11,11 +11,13 @@ Use this skill to turn a raw demand into rigorous product design. Treat product 
 
 When receiving a user demand, do not assume the user's stated path is the right path. Treat it as a surface signal. First ask what first-principles problem, invariant constraint, user motivation, or system model issue is hidden behind it, then decide whether the requested implementation is still the simplest sufficient answer.
 
-Default to Chinese output unless the user asks otherwise.
+Default to the user's language unless the user asks otherwise.
 
 Use the expression priority: diagram before table, table before prose. Prefer Mermaid diagrams for relationships, flows, boundaries, states, and decisions; use tables for fields, permissions, rules, and acceptance criteria; use prose for rationale, tradeoffs, context, and exceptions.
 
 Mermaid quality is part of PRD quality. Core diagrams should not be toy diagrams. They should expose enough domain structure to support review: actors, core objects, ownership, rules/control points, data/source-of-truth, lifecycle or exception handling where relevant. For `graph`, `flowchart`, and `stateDiagram` diagrams, use web-safe `classDef` and `class` statements from `references/diagram-patterns.md`; do not output default monochrome diagrams.
+
+Rendering compatibility is also part of PRD quality. Some host tools show Mermaid source code without rendering a preview. Never claim that a rendered preview exists unless the current tool actually renders or embeds one. When the target tool may not render Mermaid, still output a valid fenced `mermaid` code block, then add a short `Diagram Quick Read` after each non-trivial diagram: what the diagram answers, the main path, key branches or exceptions, and ownership/source-of-truth boundaries. If image or file-rendering tools are available and the user asks for a visual preview, generate and attach a rendered SVG/PNG while keeping the Mermaid source.
 
 Default to full product-design mode for complex platform, system, workflow, governance, or operations products. Do not produce a lightweight outline unless the user explicitly asks for a brief. If source information is thin, proceed with explicit assumptions and open questions, but still design the model, rules, states, and acceptance path, then deliver it in PRD form when a document is needed.
 
@@ -113,7 +115,7 @@ Run this reflection before designing a solution, delivering a PRD, or writing a 
    - Prefer the solution that closes the core problem with the fewest concepts, states, permissions, and user steps.
    - Avoid overfitting to a single stakeholder's workflow when a more universal model can serve the same need.
    - Do not pursue cleverness for its own sake. The result should feel natural, obvious, and low-friction after the root problem is understood.
-   - Use "大道至简" as a design pressure: reduce accidental complexity, but keep essential rules, boundaries, and risk controls explicit.
+   - Use radical simplicity as a design pressure: reduce accidental complexity, but keep essential rules, boundaries, and risk controls explicit.
 
 5. Record the reflection.
    - For PRDs, include a short demand reflection before goals: user request, surface symptom, first-principles problem, challenged assumptions, alternative solution paths, and chosen conclusion.
@@ -184,6 +186,7 @@ Follow this sequence when helping with requirements or PRDs.
    - Decide whether the user needs full product design, review, outline, or brainstorming. If they ask for a PRD, assume the PRD should contain full product design unless they explicitly ask for a brief.
    - Identify missing context early. Ask only when the gap blocks safe modeling; otherwise state assumptions and open questions in the PRD.
    - Use `references/prd-depth-rubric.md` before drafting or reviewing a shareable PRD.
+   - Treat "product design", "product proposal", "solution", "PRD", and "design this requirement" as full-product-design requests by default. Do not downgrade them into a short answer, executive summary, or phase outline unless the user explicitly asks for a brief.
 
 1. Reframe the request as a problem.
    - Identify the requester, context, current workaround, pain, impact, and root cause.
@@ -228,6 +231,7 @@ Follow this sequence when helping with requirements or PRDs.
    - Convert concrete UI issues into interaction principles before writing gates: clarify user information, action closure, user friendliness, ambiguity risk, and data-to-action fit.
    - Apply "diagram > table > prose": use diagrams where relationships or flows matter, tables where attributes or rule rows matter, and prose only to explain conclusions.
    - Keep Mermaid diagrams concise, visually tidy, and styled with the web-safe palette in `references/diagram-patterns.md`; for `graph`, `flowchart`, and `stateDiagram`, styling is required.
+   - If Mermaid preview support is unknown or absent, pair each important Mermaid diagram with `Diagram Quick Read` so reviewers can understand the diagram without relying on renderer support.
    - Text should explain logic and rules, not repeat screenshots.
 
 8. Complete rules and delivery.
@@ -248,19 +252,57 @@ Load these files only when needed:
 
 ## Output Expectations
 
+### Delivery Contract
+
+The default deliverable is the full PRD body, not a summary of the PRD. Do not end with only "delivery features", "next steps", or a condensed overview when the user asked for product design, a product proposal, or a PRD.
+
+If no external document target is explicitly requested, write the complete PRD inline in the current response. If the response would be long, continue with the complete structure instead of compressing it into a summary; split only if the host tool forces a hard length limit, and then say exactly which sections are included in this part and which section should continue next.
+
+If an external document target is requested, write the full PRD to that target and then return only a short completion note with the document link and a validation summary. Do not claim the full PRD was written unless the document actually contains the full PRD body.
+
+Never substitute a short table, bullet summary, or "key decisions" section for the detailed PRD body. Summary sections may appear at the top, but they are additive and must be followed by the complete sections.
+
+Some host models compress by default. Counter that explicitly: for a full PRD, use the required section set below, keep the section headings visible, and do not merge required sections into each other. If a required section seems not applicable, keep the heading and explain why it is not applicable.
+
 When delivering the product design as a PRD, produce a structured document with these sections unless the user asks for a lighter output:
 
-1. Demand reflection and first-principles interpretation
-2. Background and problem definition
-3. Goals and non-goals
-4. Concepts and glossary
-5. User roles and scenarios
-6. Product positioning and system boundaries
-7. Domain model and key rules
-8. Product solution overview
-9. Detailed module design
-10. Permissions, audit, data, and dependencies
-11. Milestones, priorities, risks, and acceptance criteria
+1. Demand Reflection And First-Principles Interpretation
+2. Background, Current Process, And Problem Definition
+3. Goals, Non-Goals, And Success Metrics
+4. User Roles And Stakeholders
+5. Usage Scenarios And User Stories
+6. Concepts And Glossary
+7. Domain Model, Entities, Fields, And Lifecycle
+8. Product Positioning And System Boundaries
+9. Product Solution And Architecture
+10. Key Interaction Rules And Decision Logic
+11. Detailed Module Design
+12. Permissions, Data Scope, And Role Matrix
+13. Audit, Notification, Dependencies, And Recovery
+14. Milestones, Scope, Risks, And Rollout
+15. Acceptance Criteria And QA Verification
+
+Do not omit sections 5, 11, 12, 13, or 15. These are common failure points in short outputs. User stories, usage scenarios, detailed module design, permissions, audit/dependency/recovery, and acceptance criteria must be explicit sections, not brief bullets hidden inside other sections.
+
+### Minimum Depth Contract
+
+For full product-design mode, each required section must contain domain-specific substance:
+
+- Demand reflection: include user request, visible symptom, first-principles problem, challenged assumptions, at least one alternative path, and the chosen conclusion.
+- Problem definition: include current process, root cause, affected roles, frequency or impact, and scope boundary.
+- Goals and non-goals: include measurable outcomes where possible and explain why non-goals are excluded.
+- Concepts and glossary: define every core noun, owner, boundary, source of truth, and lifecycle relevance.
+- User roles and stakeholders: define each role's responsibility, motivation, authority, data scope, operational pressure, and success signal.
+- Usage scenarios and user stories: include concrete scenarios for the happy path, exception path, permission-limited path, and operational recovery path. Add user stories in the form role -> action -> value -> acceptance signal. Do not replace this with a generic persona list.
+- Domain model: include entities, key fields, relationships, lifecycle states, ownership, data sources, and deterministic rules.
+- Product solution: include system boundary, product architecture, solution tradeoffs, and why the chosen path is the minimum sufficient solution.
+- Key interaction rules and decision logic: include deterministic validation, branching, conflict handling, feedback timing, disabled states, and rollback or retry rules.
+- Detailed module design: for every P0 module, include purpose, entry, list/detail/form fields, operations, validations, states, disabled states, empty/error/no-permission behavior, audit, and acceptance criteria.
+- Permissions, data scope, and role matrix: include a table covering role, operation, object scope, data scope, approval requirement, disabled/no-permission state, and audit record.
+- Audit, notification, dependencies, and recovery: include read/write ownership, interface dependencies, fallback, notification, rollback, recovery, and consistency handling.
+- Milestones, rollout, and acceptance: include P0/P1/P2 rationale, dependencies, rollout, risks, and testable acceptance rows.
+
+Before finalizing, scan the output against this contract. If a section is only 1-2 generic bullets, a generic table, or a decision without fields/rules/states/acceptance, expand it before answering. If the PRD has fewer than 15 required section headings in full-product-design mode, it is incomplete.
 
 For a shareable PRD, each section must contain domain-specific content, not generic placeholder language. Do not leave a diagram section as "shown below" without an actual diagram. If a section is not applicable, write why it is not applicable.
 
@@ -273,6 +315,8 @@ For medium or complex platform PRDs, include Mermaid diagrams in the PRD:
 - Data ownership / source-of-truth diagram when multiple systems exchange data
 
 Keep diagrams compact but meaningful: one diagram answers one question, labels are short and business-readable, arrows are labeled with verbs, and overloaded diagrams should be split. For core concept, boundary, layered, and decision diagrams, a useful diagram usually has 8-14 meaningful nodes; fewer nodes are acceptable only when the domain is genuinely simple.
+
+When the output is intended for tools outside Codex, assume Mermaid may appear as source code only. For each important diagram, provide both the Mermaid block and a short `Diagram Quick Read`. Do not replace diagrams with prose, but make the prose sufficient for review when rendering is unavailable.
 
 Before finalizing a PRD, run the depth gates in `references/prd-depth-rubric.md`. A PRD is not ready if it only lists background, goals, a few concepts, CRUD modules, a simple permission table, and phases.
 
