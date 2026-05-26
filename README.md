@@ -4,6 +4,10 @@ Junco is a model-agnostic methodology and reusable skill package for product req
 
 It helps turn raw needs, vague feature requests, stakeholder feedback, operational pain points, platform/system ideas, or existing PRDs into rigorous product designs with clear problems, concepts, models, flows, rules, milestones, and acceptance criteria. The final delivery artifact is often a PRD, but the purpose is product design quality rather than template completion.
 
+## 核心思想文档
+
+Junco 的核心产品思想可参阅 [《做一个好产品》](./做一个好产品.pdf)。该文档说明从原始需求回到真实问题、用户思考路径、领域模型、产品规则和可评审 PRD 的方法。
+
 ## 中文说明
 
 ### 这套方法解决什么问题
