@@ -43,6 +43,8 @@ Junco 基于《做一个好产品》的完整方法论，而不是只套 PRD 模
 8. 为复杂产品制定清晰的“游戏规则”：边界、异常、保护、状态和责任。
 9. 图优先于表，表优先于散文说明。
 10. 具体反馈要抽象成公共规则，而不是只写“不能这样”。
+11. 在画页面或流程前，先审计产品逻辑归属：哪个对象拥有哪个字段、哪个动作负责哪类冲突、哪个状态来自哪个系统。
+12. 按用户决策合并重复页面，不因为标题不同就保留两套逻辑相同的流程。
 
 处理需求时，Junco 默认按以下链路思考：
 
@@ -52,6 +54,22 @@ Problem -> Minimum-cost goal -> User thinking path -> Human motivation
 -> First-principles challenge -> Product architecture
 -> Game rules / boundaries -> Tangible interactions -> Delivery plan -> PRD
 ```
+
+### 产品逻辑归属审计
+
+当需求涉及保存、预览、同步、发布、删除、审批、运行任务、历史记录或异常处理时，Junco 会先做 `Product Logic Ownership Audit`，避免把逻辑放错页面或动作。
+
+它会检查：
+
+- 每个核心对象拥有什么、不拥有什么，source of truth 是哪里
+- 保存、预览、同步、发布、删除、运行任务分别改变什么状态
+- 冲突处理应该发生在保存、同步、运行任务还是删除动作中
+- 哪些异常是用户当前必须决策的，哪些只应该进入历史、审计或恢复入口
+- 用户页面是否暴露了 PRD 推理、实现细节或内部方案说明
+- 是否存在多个页面在回答同一个用户问题，需要合并成一个 canonical flow
+- 页面是否有明确决策：用户看到什么、判断什么、做什么、失败后去哪
+
+这套审计用于保证产品方案先逻辑正确，再进入交互和视觉设计。
 
 ### 第一性原理需求反思
 
@@ -127,6 +145,28 @@ git pull
 
 或在需要产品需求分析、产品设计、PRD review、产品规则抽象时使用。
 
+常见用法：
+
+```text
+使用 junco 阅读这个 PRD，找出产品逻辑、边界、异常和验收遗漏。
+```
+
+```text
+使用 junco 重新梳理这个同步/保存/删除流程，判断冲突处理应该放在哪个动作里。
+```
+
+```text
+使用 junco 把这轮原型反馈抽象成通用产品规则，并更新 PRD。
+```
+
+### 依赖与边界
+
+Junco 是产品设计和 PRD 方法论技能，本身不依赖 Figma、本地 UI 组件库或代码运行环境。
+
+- 如果只做需求分析、PRD 设计或产品逻辑审查，不需要 Figma。
+- 如果要把方案输出成 Figma 原型，应结合 `arco-design` 或对应设计系统技能。
+- Junco 负责产品模型、流程、规则、异常、权限、验收和文档质量；视觉组件、图表组件、Figma library 加载和画布 QA 应由设计系统技能负责。
+
 ### 目录结构
 
 ```text
@@ -171,6 +211,8 @@ Junco is based on the full "make a good product" methodology:
 8. Define product game rules: boundaries, exceptions, protections, states, and responsibilities.
 9. Prefer diagrams over tables, and tables over prose.
 10. Convert concrete feedback into positive product standards, not only prohibitions.
+11. Audit product logic ownership before drawing pages or flows: which object owns which field, which action owns which conflict, and which system owns each state.
+12. Merge duplicate pages by user decision instead of keeping two flows with different titles but the same logic.
 
 The default reasoning chain is:
 
@@ -180,6 +222,22 @@ Problem -> Minimum-cost goal -> User thinking path -> Human motivation
 -> First-principles challenge -> Product architecture
 -> Game rules / boundaries -> Tangible interactions -> Delivery plan -> PRD
 ```
+
+### Product Logic Ownership Audit
+
+When a requirement involves saving, previewing, syncing, publishing, deleting, approving, runtime jobs, history, or exception handling, Junco runs a Product Logic Ownership Audit before designing screens.
+
+It checks:
+
+- What each core object owns, does not own, and uses as source of truth
+- What state is changed by save, preview, sync, publish, delete, and runtime jobs
+- Whether conflict handling belongs in save, sync, runtime history, or deletion
+- Which exceptions require an immediate user decision and which belong in audit, history, or recovery
+- Whether user-facing pages expose PRD reasoning, implementation details, or internal solution notes
+- Whether multiple pages answer the same user decision and should be merged into one canonical flow
+- Whether each page has a clear decision: what the user sees, judges, acts on, and does after failure
+
+This audit keeps product logic correct before interaction or visual design begins.
 
 ### First-Principles Demand Reflection
 
@@ -252,6 +310,28 @@ Use junco to design a product solution for this request and deliver it as a PRD.
 ```
 
 You can also use it whenever you need product requirement analysis, product design, PRD review, or abstraction of product interaction rules.
+
+Common prompts:
+
+```text
+Use junco to review this PRD and find missing product logic, boundaries, exceptions, and acceptance criteria.
+```
+
+```text
+Use junco to reframe this save/sync/delete flow and decide where conflict handling belongs.
+```
+
+```text
+Use junco to abstract this prototype feedback into reusable product rules and update the PRD.
+```
+
+### Dependencies And Boundaries
+
+Junco is a product design and PRD methodology skill. It does not require Figma, local UI libraries, or a code runtime.
+
+- For requirement analysis, PRD design, or product logic review, Figma is not required.
+- For Figma prototype output, combine Junco with `arco-design` or another design-system skill.
+- Junco owns product models, flows, rules, exceptions, permissions, acceptance, and document quality. Visual components, chart components, Figma library loading, and canvas QA belong to the design-system skill.
 
 ### Repository Structure
 
