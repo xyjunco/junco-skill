@@ -178,6 +178,54 @@ Use this method when iterative product implementation reveals repeated UX, wordi
    - Write the rule as a positive standard with a failure example so future changes can be checked without relying on memory.
    - The PRD should describe the user-facing principle; implementation rules can add concrete checks for files, fields, and UI states.
 
+## Product Logic Ownership Audit
+
+Use this audit before designing pages, flows, confirmations, sync jobs, approvals, or exception handling. The goal is to prevent product logic from drifting into the wrong surface: a lightweight save action should not become a heavy conflict-resolution wizard; a runtime synchronization action should not hide material overwrite choices; a user page should not expose PRD reasoning or implementation notes.
+
+1. Name the product objects and their owners.
+   - For every core noun, define what it owns, what it does not own, and its source of truth.
+   - Do not let two objects claim the same responsibility unless the relationship is explicit, such as policy -> applied instance, template -> generated item, or scope -> matched objects.
+   - If a field or conflict depends on another object, place the decision where that object is changed or materialized.
+
+2. Classify each action by its product effect.
+   - Draft/save: stores configuration and should be lightweight unless it writes to live users, money, security, runtime behavior, or irreversible records.
+   - Preview: calculates impact and exposes uncertainty before commitment; it should not secretly mutate state.
+   - Apply/sync/publish/submit: materializes configuration into downstream objects or runtime behavior; this is where overwrite, skip, conflict, missing data, and retry decisions usually belong.
+   - Runtime job: reacts to ongoing data changes after configuration is saved; users usually need history, errors, retry, and audit rather than a blocking wizard every time.
+   - Delete/archive: changes ownership or lifecycle; if dependent objects exist, the page must ask the user to choose the dependent-object handling policy.
+
+3. Put conflict handling at the decision point that creates the conflict.
+   - A conflict belongs to the action that changes the contested target.
+   - If a save action only defines a scope, then expression syntax and scope impact may be validated there, but downstream variable missing, instance overwrite, or notification failure should not be handled there unless save also materializes those downstream objects.
+   - If a sync/apply action writes generated instances, then duplicate target handling, overwrite/ignore, partial failure, retry, and owner notification belong in that flow.
+   - If a runtime job later detects additions/removals, expose the job's result in history and recovery surfaces instead of forcing an unrelated edit flow.
+
+4. Separate UI surfaces from PRD and implementation reasoning.
+   - User pages should show object identity, current state, impact, available choices, validation errors, and recovery entry points.
+   - Product rationale, why a component exists, fallback implementation behavior, hidden audit details, and "what this page demonstrates" belong in PRD, annotations, or acceptance criteria, not in the product UI.
+   - If the copy sounds like a reviewer note, implementation comment, or internal mechanism, rewrite it into user language or remove it from the interface.
+
+5. Remove duplicate flows by intent, not by page title.
+   - When two pages both answer the same user question, merge them into one canonical flow even if their titles differ.
+   - Keep separate pages only when the entry, decision, permission, state source, or recovery path is meaningfully different.
+   - If a later design adds pages that overlap an earlier flow, update the earlier flow instead of leaving two competing versions in the prototype or PRD.
+
+6. Match flow weight to risk.
+   - Low-risk configuration save: lightweight validation, concise impact preview, simple success/failure feedback, and history link if asynchronous effects exist.
+   - Medium-risk materialization: preview affected targets, show skipped/changed/new counts, ask for strategy where user choice matters, then submit.
+   - High-risk overwrite/delete/publish: require exact target identity, consequence, reason when needed, audit, notification, and recovery path.
+   - Do not add steps merely to explain system behavior. Add steps only when the user must make or verify a decision.
+
+7. Define every page by the decision it supports.
+   - Before drawing a page, state: entry, user decision, information required, primary action, secondary action, completion state, error state, and where the user goes next.
+   - If a page has no user decision and only explains a process, it is probably PRD content, dashboard history, or audit detail rather than an operation page.
+   - If a dashboard, list, or detail page exists, define what it helps users perceive quickly: volume, trend, distribution, ownership, priority, progress, anomaly, or recovery.
+
+8. Make state sources explicit.
+   - A status label must have a source-of-truth and lifecycle definition.
+   - Do not mix states from different systems into one status unless the UI names the source or composes them into a user-meaningful overall state.
+   - Color and severity choices should follow the product meaning, not the system that produced the state.
+
 ## Workflow
 
 Follow this sequence when helping with requirements or PRDs.
@@ -211,6 +259,7 @@ Follow this sequence when helping with requirements or PRDs.
    - Watch for model smells: bulk editing as a workaround, business-only fields in a generic core, unclear source of truth, over-reliance on priority to resolve conflicts.
    - Draw concept relationship diagrams before detailed module design when the requirement has multiple concepts, systems, or ownership boundaries.
    - For complex platform or multi-system products, use `references/platform-patterns.md` for common modeling patterns before writing modules.
+   - Run the Product Logic Ownership Audit before proposing pages: map each save, preview, apply, sync, runtime job, delete, and history surface to the object and lifecycle stage that owns it.
 
 5. Derive user stories from role x model.
    - Use roles and entities to enumerate concrete paths.
@@ -228,6 +277,8 @@ Follow this sequence when helping with requirements or PRDs.
 7. Design tangible functions and interactions.
    - For each module, define page purpose, entry, fields, operations, states, validation, permissions, feedback, and audit.
    - For every P0 module, include list/detail/form fields, operation rules, disabled states, empty/error/no-permission states, audit, and acceptance.
+   - Before adding a new page, check whether an existing page already supports the same user decision; merge duplicate flows and update the canonical flow instead of preserving two versions.
+   - Place conflict handling, overwrite/ignore strategy, missing-data recovery, and retry at the action that creates or discovers the issue; avoid spreading the same exception across save, sync, preview, and history surfaces.
    - Convert concrete UI issues into interaction principles before writing gates: clarify user information, action closure, user friendliness, ambiguity risk, and data-to-action fit.
    - Apply "diagram > table > prose": use diagrams where relationships or flows matter, tables where attributes or rule rows matter, and prose only to explain conclusions.
    - Keep Mermaid diagrams concise, visually tidy, and styled with the web-safe palette in `references/diagram-patterns.md`; for `graph`, `flowchart`, and `stateDiagram`, styling is required.
