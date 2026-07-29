@@ -1,6 +1,6 @@
 ---
 name: junco
-description: Product design methodology based on Junco's "make a good product" approach. Use when an AI assistant or product practitioner needs to turn raw needs, stakeholder requests, operational pain points, platform/system ideas, or vague feature asks into high-quality product design through first-principles demand reflection, problem framing, user path analysis, concept definition, domain modeling, Mermaid concept relationship diagrams, system boundary diagrams, process flows, interaction rules, milestones, and acceptance criteria. The final delivery artifact is usually a reviewable PRD, but the skill's purpose is product design quality rather than template completion. Also use when reviewing or improving product plans and PRDs for clarity, model quality, diagrams, boundaries, permissions, risks, depth, and delivery readiness.
+description: Product design methodology based on Junco's "make a good product" approach. Use when an AI assistant or product practitioner needs to turn raw needs, stakeholder requests, operational pain points, platform/system ideas, or vague feature asks into high-quality product design through first-principles demand reflection, problem framing, user path analysis, concept definition, domain modeling, Mermaid concept relationship diagrams, system boundary diagrams, process flows, interaction rules, milestones, and acceptance criteria. The final delivery artifact is usually a reviewable PRD, but the skill's purpose is product design quality rather than template completion. Also use when reviewing or improving product plans and PRDs for clarity, model quality, diagrams, boundaries, permissions, risks, depth, delivery readiness, or when drafting and rewriting Chinese PRD 产品方案 and detailed page/module specifications in the user's established house style.
 ---
 
 # Junco
@@ -12,6 +12,8 @@ Use this skill to turn a raw demand into rigorous product design. Treat product 
 When receiving a user demand, do not assume the user's stated path is the right path. Treat it as a surface signal. First ask what first-principles problem, invariant constraint, user motivation, or system model issue is hidden behind it, then decide whether the requested implementation is still the simplest sufficient answer.
 
 Default to the user's language unless the user asks otherwise.
+
+When the task creates, rewrites, or reviews a PRD `产品方案`, `产品方案与系统架构`, or detailed page/module specification, read `references/prd-product-solution-writing-style.md` completely before drafting that section. Treat it as the user's house-style output contract. It governs how an already-derived product model is expressed; it does not replace first-principles reflection, concept modeling, boundary definition, or rule design. Preserve the sequence problem -> model -> rules -> pages, then apply the page/module writing style.
 
 Use the expression priority: diagram before table, table before prose. Prefer Mermaid diagrams for relationships, flows, boundaries, states, and decisions; use tables for fields, permissions, rules, and acceptance criteria; use prose for rationale, tradeoffs, context, and exceptions.
 
@@ -234,6 +236,7 @@ Follow this sequence when helping with requirements or PRDs.
    - Decide whether the user needs full product design, review, outline, or brainstorming. If they ask for a PRD, assume the PRD should contain full product design unless they explicitly ask for a brief.
    - Identify missing context early. Ask only when the gap blocks safe modeling; otherwise state assumptions and open questions in the PRD.
    - Use `references/prd-depth-rubric.md` before drafting or reviewing a shareable PRD.
+   - If the deliverable includes a Chinese `产品方案`, detailed module design, page specification, or a request to rewrite in the user's PRD style, read `references/prd-product-solution-writing-style.md` completely before drafting. Apply it as a mandatory writing and completeness gate unless the user explicitly requests a different format.
    - Treat "product design", "product proposal", "solution", "PRD", and "design this requirement" as full-product-design requests by default. Do not downgrade them into a short answer, executive summary, or phase outline unless the user explicitly asks for a brief.
 
 1. Reframe the request as a problem.
@@ -277,6 +280,12 @@ Follow this sequence when helping with requirements or PRDs.
 7. Design tangible functions and interactions.
    - For each module, define page purpose, entry, fields, operations, states, validation, permissions, feedback, and audit.
    - For every P0 module, include list/detail/form fields, operation rules, disabled states, empty/error/no-permission states, audit, and acceptance.
+   - After the domain model and product rules are stable, express each page in the order page/function module -> one or two sentences of purpose and boundary -> visible regions -> fields/actions/states. Do not start the product reasoning from pages merely because the final writing format is page-based.
+   - For each important field, action, and state, select the relevant atomic labels from control, source, enum, default, required, format, constraint, linkage, trigger, click destination, result, permission, calculation, validation, and exception. Do not mechanically include irrelevant labels, but do not leave implementation-critical values implicit.
+   - Treat specification completion and business-fact completion as different tasks. Never invent a default, enum, state transition, data source, permission, or post-action result merely to make the specification look complete. If the source does not establish it, write `待确认` and name the missing decision; if proposing a design, label it `建议方案` instead of presenting it as confirmed. When page-copy design is in scope and the source does not provide exact wording, label the proposed string `建议文案`.
+   - Write buttons as complete action chains: visibility and prerequisites -> click destination or mutation -> carried context -> validation -> success feedback and state change -> failure/retry/audit behavior.
+   - Write lists as decision surfaces, not column inventories. Define search/filter scope, default sort, field source and display, truncation/Tooltip/copy behavior, click destination, status-dependent operations, and empty/loading/error/no-permission behavior.
+   - Extract complex multi-party flows, lifecycle transitions, asynchronous callbacks, and downstream impact into a flowchart, sequence diagram, state machine, or impact matrix instead of burying them in long prose.
    - Before adding a new page, check whether an existing page already supports the same user decision; merge duplicate flows and update the canonical flow instead of preserving two versions.
    - Place conflict handling, overwrite/ignore strategy, missing-data recovery, and retry at the action that creates or discovers the issue; avoid spreading the same exception across save, sync, preview, and history surfaces.
    - Convert concrete UI issues into interaction principles before writing gates: clarify user information, action closure, user friendliness, ambiguity risk, and data-to-action fit.
@@ -294,6 +303,7 @@ Follow this sequence when helping with requirements or PRDs.
 
 Load these files only when needed:
 
+- `references/prd-product-solution-writing-style.md`: mandatory house style for Chinese PRD `产品方案`, detailed module/page specifications, and PRD rewrites requested in the user's style; includes structure, atomic-spec templates, action/state rules, emphasis conventions, WIP cleanup, and a final checklist.
 - `references/methodology.md`: detailed demand-to-product-design method and analysis questions.
 - `references/diagram-patterns.md`: Mermaid diagram selection rules and reusable templates for concept relationships, architecture, flows, and state machines.
 - `references/prd-depth-rubric.md`: full-depth PRD gates, thin-PRD anti-patterns, and final self-review rules.
@@ -334,6 +344,22 @@ When delivering the product design as a PRD, produce a structured document with 
 15. Acceptance Criteria And QA Verification
 
 Do not omit sections 5, 11, 12, 13, or 15. These are common failure points in short outputs. User stories, usage scenarios, detailed module design, permissions, audit/dependency/recovery, and acceptance criteria must be explicit sections, not brief bullets hidden inside other sections.
+
+### Product Solution House-Style Contract
+
+For Chinese PRDs, apply `references/prd-product-solution-writing-style.md` to sections 9 and 11. If the user explicitly asks to create or rewrite only the `产品方案` section, apply the same contract to that scoped deliverable without forcing unrelated PRD chapters.
+
+- Use the page or product-function module as the outer writing skeleton only after the problem, concepts, model, boundaries, and rules have been derived.
+- Start each page/module with one or two sentences explaining its purpose, supported decision, and responsibility boundary.
+- Organize the body by visible regions such as top actions, controls, metric cards, quick filters, list, detail, form, impact preview, action area, and records.
+- Use unordered lists and short verb-led statements inside each region. Avoid long paragraphs and do not expose demand reflection, brief text, PRD reasoning, reviewer notes, or implementation commentary in user-facing page copy.
+- When the destination supports the layout, use the three-column structure `产品模块 | 产品方案 | 原型示意`; otherwise preserve the same hierarchy with headings and lists.
+- Make fields traceable and executable: control, source, enum/range, default, required, format, constraint, linkage, display, and exception as relevant.
+- Make actions closed-loop: entry/visibility, prerequisite, click destination or mutation, context, validation, success, failure, retry, audit, and downstream state change as relevant.
+- Make states deterministic: enum, source of truth, entry condition, available actions, exit condition, display semantics, downstream effect, and reopen/rollback rule.
+- Do not fill missing business facts with plausible guesses. Mark unconfirmed defaults, enums, permissions, data sources, transitions, and results as `待确认`; mark optional design recommendations as `建议方案`; mark newly designed UI wording as `建议文案`.
+- Emphasize only high-value content: `🎯` for positioning, `⚠️` for hard constraints or boundaries, `ℹ️` for core mechanisms, `❗` for counterintuitive conclusions, and `待确认` for unresolved facts.
+- Remove WIP debris from final copy: dated change notes, strikethrough alternatives, unresolved conversational questions, duplicated sentences, spelling drift, and mixed terminology. Preserve them only when the user explicitly asks for change history or WIP annotations.
 
 ### Minimum Depth Contract
 
@@ -393,3 +419,5 @@ A strong PRD should create four kinds of certainty:
 It should also have high information density: use diagrams instead of tables when relationships matter, tables instead of prose when rows and columns communicate faster, and concise prose only where judgment is needed.
 
 For product experience, a strong PRD should also create interaction certainty: each UI surface should make clear what information the user receives, what decision it supports, what action can close the loop, what fallback exists when data is missing or uncertain, and what ambiguity has been removed through wording, timing, and data choice.
+
+For the user's PRD house style, it should also create scanning certainty: reviewers should be able to locate the page purpose, each visible region, every important field/action/state rule, data source, constraint, destination, and exception without reading a dense paragraph twice.
