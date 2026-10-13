@@ -2,11 +2,11 @@
 
 Junco is a model-agnostic methodology and reusable skill package for product requirement analysis, product modeling, and high-quality product design.
 
-It helps turn raw needs, vague feature requests, stakeholder feedback, operational pain points, platform/system ideas, or existing PRDs into rigorous product designs with clear problems, concepts, models, flows, rules, milestones, and acceptance criteria. The final delivery artifact is often a PRD, but the purpose is product design quality rather than template completion.
+It helps turn raw needs, vague feature requests, stakeholder feedback, operational pain points, platform/system ideas, or existing PRDs into rigorous product designs with clear problems, concepts, models, flows, rules, page content, actual UI copy, milestones, and acceptance criteria. It also supports scoped PRD revision in the user's established style, preserving confirmed decisions and document structure. The final delivery artifact is often a PRD, but the purpose is product design quality rather than template completion.
 
 ## 核心思想文档
 
-Junco 的核心产品思想可参阅 [《做一个好产品》](./做一个好产品.pdf)。该文档说明从原始需求回到真实问题、用户思考路径、领域模型、产品规则和可评审 PRD 的方法。
+Junco 的核心产品思想可参阅仓库提供的 [《做一个好产品》PDF](做一个好产品.pdf)。该文档说明从原始需求回到真实问题、用户思考路径、领域模型、产品规则和可评审 PRD 的方法。
 
 ## 中文说明
 
@@ -41,7 +41,7 @@ Junco 基于《做一个好产品》的完整方法论，而不是只套 PRD 模
 6. 用角色 x 模型推导用户故事，而不是只枚举 CRUD。
 7. 用第一性原理挑战旧流程、旧系统、组织习惯和用户给出的默认路径。
 8. 为复杂产品制定清晰的“游戏规则”：边界、异常、保护、状态和责任。
-9. 图优先于表，表优先于散文说明。
+9. 按信息任务选择图、表和文字：关系与流程用图，精确条目用表，趋势与分布用图表，判断依据用短文。
 10. 具体反馈要抽象成公共规则，而不是只写“不能这样”。
 11. 在画页面或流程前，先审计产品逻辑归属：哪个对象拥有哪个字段、哪个动作负责哪类冲突、哪个状态来自哪个系统。
 12. 按用户决策合并重复页面，不因为标题不同就保留两套逻辑相同的流程。
@@ -52,7 +52,7 @@ Junco 基于《做一个好产品》的完整方法论，而不是只套 PRD 模
 Problem -> Minimum-cost goal -> User thinking path -> Human motivation
 -> Concept definition -> Domain model -> Role x model user stories
 -> First-principles challenge -> Product architecture
--> Game rules / boundaries -> Tangible interactions -> Delivery plan -> PRD
+-> Game rules / boundaries -> Page content and copy -> Delivery plan -> PRD
 ```
 
 ### 产品逻辑归属审计
@@ -94,9 +94,9 @@ Junco 在生成或评审 PRD 前，会先要求回答：
 - 审查 PRD 是否足够清晰、完整、可落地
 - 把具体 UX 反馈抽象成可复用的产品规则
 - 设计 P0/P1/P2 范围、验收标准和质量门禁
-- 生成 Mermaid 概念关系图、系统边界图、流程图、状态机和数据责任图
+- 使用适合目标文档的原生图示或 Mermaid 表达概念关系、系统边界、流程、状态与数据责任
 
-复杂平台、系统、流程、治理、运营类产品默认进入完整产品设计模式，不输出轻量提纲，除非用户明确要求。
+新建复杂产品方案默认完成可评审的完整设计；已有 PRD 修订保留当前结构和授权范围，用户明确要求简版时按简版交付。完整性取决于问题是否回答清楚，而非固定章节数。
 
 ### 交付质量要求
 
@@ -119,6 +119,18 @@ Junco 的 PRD 不应停留在背景、目标、概念、CRUD、权限表和阶�
 - 对齐颜色、布局、状态的产品语义
 - 校验数据是否足以支撑用户动作
 - 同步更新 PRD、验收标准和实现规范
+
+### PRD 写作与迭代
+
+按问题 → 模型 → 规则 → 页面内容与实际文案设计，再使用目标工具的技能交付。正文写业务对象、责任、动作和结果；用户诉求描述实际工作，评审意见归入方案，归纳出的诉求注明来源。沿用用户样文，保留当前结构、确认决定与授权范围。
+
+区分确认事实、方案、未决决定与验证结果。常规文案与布局作为可评审方案写出；未决业务事实集中记录依据、影响、负责人和下一步。页面展示实际文案，需求、brief、PRD 推理与评审说明留在工作文档。
+
+指标定义来源、单位、时点、版本和公式；计算总体、可见范围和执行集合分别定义。正常样例完整可对账，实际异常单独设计。批量机制按频率、规模与来源选择，明确全批校验、纠错、提交范围、幂等、结果与返回路径。
+
+强调与颜色具有业务语义，沿用原生格式。修订先按规则职责整理内容，再更新受影响的正文、图示、原型、权限与验收，保持用户最新范围。里程碑拆到有交付物、日期、依赖和验收的能力节点，并行安排独立工作；建议排期与交付承诺分别表述。远端文档原位维护后回读，并按实际取得的结构、渲染或运行证据报告验证情况。
+
+详细规范见 [PRD 写作与迭代规范](references/prd-writing-lessons.md)、[产品方案写作风格](references/prd-product-solution-writing-style.md) 和 [检查清单](references/review-checklist.md)。
 
 ### 安装
 
@@ -164,14 +176,17 @@ git pull
 Junco 是产品设计和 PRD 方法论技能，本身不依赖 Figma、本地 UI 组件库或代码运行环境。
 
 - 如果只做需求分析、PRD 设计或产品逻辑审查，不需要 Figma。
-- 如果要把方案输出成 Figma 原型，应结合 `arco-design` 或对应设计系统技能。
-- Junco 负责产品模型、流程、规则、异常、权限、验收和文档质量；视觉组件、图表组件、Figma library 加载和画布 QA 应由设计系统技能负责。
+- Junco 先完成需求抽象、页面展示内容和实际文案；后续视觉设计或实现遵从用户范围与项目流程。
+- 如果项目要求先进行 Product Design 页面设计、再输出 Figma，应依次完成 Junco → Product Design → `arco-design` / Figma。这是适用项目的流程要求，不是 Junco 的全局依赖。
+- Junco 负责产品模型、流程、规则、页面内容、文案、异常、权限、验收和文档质量；视觉组件、图表组件、真实组件实例、Figma library 加载和画布 QA 由设计系统与目标工具技能负责。
 
 ### 目录结构
 
 ```text
 junco/
+├── README.md
 ├── SKILL.md
+├── 做一个好产品.pdf
 ├── agents/
 │   └── openai.yaml
 └── references/
@@ -179,11 +194,17 @@ junco/
     ├── methodology.md
     ├── platform-patterns.md
     ├── prd-depth-rubric.md
+    ├── prd-product-solution-writing-style.md
     ├── prd-template.md
+    ├── prd-writing-lessons.md
     └── review-checklist.md
 ```
 
 ## English
+
+### Core Methodology Source
+
+The core product philosophy is documented in the [《做一个好产品》 repository PDF](做一个好产品.pdf). It explains how to move from a raw request to the real problem, user thinking paths, domain models, product rules, and a reviewable PRD.
 
 ### What This Skill Is For
 
@@ -209,7 +230,7 @@ Junco is based on the full "make a good product" methodology:
 6. Derive user stories from role x model, not only from CRUD tasks.
 7. Use first principles to challenge inherited process, legacy systems, org habits, and the user's requested path.
 8. Define product game rules: boundaries, exceptions, protections, states, and responsibilities.
-9. Prefer diagrams over tables, and tables over prose.
+9. Choose diagrams for relationships and flows, tables for precise items and rules, charts for quantitative patterns, and concise prose for judgment.
 10. Convert concrete feedback into positive product standards, not only prohibitions.
 11. Audit product logic ownership before drawing pages or flows: which object owns which field, which action owns which conflict, and which system owns each state.
 12. Merge duplicate pages by user decision instead of keeping two flows with different titles but the same logic.
@@ -220,7 +241,7 @@ The default reasoning chain is:
 Problem -> Minimum-cost goal -> User thinking path -> Human motivation
 -> Concept definition -> Domain model -> Role x model user stories
 -> First-principles challenge -> Product architecture
--> Game rules / boundaries -> Tangible interactions -> Delivery plan -> PRD
+-> Game rules / boundaries -> Page content and copy -> Delivery plan -> PRD
 ```
 
 ### Product Logic Ownership Audit
@@ -263,6 +284,9 @@ Use Junco when you need to:
 - Review an existing PRD for clarity, completeness, and delivery readiness
 - Abstract repeated UX feedback into reusable product quality gates
 - Split scope into P0/P1/P2 and define milestone acceptance
+- Use target-native diagrams or Mermaid to explain concepts, system boundaries, flows, states, and data ownership
+
+A new complex product normally receives a complete, reviewable design. Revisions to an existing PRD preserve its useful structure and the authorized scope; an explicitly requested brief stays concise. Completeness depends on answered product questions, not a fixed heading count.
 
 ### Output Quality
 
@@ -285,6 +309,18 @@ The `Feedback-to-Rule Method` helps convert implementation feedback into reusabl
 - Align visual semantics with product semantics
 - Verify that the data shown is precise enough to support the action
 - Keep PRDs, acceptance criteria, and implementation guidance in sync
+
+### PRD Writing And Revision
+
+Follow problem → model → rules → page content and actual copy, then use the destination's skill to deliver the result. Describe business objects, responsibilities, actions, and outcomes. User needs describe real work; review feedback belongs in the solution, and synthesized needs are identified by source. Preserve the user's sample style, current structure, confirmed decisions, and authorized scope.
+
+Distinguish confirmed facts, proposed design, unresolved decisions, and verified results. Write routine copy and layout as a reviewable proposal; consolidate missing business decisions with evidence, impact, owner, and next step. Product pages show actual UI copy; requests, briefs, PRD reasoning, and review notes stay in working documents.
+
+Define each metric's source, unit, time, version, and formula. Keep the comparison population, visible subset, and modification set separate. Normal examples must be complete and internally consistent; actual exceptions receive separate designs. Choose batch workflows by cadence, scale, and input source, then define whole-batch validation, correction, submission scope, idempotency, results, and return path.
+
+Preserve native formatting and use emphasis and color semantically. Regroup changed rules before revision, then update affected text, figures, prototypes, permissions, and acceptance while preserving the latest scope. Milestones have deliverables, dates, real dependencies, and acceptance signals, with independent work in parallel; distinguish proposed dates from delivery commitments. Read back remote edits and report the structural, rendered, or runtime evidence actually obtained.
+
+See [PRD writing and revision standards](references/prd-writing-lessons.md), [product-solution writing style](references/prd-product-solution-writing-style.md), and the [review checklist](references/review-checklist.md).
 
 ### Installation
 
@@ -330,14 +366,17 @@ Use junco to abstract this prototype feedback into reusable product rules and up
 Junco is a product design and PRD methodology skill. It does not require Figma, local UI libraries, or a code runtime.
 
 - For requirement analysis, PRD design, or product logic review, Figma is not required.
-- For Figma prototype output, combine Junco with `arco-design` or another design-system skill.
-- Junco owns product models, flows, rules, exceptions, permissions, acceptance, and document quality. Visual components, chart components, Figma library loading, and canvas QA belong to the design-system skill.
+- Junco first completes requirement abstraction, page content, and actual UI copy. Further visual design or implementation follows the user's scope and project workflow.
+- Where the project requires Product Design page design before Figma output, follow Junco → Product Design → `arco-design` / Figma. This is a requirement of the applicable project, not a global Junco dependency.
+- Junco owns product models, flows, rules, page content, copy, exceptions, permissions, acceptance, and document quality. Visual components, chart components, real component instances, Figma library loading, and canvas QA belong to the design-system and destination skills.
 
 ### Repository Structure
 
 ```text
 junco/
+├── README.md
 ├── SKILL.md
+├── 做一个好产品.pdf
 ├── agents/
 │   └── openai.yaml
 └── references/
@@ -345,6 +384,8 @@ junco/
     ├── methodology.md
     ├── platform-patterns.md
     ├── prd-depth-rubric.md
+    ├── prd-product-solution-writing-style.md
     ├── prd-template.md
+    ├── prd-writing-lessons.md
     └── review-checklist.md
 ```

@@ -1,99 +1,84 @@
 # PRD Review Checklist
 
-Use this checklist to review or improve PRDs.
+Apply relevant checks to the requested scope. A passing PRD has clear business behavior and verifiable rules; it need not reproduce every template heading.
 
-## Problem Clarity
+## Context, Work, And Scope
 
-- The PRD reframes the request as a real problem.
-- It separates symptom, root cause, impact, and proposed solution.
-- It includes demand reflection: user request, surface symptom, first-principles problem, challenged assumptions, alternatives, and chosen conclusion.
-- It treats the stakeholder's implementation path as a hypothesis, not as the requirement itself.
-- It identifies whether the actual fix should be feature-level, model-level, data-level, rule-level, process-level, or operational.
-- It explains why current process or system is insufficient.
-- It states goals and non-goals.
-- It includes evidence or examples when available.
+- Current project context, source PRD, latest decisions, user sample style, and destination have been read. Sources have been checked for the same project, object, scope, and time; reference examples and unrelated history have not become current facts.
+- Work problem, role, cadence, volume, pain, impact, and success signal are concrete.
+- The proposed feature/path has been tested against simpler solutions, while confirmed business boundaries remain valid.
+- Real work needs, prototype feedback, writing instructions, and assistant proposals are separated; inferred needs are identified.
+- Active scope and adjacent responsibility are clear; withdrawn flows have been removed from all affected current artifacts.
+- Role merges preserve responsibility, data scope, approval, notifications, and stories.
 
-## User Thinking Path
+## Objects, Rules, And Effects
 
-- User roles are specific, not just "user".
-- Each role has responsibilities, daily behavior, needs, and concerns.
-- The PRD explains the user's natural thinking path, not only the product's page flow.
-- The solution aligns with user cognition enough to feel natural without excessive training.
-- Human motivations behind behavior are considered: certainty, control, trust, safety, efficiency, anxiety, recognition, or curiosity where relevant.
-- Existing mental models are preserved where useful.
-- High-frequency paths are prominent.
-- Risky paths are slowed down with confirmation, preview, or permissions.
+- Core nouns have meaning, ownership, source of truth, relationships, cardinality, and lifecycle.
+- Business objects and underlying implementation/physical objects are distinguished.
+- Saved configuration, proposed change, submitted request, executed result, acknowledgment, and current state have distinct effects where applicable.
+- States have actual sources, entry/exit conditions, available actions, and meaningful display semantics.
+- Rules cover deterministic validation, conflicts, precedence, versions, idempotency, permissions, and audit as relevant.
+- Exceptions are justified by the product contract; template examples have not become invented business states.
+- Model and term changes propagate to prose, fields, calculations, actions, histories, permissions, figures, and acceptance.
 
-## Concepts And Model
+## Data And Metrics
 
-- Core nouns are defined clearly.
-- Similar concepts are distinguished.
-- Concepts are defined as shared language for product, engineering, design, operations, and users.
-- Source-of-truth systems are named.
-- Entities, relationships, states, ownership, and lifecycle are explicit.
-- Complex products have explicit object, relationship, lifecycle, version/history, and ownership models.
-- Decision, priority, conflict, publish, rollback, and downstream consistency rules are defined when relevant.
-- Concept relationships are shown with a diagram when there are multiple nouns or ownership boundaries.
-- Relationship arrows are labeled with verbs such as owns, maps to, depends on, writes, reads, triggers, or audits.
-- Generic kernel concepts are separated from scenario-specific extensions.
-- The model can support foreseeable future scenarios without changing the skeleton.
+- Each metric supports a role's decision and has source, object, population, unit, time/version, formula, deduplication, precision, and update timing.
+- Original, transformed, planned, actual, cumulative, and current-state quantities have explicit relationships.
+- Business formulas use verified source-field names and mappings; engineering symbols are defined separately where needed. Undefined numerators/denominators have not been inferred from nearby nouns or examples.
+- Comparison population, displayed subset, and modified/executed set are distinct; filter, Tab, selection, and pagination behavior is explicit.
+- Nonparticipation, numerical zero, missing facts, empty data, and operational failure have distinct semantics.
+- Normal examples are complete, coherent, and reconciled across lists, details, charts, totals, and rates; illustrative data is not presented as production truth.
+- Thresholds are sourced and tested with full precision; percentage-point differences are expressed accurately.
+- Genuine data gaps are visible decisions; a tooling failure has not been inserted as a product-data state.
 
-## Rules And Boundaries
+## Scenarios, Pages, And Batch
 
-- Product/system boundaries are explicit.
-- System boundary or layered architecture is diagrammed when multiple systems collaborate.
-- Upstream and downstream responsibilities are clear.
-- Boundary conditions and exceptions are designed as product "game rules", not left as implementation details.
-- Permission matrix exists for key actions.
-- Status machine exists where lifecycle matters.
-- Core write/read/approval/submission paths are represented with sequence diagrams or flowcharts when order matters.
-- Validation rules, defaults, required fields, and uniqueness constraints are defined.
-- Every P0 module has fields, operations, preconditions, disabled states, errors, audit, and acceptance criteria.
-- High-risk actions have confirmation and audit.
-- Exceptions, empty states, no-permission states, and dependency failures are covered.
+- Role-action-value-acceptance stories cover actual main work and relevant permission, exception, and recovery paths.
+- Each surface has a decision or useful information task, required context, clear primary action, and completion/return path.
+- Existing context is carried forward; repeated selection, explanation-only steps, and redundant result pages are removed.
+- Fields, operations, visibility, defaults, validation, state constraints, outcomes, and audit are specified where they affect behavior.
+- Batch input fits cadence and volume; whole-batch validation, cross-row constraints, correction, exact submission scope, duplicate handling, and results are defined.
+- Confirmation follows actual consequence and reversibility. It adds a necessary decision instead of repeating a sufficient preview.
+- Action guidance, static evidence, pre/post impact, exceptions, and history have distinct roles.
+- Same-group fields align; duplicate metadata has one canonical definition; status and auxiliary actions stay with their object.
+- Default view appears first. Charts serve quantitative patterns; tables serve exact lookup and execution. Dimension views show the selected dimension with consistent scale and reconcilable totals.
+- Visual simplification preserves original decision information, using hierarchy and drill-down rather than deleting core metrics.
 
-## Delivery Readiness
+## Permissions, Dependencies, And Delivery
 
-- P0/P1/P2 are based on closure, risk, dependency, and cost.
-- The chosen solution is the minimum sufficient path after comparing simpler or more universal alternatives.
-- Milestones describe capability maturity, not just dates.
-- Dependencies and risks have owners.
-- Acceptance criteria are testable.
-- Data, interfaces, migration, and fallback are considered.
+- Permissions name role, action/state, object/data scope, approval/prerequisite, no-permission behavior, and audit.
+- Interfaces identify provider/consumer, read/write truth, timing, consistency, version, and relevant failure/recovery behavior.
+- Risk handling exposes affected objects, consequences, required choices, and recovery; risk is not inferred from an action name alone.
+- Priorities reflect closure, risk, dependency, and cost.
+- Milestones have specific usable capability, dated window/cutoff, deliverable, acceptance signal, actual dependency, owner, and date basis.
+- Independent work streams proceed in parallel; dependencies constrain specific nodes rather than serializing every stream.
+- Roadmap agrees with milestone dates, durations, overlap, and acceptance. Proposed schedule is distinguished from a staffed commitment.
+- Acceptance checks observable main paths, permissions, validation, dependency failure, recovery, audit, and data consistency.
 
-## Expression Quality
+## Writing, Format, And Maintenance
 
-- The PRD follows "diagram > table > prose": diagrams for relationships/flows/boundaries/states, tables for repeated attributes/rules, prose for rationale and conclusions.
-- The PRD uses diagrams, tables, matrices, and state machines where they communicate better than prose.
-- For complex PRDs, diagrams include concept relationship, system boundary, core flow, and state machine views.
-- Diagram sections contain actual Mermaid diagrams, not placeholder text such as "shown below".
-- Mermaid diagrams are concise, visually tidy, and split when one diagram tries to answer multiple questions.
-- Core Mermaid diagrams are not toy diagrams; they show enough actors, objects, rules, data, audit, runtime, and exception nodes to support review.
-- `graph`, `flowchart`, and `stateDiagram` diagrams use `classDef` and `class` statements from a consistent web-safe color palette.
-- Text explains logic and rules instead of repeating prototypes.
-- A reader from product, engineering, design, QA, or operations can understand what they need to do.
+- Prose describes object responsibility, actions, rules, and results, rather than repeating prompt or review instructions.
+- Necessary exclusions remain accurate; long repeated negative constructions have been rewritten positively.
+- User sample voice, short sentences, stable terms, meaningful headings, and exact action copy are preserved.
+- Chinese/English, numbers/units, punctuation, and date formats follow the document convention; IDs and code identifiers stay intact.
+- Ordinary prose/data retain normal weight; emphasis and color are local and semantic. Rich-text fonts, links, indentation, and adjacent content are preserved.
+- Diagram, table, chart, or prose is chosen by the information task and requested destination, rather than a blanket preference.
+- Figures answer one question and agree with models/rules. Native or Mermaid rendering is verified; source-only output is identified honestly.
+- Open business decisions are consolidated with source, impact, owner, and next step; routine UI copy carries no process-label prefix.
+- WIP debris, duplicate explanations, outdated alternatives, empty placeholders, and withdrawn features are absent from the current solution.
+- Remote edits use the relevant skill and current native structure. Unknown write results are read back before retries; concurrent edits and user deletions are preserved.
+- Affected text, structures, links, images/boards, and rendered layout are verified. Static, runtime, and user-acceptance evidence are reported separately.
 
-## Common Anti-Patterns
+## Common Failure Signals
 
-- Starting with pages and buttons before defining the problem.
-- Treating a stakeholder's solution as the requirement itself.
-- Following the user's requested path literally without first-principles reflection.
-- Mistaking a visible workaround for the underlying requirement.
-- Adding a feature when a concept, data ownership, default rule, permission boundary, or process agreement would solve the problem more simply.
-- Producing INVEST-compliant user stories that still follow the wrong path or preserve a bad existing structure.
-- Delivering a four-page outline when the user asked for a full PRD.
-- Skipping concept definitions and letting teams argue over words during review.
-- Defining many concepts in tables but not showing their relationships.
-- Stopping at "support CRUD" without fields, rules, states, edge cases, and acceptance criteria.
-- Describing key actions or decision logic without lifecycle, precedence, conflict, and audit rules.
-- Showing a permission table with checkmarks but no data scope, ownership, disabled states, or audit implications.
-- Replacing clear diagrams with long tables or prose when a relationship or flow is the real point.
-- Creating Mermaid diagrams that are either too shallow, such as `User -> Product -> System`, or too dense with crossing arrows, unlabeled edges, or inconsistent colors.
-- Outputting default monochrome `graph`, `flowchart`, or `stateDiagram` diagrams without web-safe classes.
-- Designing only by feature scenes without a domain model.
-- Putting business-specific fields into a generic platform core.
-- Using bulk edit to hide poor model abstraction.
-- Covering only happy paths.
-- Missing permissions, audit, status, validation, or exception rules.
-- No non-goals, leading to uncontrolled scope expansion.
-- A long PRD with low information density and no clear structure.
+- A full PRD replaced by a capability outline, or a scoped edit expanded into an unrelated full rewrite.
+- Reviewer demands treated as user research, or proposals described as implemented facts.
+- Familiar old fields retained after the object model changes.
+- Submitted or saved quantities counted as actual execution.
+- Incomplete normal examples filled with source-error placeholders.
+- Pagination or selection silently shrinking a global calculation or batch execution.
+- A high-volume batch task implemented as repeated single-item forms.
+- Decorative charts/cards, dense scattered facts, or whitespace changes that discard required information.
+- Identical long date bars masquerading as detailed milestones.
+- Text-only replacement claimed as full logic/visual verification.

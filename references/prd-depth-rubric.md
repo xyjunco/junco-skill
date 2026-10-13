@@ -1,90 +1,77 @@
-# PRD Depth Rubric
+# PRD Depth And Readiness Rubric
 
-Use this before drafting or reviewing a shareable PRD. The goal is to prevent a full PRD from collapsing into a short capability outline.
+Use this for drafting a full PRD or assessing readiness. Full means domain-specific, understandable, and verifiable; it is not a heading or word-count target.
 
-## Full PRD vs Outline
+## Scope Before Depth
 
-A short outline may be acceptable for early brainstorming only. A full PRD is expected when the user asks for a PRD, product proposal, product design, or can-share document for engineering/design/QA review.
+- A new full PRD includes the applicable problem, roles/stories, model, rules, modules, permissions, dependencies/recovery, milestones, and acceptance.
+- An existing document or section-only request preserves the useful current outline. Complete the affected rules and dependencies without rebuilding unrelated chapters.
+- An explicitly requested brief stays brief while retaining material scope, ownership, dependency, and uncertainty.
+- A review identifies concrete gaps and effects, rather than restating a generic template.
 
-Summary-only output is a failure mode. A response that lists section headings, a few decisions, delivery features, and next steps is not a full PRD, even if it mentions diagrams or claims the content is complete.
+A summary that replaces a requested full PRD is incomplete. A detailed scoped revision does not become incomplete because it has fewer than a fixed number of chapters.
 
-A full PRD must not merge away user stories, usage scenarios, permissions, audit, dependency recovery, or QA verification. These sections are required because they make the design reviewable by design, engineering, QA, and operations.
+## Depth Dimensions
 
-| Dimension | Outline | Full PRD |
-| --- | --- | --- |
-| Problem | Lists pain points | Separates user request, surface symptom, first-principles problem, current process, root cause, impact, scope, evidence |
-| Concepts | Defines a few nouns | Defines nouns, boundaries, source of truth, lifecycle, relationships |
-| Model | Light entity list | Entity IDs, fields, ownership, states, cardinality, data source |
-| Rules | General statements | Deterministic decisions, validation, conflicts, permissions, audit, exceptions |
-| Modules | CRUD bullets | Entry, layout, fields, operations, states, errors, audit, acceptance |
-| Permissions | Mentions roles | Role x operation x data scope x approval x disabled state x audit matrix |
-| Delivery | Phase list | Priority rationale, dependencies, risks, rollout, acceptance |
+| Dimension | Thin Output | Reviewable Output |
+|---|---|---|
+| Problem | Feature wishes | Work, context, pain, cause, scale, impact, constraints, and chosen path |
+| Role needs | Persona or UI preference list | Actual responsibility, cadence, volume, decisions, desired outcome, and evidence |
+| Concepts | Nouns without relationships | Meaning, ownership, cardinality, source, lifecycle, and distinctions |
+| Rules | Support CRUD or automate | Deterministic inputs, scope, validation, action effect, conflicts, permissions, and recovery |
+| Data | Numbers and symbols | Decision served, source, population, units, time/version, readable formula, precision, and reconciled examples |
+| Modules | Columns and buttons | Purpose, carried context, information groups, complete actions, states, return path, and acceptance |
+| Permissions | Checkmarks | Role x action/state x object/data scope x approval x feedback x audit |
+| Batch | Many single forms | Actual workload, input throughput, whole-batch validation, correction, execution scope, idempotency, and result |
+| Delivery | Large module bars | Verifiable capability nodes, dates/basis, deliverables, real dependencies, parallel work, and acceptance |
+| Expression | Prompt rules or dense paragraphs | Business-readable responsibility/action/result, consistent terms, semantic emphasis, and appropriate figures/tables |
+| Evidence | Claims of completion | Actual written artifact, readback, rendered checks where needed, and precise verification level |
 
-## Depth Gates
+## Readiness Questions
 
-A platform/system PRD is not ready unless it answers these questions:
+1. Which work problem is solved, for whom, how often, and at what scale?
+2. Which constraints are confirmed, which are inherited habits, and which decisions remain open?
+3. Are role needs distinguished from design review, writing instructions, and assistant inference?
+4. Are the core objects, their relationships, and the source of truth clear?
+5. Are save/preview, request/approval, execution/acknowledgment, and current-state effects distinguished where they exist?
+6. Can engineering determine validation, permission, conflict, lifecycle, and audit behavior?
+7. Can a business reader understand metrics without decoding engineering symbols? Do units, time/version, population, and precision agree?
+8. Are comparison population, displayed subset, and modified/executed set explicit?
+9. Do normal examples contain complete coherent data, with source/illustrative status clear? Are real exceptions designed separately?
+10. Does every page support a useful decision, with a next action and return/recovery path?
+11. Does the batch mechanism fit the cadence and workload, including full-batch constraints across pages?
+12. Are action guidance, static evidence, comparison, and history organized by meaning?
+13. Are milestones small enough to demonstrate or accept a capability? Do dependencies and parallel streams match the actual work?
+14. Are canonical prose, figures, prototypes, permissions, examples, and acceptance synchronized after changes?
+15. Do delivery claims match the evidence, with proposed dates and unverified runtime behavior distinguished?
 
-1. What did the user ask for on the surface, and what first-principles problem is hidden behind it?
-2. Which assumptions in the requested path are real constraints, and which are inherited habits or workarounds?
-3. What simpler, more universal, or more model-level solutions were considered before choosing the final path?
-4. What are the core nouns, and how do they relate?
-5. Which system owns each noun and field?
-6. What is the source of truth for read and write paths?
-7. What lifecycle states exist, and what operations are allowed in each state?
-8. What decision, priority, validation, and conflict rules produce deterministic outcomes?
-9. What happens when upstream/downstream dependencies fail?
-10. What does each role see, change, approve, or audit?
-11. What exact fields appear on the key list/detail/form surfaces?
-12. What audit, notification, rollback, and recovery path exists for risky operations?
-13. How will QA verify main paths, permission paths, exception paths, and data consistency?
+## Artifacts As Needed
 
-## Required Artifacts For Complex PRDs
+For a complex PRD, choose artifacts that answer actual review questions:
 
-Include these unless clearly not applicable:
+- Role/work/evidence and scenario/story tables.
+- Concept relationship and system boundary diagrams.
+- Entity/field tables, decision rules, and lifecycle views.
+- Core flow or sequence for ordering and asynchronous results.
+- Metric dictionary and data/interface contracts.
+- Relevant module/action specifications and permission matrix.
+- Batch input/validation/submission contract.
+- Audit, notification, exception, and recovery rules.
+- Capability milestone and acceptance tables.
 
-- Demand reflection table: user request, surface symptom, first-principles problem, challenged assumptions, alternatives, chosen conclusion.
-- User role table with responsibility, decision moment, authority, and success signal.
-- Usage scenarios and user stories for happy path, exception path, permission-limited path, and recovery path.
-- Concept relationship diagram.
-- System boundary or layered architecture diagram.
-- Core decision flow or sequence diagram.
-- State machine for lifecycle objects.
-- Entity table with unique ID, owner, and source of truth.
-- Field table for core entities and P0 surfaces.
-- Operation table for P0 modules.
-- Permission matrix with data scope and notes.
-- Audit and notification rules.
-- Data/interface dependency table with consistency and fallback.
-- Acceptance criteria covering success, permission, validation, dependency failure, and audit.
+Prefer a target-native editable diagram where supported; use styled Mermaid when appropriate. The diagram must exist and be readable, rather than a placeholder. Avoid adding nodes, states, warnings, or tables merely to reach a count.
 
-## Thin PRD Anti-Patterns
+## Final Review Gates
 
-These are signals that the output is still too shallow:
-
-- It says "main entities and relationships are as follows" but no diagram follows.
-- It defines concepts but never shows cardinality, source of truth, or lifecycle.
-- It lists modules as generic capability names without fields and operation rules.
-- It skips user stories or reduces scenarios to a short role list.
-- It uses checkmarks for permissions but does not define data scope, ownership, disabled states, and audit.
-- It skips the permission matrix entirely or hides permissions inside module prose.
-- It explains a key switch or high-risk action but lacks state machine, execution path, conflict behavior, and rollback.
-- It has phases but no acceptance criteria.
-- It has generic prose that could apply to many products after replacing nouns.
-- It ends with a short "delivery features", "next steps", or "summary" block without the detailed PRD sections.
-- It claims a PRD has been created but the actual response or target document only contains condensed decisions and high-level bullets.
-
-## Final Self-Review
-
-Before finalizing, scan the PRD and mark each item as pass/fail:
-
-| Gate | Pass / Fail | Fix If Failed |
-| --- | --- | --- |
-| Demand is reflected from first principles |  | Add user request, surface symptom, root problem, challenged assumptions, alternatives, chosen conclusion |
-| Problem is reframed with root cause and impact |  | Add current process, root cause, impact, scope |
-| Concepts and relationships are diagrammed |  | Add concept relationship diagram and entity table |
-| User stories and usage scenarios are explicit |  | Add role-action-value-acceptance stories and happy/exception/permission/recovery scenarios |
-| Core rules are deterministic |  | Add decision, validation, conflict, and fallback rules |
-| P0 modules are implementable |  | Add fields, operations, state constraints, errors, audit |
-| Permissions are implementable |  | Add role x operation x data scope x approval x disabled state x audit matrix |
-| Dependencies are explicit |  | Add system boundary and interface table |
-| Acceptance is testable |  | Add scenario-based acceptance rows |
+| Gate | Evidence | Repair If Missing |
+|---|---|---|
+| Requested scope preserved | Current decisions and withdrawn scope checked | Reconcile latest context before editing |
+| Real work modeled | Role, cadence/scale, pain, outcome, source | Separate actual needs from review instructions |
+| Objects and effects coherent | Model, ownership, stages, state truth | Fix affected fields and actions across surfaces |
+| Data traceable | Population, unit, time/version, source, formula, arithmetic | Define canonical metrics and complete representative data |
+| Modules usable | Decision, groups, closed action, permission, return/recovery | Fill behavior gaps rather than adding decorative pages |
+| Batch throughput fits | Full-batch validation and exact execution set | Redesign from workload instead of multiplying single forms |
+| Delivery concrete | Capability nodes, dates/basis, dependency, exit signal | Split broad bars and expose parallel work |
+| Expression readable | Positive product semantics, stable terms and formatting | Rewrite long clauses and prompt-like rules |
+| Acceptance testable | Observable scenario outcomes and data consistency | Add domain-specific checks |
+| Artifact verified | Readback and rendered evidence for visual changes | Verify target and report limitations accurately |

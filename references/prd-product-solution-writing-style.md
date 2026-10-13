@@ -23,10 +23,10 @@ Treat this style as an expression and completeness contract, not as a product-di
 - Then express the stable solution through the page/module writing structure in this reference.
 - Do not let the page-based format reverse the reasoning order or turn product design into feature stitching.
 - Do not expose the demand, brief, first-principles reasoning, reviewer commentary, implementation notes, or design explanation inside user-facing page copy.
-- If a business fact is unknown, write `待确认` and name the missing decision or source. Do not invent it.
-- Treat a plausible product recommendation as a proposal, not a confirmed fact. Label it `建议方案` and keep the unresolved decision visible.
-- Do not infer defaults, enums, permissions, data sources, state transitions, post-action results, or error behavior merely because the template contains those slots.
-- When page-copy design is in scope, propose missing labels, placeholders, prompts, and error messages as `建议文案`; do not present newly written wording as source-confirmed copy.
+- Distinguish confirmed facts, proposed design, and unresolved business decisions. Put material missing decisions in a consolidated table with evidence, impact, owner, and next step; reference them where they affect the solution.
+- Write authorized routine layout and copy directly as the proposed solution. State proposal status at the relevant solution level rather than prefixing every field with `建议方案` or every string with `建议文案`. User-facing pages show the actual copy.
+- Preserve uncertainty about real defaults, enums, permissions, sources, transitions, and effects. A template slot is not evidence of a business fact.
+- Read `prd-writing-lessons.md` for source classification, product semantics, data/batch contracts, and native-document maintenance.
 - If the user explicitly requests another structure, preserve the completeness rules while adapting the presentation.
 
 ## 2. Core Writing Formula
@@ -92,7 +92,7 @@ For each page or function module:
    - Who uses the page.
    - What decision or task it supports.
    - What it owns.
-   - What it deliberately does not own.
+   - Which adjacent module or system handles related responsibilities when ambiguity exists.
 2. Split the page into visible regions.
 3. Expand each region by field, action, or state.
 4. Extract complex logic into a diagram or rule table.
@@ -124,14 +124,14 @@ Start with direct sentences such as:
 - `展示……`
 - `帮助……判断……`
 - `解决「……」的问题`
-- `只承载……，不理解 / 不承担……`
+Write responsibility and action in positive business language:
 
-Write explicit responsibility boundaries when drift is likely:
+- `列表用于查找和选择计划，操作列直接进入该计划的调整。`
+- `影响预览展示拟执行后的变化；实际结果按执行回执更新。`
+- `根据配置生成 DAG，运行记录展示节点结果。`
+- `消息卡片负责提醒，任务中心负责协作，源系统提供真实状态。`
 
-- `列表只做筛选和入口，不承载完整业务逻辑。`
-- `影响预览不等同于最终执行结果。`
-- `DAG 是结果，不是输入方式。`
-- `消息卡片负责提醒，任务中心负责协作，源系统负责真实状态。`
+Keep an explicit exclusion when it determines scope, permission, or risk. Avoid repeating reviewer instructions such as `不展示、不直接、不承担` as the main product specification.
 
 ## 4. Atomic Specification Rules
 
@@ -159,14 +159,13 @@ For each important field, action, state, card, metric, filter, or table column, 
 - 文案
 - 异常
 
-Do not mechanically write every label for every object. Include the labels needed to remove implementation ambiguity.
+Do not mechanically write every label for every object. Include the labels needed to remove implementation ambiguity. Keep each native list item focused on one responsibility. For prototype-to-PRD sync and dense rule repair, apply the regrouping and single-source guidance in `prd-writing-lessons.md` sections 2 and 8 before editing blocks.
 
-When a required label is not grounded in the source:
+When a required business fact is not grounded in the source, record the missing decision and its effect in the decision table. For example: `新建后的状态及可执行动作：由对象负责人确认，影响提交入口`.
 
-- Write `待确认：新建后的默认状态` rather than assuming `未启用`.
-- Write `待确认：状态枚举由服务端接口确定` rather than inventing a complete state list.
-- Write `建议方案：接口失败时保留输入并提供原地重试` when proposing a recoverability pattern not yet confirmed.
-- Write `建议文案：「请输入规则名称」` when the page needs copy but the source does not provide the exact string.
+When routine design is authorized, write the reviewable proposal directly: `失败时保留输入，展示原因并提供原地重试` or `输入框提示「请输入规则名称」`. This describes proposed behavior without claiming it is already implemented or source-confirmed.
+
+Use complete, consistent representative data for normal examples. Document real empty/error states separately, using established semantics; distinguish missing sample values from genuinely unknown business facts.
 
 Use this default order:
 
@@ -208,16 +207,22 @@ For a field, answer as relevant:
 Write a complete action chain:
 
 ```markdown
-保存并预览影响
+保存安排
 - 展示条件：当前用户有编辑权限
-- 前置条件：基础信息和规则配置校验通过
-- 点击：进入「保存 - 影响预览」
-- 携带上下文：当前对象 ID、筛选范围和配置版本
-- 校验：存在阻断项时不可提交；警告项允许确认后继续
-- 成功结果：保存配置，并创建后台变更任务
-- 页面反馈：提示「保存成功」，进入结果页或返回列表
-- 异常：提交中按钮置灰；失败时保留用户输入并支持重试
-- 审计：记录操作人、操作时间和变更前后值
+- 前置条件：安排数量与对象版本校验通过
+- 点击：保存该对象的拟执行安排
+- 携带上下文：对象 ID、当前版本和安排数量
+- 成功结果：更新安排版本与预计影响，实际执行结果仍按回执更新
+- 页面反馈：提示「已保存」，返回原列表并保留筛选条件
+- 异常：提交中禁用按钮；失败保留输入并支持重试
+- 审计：记录操作人、时间和变更前后值
+
+确认执行
+- 前置条件：预览已完成，执行范围、权限和最新版本校验通过
+- 点击：提交预览中的执行对象及数量，按幂等标识创建请求
+- 成功结果：记录请求编号与受理状态；实际执行结果按回执更新
+- 页面反馈：提示「请求已提交」，返回任务所在列表并刷新相关对象
+- 异常：受理结果未知时先查询请求状态，再决定重试
 ```
 
 Cover as relevant:
@@ -240,7 +245,7 @@ Do not stop at `点击后打开弹窗`.
 - 页面目的：帮助项目经理快速找到需要优先处理的交付项目
 - 搜索范围：项目名称、交付对象
 - 默认排序：按当前动作优先级和更新时间倒序
-- 批量操作：勾选行后出现；提交前二次确认
+- 批量操作：选择范围后展示影响汇总；按实际后果决定是否单独确认，预览已满足最终决定时直接提交
 
 项目名称
 - 展示：项目创建时填写的名称
@@ -265,7 +270,7 @@ Define:
 - Search trigger and whether it filters the full dataset.
 - Filter values and source.
 - Default sort.
-- Batch-operation trigger and confirmation.
+- Batch input/selection, actual volume, whole-batch validation, execution scope across pagination, correction, submission, and result/return path. Confirmation depends on actual consequence.
 - Column value, source, format, filter, sort, truncation, Tooltip, copy, and click destination.
 - Status-dependent actions.
 - Empty, loading, error, no-permission, and stale-data behavior.
@@ -332,27 +337,17 @@ For complex status, define:
 
 ### 5.6 High-Risk Action
 
-Use for delete, overwrite, publish, apply, sync, return-to-work, block, exemption, bulk action, or irreversible change.
+Classify risk by scope, reversibility, overwrite, and financial/permission/runtime consequences. Action names such as bulk, save, or sync do not determine risk on their own.
 
 ```markdown
-⚠️ 约束
-- 提交前必须展示影响预览
-- 存在关联对象时，不允许直接删除
-- 无关联对象与有关联对象进入不同确认逻辑
+执行影响
+- 展示确切对象、范围、变更前后值和关联对象处理方式
+- 有策略选择时，说明每种选择的结果
 - 执行前重新校验权限和最新状态
-- 成功后记录审计信息
-- 失败时展示原因，并提供重试或恢复入口
+- 成功记录结果与审计；失败保留原因及恢复入口
 ```
 
-Cover this chain:
-
-1. Precheck.
-2. Impact preview.
-3. User decision and second confirmation.
-4. Permission and latest-state validation.
-5. Idempotent execution.
-6. Result record and notification.
-7. Retry, rollback, or recovery.
+Cover the relevant chain: precheck -> impact -> necessary user choice -> final validation -> idempotent execution -> result/audit -> recovery. The existing preview may already be the final submission surface. Add a separate confirmation only for an additional decision or material consequence; add a result page only for meaningful result review, partial success, or long asynchronous work.
 
 ## 6. Flow, State, And Data Rules
 
@@ -396,7 +391,9 @@ Clarify:
 - Realtime, scheduled, or asynchronous update.
 - Snapshot/version.
 - Whether multiple pages read one canonical result.
-- Missing, delayed, stale, or failed-source behavior.
+- Actual empty, delayed, stale, or failed-source behavior where established or proposed for the product; keep source gaps in the decision table and tooling failures in the work log.
+
+Verify source-field definitions and variable mappings before renaming a formula. An undefined denominator remains an explicit missing decision; nearby nouns and reference examples are not evidence of its meaning. For business readers, use named-field formulas before engineering symbols. Define numerator/denominator, population, resource/unit, time/version, deduplication, and precision beside the formula. Distinguish comparison population, visible subset, and modification set; pagination and selection must follow an explicit scope contract. Check pre/post values against the same baseline and use full precision for thresholds.
 
 ### 6.3 Responsibility And Source Boundaries
 
@@ -414,7 +411,7 @@ Place conflict handling at the action that creates or discovers the conflict. Do
 
 ### 7.1 Sentence Style
 
-Use short sentences and verb-led bullets:
+Read the user's current writing sample first. Use short business-readable sentences, with one main rule per sentence and its dependencies intact. Prefer responsibility, object, action, and outcome over repeated negative prompt rules. Use short sentences and verb-led bullets:
 
 - 展示
 - 支持
@@ -437,7 +434,7 @@ Prefer:
 - `点击进入详情页`
 - `默认按更新时间倒序排列`
 - `未选择对象类型时，模板区域置灰`
-- `提交后创建后台变更任务`
+- `提交后记录请求编号；执行结果按回执更新`
 
 Avoid:
 
@@ -453,17 +450,13 @@ Avoid:
 
 ### 7.3 Emphasis
 
-Use emphasis sparingly:
+Preserve the destination's established font, heading hierarchy, indentation, and semantic colors. Keep ordinary prose and data at normal weight; emphasize short action labels, important thresholds, risks, and conclusions locally. Do not bold whole paragraphs or color every quoted noun. Preserve native links and unrelated rich-text runs during revision.
 
-- `🎯 定位`: user, decision, and core page purpose.
-- `⚠️ 约束 / 原则 / 产品边界`: non-negotiable rule or high-risk consequence.
-- `ℹ️`: core mechanism.
-- `❗`: counterintuitive but confirmed conclusion.
-- `待确认`: unresolved fact, owner, or data source.
+Normalize Chinese/English, number/unit, punctuation, and date spacing according to the document's convention. Keep IDs, code identifiers, paths, and domains unchanged.
 
-Use `🤔` and `TODO` only in an explicitly WIP document. In a reviewable final PRD, convert them into a decision or a consolidated `待确认项`.
+Optional callouts follow the existing style: `🎯` for purpose, `⚠️` for material constraints, `ℹ️` for mechanisms, and `❗` for a confirmed counterintuitive conclusion. Use them only when they improve scanning. Put unresolved business decisions in a consolidated decision table rather than decorating every field.
 
-Do not turn ordinary fields into callouts. Keep one or two high-value callouts per module when possible.
+Keep action guidance, static evidence, comparison, and history visually distinct. Status belongs with its object; supporting links belong next to their data. A rendered review checks alignment, whitespace, weight, color, and clipping.
 
 ## 8. WIP Cleanup
 
@@ -476,7 +469,7 @@ Before delivering a reviewable PRD, remove:
 - Misspellings, mixed capitalization, and terminology drift.
 - Screenshot-only logic without written rules.
 - Page copy that exposes PRD rationale, reviewer notes, fallback implementation details, or hidden system mechanisms.
-- Happy-path-only descriptions that omit no-permission, empty, failure, retry, and duplicate-submit behavior.
+- Happy-path-only descriptions that omit relevant permission, empty, failure, retry, and duplicate-submit rules. Design justified exceptions separately; do not populate normal examples with invented failures or missing-value placeholders.
 
 Preserve change history only when the user explicitly asks for a WIP or revision log. Keep it outside the canonical product-solution body when possible.
 
@@ -613,7 +606,7 @@ Preserve change history only when the user explicitly asks for a WIP or revision
 - [ ] Define carried object, filters, scope, or version.
 - [ ] Define success feedback and resulting state/data/page changes.
 - [ ] Define failure, retry, idempotency, and audit.
-- [ ] Add impact preview and confirmation for high-risk operations.
+- [ ] Show exact impact and necessary choices for materially risky operations; confirmation adds a distinct decision rather than repeating the preview.
 
 ### States
 
@@ -626,10 +619,12 @@ Preserve change history only when the user explicitly asks for a WIP or revision
 
 - [ ] Define source, formula, time window, deduplication, and update timing.
 - [ ] Cover empty, loading, error, no-permission, concurrency, and duplicate submit.
-- [ ] Mark unknown facts as `待确认`.
-- [ ] Confirm that no default, enum, permission, data source, transition, or result was invented to fill a template slot.
-- [ ] Mark optional product recommendations as `建议方案`, not as confirmed business rules.
-- [ ] Mark newly designed labels, placeholders, prompts, and error strings as `建议文案` when the source does not provide exact wording.
+- [ ] Consolidate material open business decisions with source, impact, owner, and next step.
+- [ ] Confirm that no default, enum, permission, source, transition, or result was invented to fill a slot.
+- [ ] Distinguish confirmed rules, proposed design, and verified implementation at the solution level.
+- [ ] Use actual page copy for authorized routine designs, with no process-label prefixes.
+- [ ] Check complete normal examples, quantity arithmetic, units, population, time/version, and precision.
+- [ ] Keep comparison, visible, and modification scopes distinct; full-batch validation matches execution scope.
 
 ### Expression
 
@@ -637,4 +632,6 @@ Preserve change history only when the user explicitly asks for a WIP or revision
 - [ ] Use noun phrases for headings.
 - [ ] Put exact button, prompt, and status copy in `「」`.
 - [ ] Remove WIP debris, duplicated wording, spelling errors, and term drift.
-- [ ] Keep emphasis sparse and meaningful.
+- [ ] Keep emphasis sparse and semantic; verify rich-text colors, font weight, spacing, links, and rendered layout.
+- [ ] Use positive product semantics and preserve real boundaries.
+- [ ] Propagate model/term changes to affected diagrams and prototypes; keep withdrawn scope out of the current solution.

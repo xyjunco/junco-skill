@@ -2,7 +2,7 @@
 
 Use diagrams to express concept relationships, system boundaries, flows, and rules. The goal is not decoration. A diagram should reduce ambiguity faster than prose.
 
-Use the expression priority: diagrams over tables, tables over prose.
+Use this reference when Mermaid is appropriate for the destination. Prefer target-native editable diagrams when requested or supported. Choose diagrams for relationships/flows, tables for precise repeated rules, charts for quantitative patterns, and concise prose for judgment.
 
 1. Use diagrams for relationships, ownership, system boundaries, layers, lifecycle, decisions, and flows.
 2. Use tables for fields, permissions, validations, rule rows, priorities, milestones, and acceptance criteria.
@@ -65,11 +65,11 @@ graph LR
 
 Mermaid source is not the same as a rendered preview. Many model tools preserve the fenced code block but do not render it inline. The PRD should remain reviewable in both cases.
 
-- Always use a fenced code block with the language tag `mermaid`.
+- When delivering Mermaid source, use a fenced block with the language tag `mermaid`. When publishing a rendered or native figure, keep source separately if needed; avoid forcing raw code into the document body.
 - Do not state that a visual preview has been generated unless the current environment actually renders, embeds, or attaches one.
-- When preview support is unknown, add `Diagram Quick Read` after each non-trivial diagram.
+- When rendering is unavailable, include a short reading guide after non-trivial source-only diagrams. When the document contains a readable rendered/native figure, retain only explanatory text that adds value.
 - Keep `Diagram Quick Read` short: 3-5 bullets covering diagram purpose, main path, critical branch/exception, and ownership or source-of-truth boundary.
-- If a sequence diagram is used, `Diagram Quick Read` is required because sequence diagrams usually have limited styling and are harder to scan as source.
+- Source-only sequence diagrams benefit from a reading guide. A rendered sequence diagram does not automatically require a second explanation of the same path.
 - If rendering tools are available and the user explicitly needs a visual preview, generate SVG/PNG from the Mermaid source and include it with the source code.
 - Prefer renderer-stable syntax for cross-tool documents: `graph`, `flowchart`, `sequenceDiagram`, `stateDiagram-v2`, and `erDiagram`. Avoid experimental Mermaid syntax, raw HTML labels, emoji-only nodes, and complex init directives.
 
@@ -86,8 +86,8 @@ Diagram Quick Read:
 ## Mermaid Rules
 
 - Prefer one clear diagram per question. Do not put every detail into one huge diagram.
-- Avoid toy diagrams. A core PRD diagram should usually contain 8-14 meaningful nodes and cover at least three semantic classes such as actor, core, data, control, runtime, and risk.
-- Keep diagrams concise. Split into multiple diagrams when relationships, flow, and state compete for space, or when a graph grows beyond roughly 16 meaningful nodes.
+- Include the relevant objects, cardinality, ownership, sources, or control points needed to answer the diagram's question. Node count and number of color classes are not completeness targets; omit unrelated elements.
+- Split a diagram when different questions compete for space, labels become unreadable, or branches are hard to follow; judge the actual rendered result rather than a fixed node limit.
 - Keep the visual layout tidy: use one dominant direction, group related nodes with `subgraph`, avoid long crossing arrows, and keep labels similar in length.
 - Keep node labels business-readable. Use product nouns, not implementation-only variable names unless the PRD is API-facing.
 - Quote labels with spaces or punctuation: `A["Business Object"]`.
@@ -99,7 +99,7 @@ Diagram Quick Read:
 - Add tables after diagrams for fields, permissions, validations, and exceptions.
 - For `graph`, `flowchart`, and `stateDiagram`, always add `classDef` and `class` statements from the web-safe palette. Do not output default monochrome diagrams.
 - For `sequenceDiagram` and `erDiagram`, use clear participant/entity grouping; if renderer styling is limited, pair the sequence or ERD with a colored concept, boundary, or decision diagram when color semantics matter.
-- Never leave a diagram placeholder. If the PRD says "relationship is shown below", include the Mermaid diagram immediately below it.
+- Never leave a diagram placeholder. If the PRD says "relationship is shown below", include the actual readable figure or suitable Mermaid diagram immediately below it.
 
 ## Pattern 1: Concept Relationship Diagram
 

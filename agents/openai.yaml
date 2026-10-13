@@ -1,4 +1,4 @@
 interface:
   display_name: "Junco"
-  short_description: "First-principles product reflection, domain modeling, and PRD design"
-  default_prompt: "Use $junco to reflect on a product request from first principles, model the domain, and deliver the full PRD body inline. Use the mandatory full-PRD section set, including Usage Scenarios And User Stories and Permissions, Data Scope, And Role Matrix. Do not replace the PRD with a summary unless I explicitly ask for a brief."
+  short_description: "First-principles product modeling and PRD writing"
+  default_prompt: "Use $junco to model the real problem and write or revise a clear, reviewable PRD in my established style, preserving the requested scope, confirmed decisions, and document format."

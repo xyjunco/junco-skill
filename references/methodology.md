@@ -16,11 +16,11 @@ For medium or complex platform requirements, diagram before writing long prose:
 
 Before designing, calibrate depth:
 
-- Full product design: default for complex platform, system, workflow, governance, and operations products; deliver as a PRD artifact when a document is needed.
+- Full product design: default for a new complex product proposal; deliver a reviewable PRD when requested. Existing-document revisions preserve the authorized scope and useful outline.
 - Outline: only when the user explicitly asks for a brief.
 - Review: lead with gaps, risks, and concrete fixes.
 
-If context is incomplete, do not shrink the PRD into generic bullets. Write assumptions, open questions, and TODOs, then still complete the model, flow, rules, and acceptance criteria with the best defensible design.
+If context is incomplete, keep confirmed facts, proposed design, and necessary open decisions distinguishable. Consolidate business gaps with impact, owner, and next step. Complete the defensible model and rules without inventing facts or attaching a process label to every page string.
 
 ## Full Method From "Make A Good Product"
 
@@ -101,7 +101,7 @@ Analyze:
 - What information is needed before action?
 - What action feels natural after each state?
 - What actions are high-frequency and must be prominent?
-- What actions are risky and must be slowed down?
+- Which actions have material consequences that need impact review or a user choice?
 - Which existing mental models should be preserved?
 - Which parts of the current path feel "self-evident", and which parts require explanation or training?
 - Which needs are functional, and which are psychological: certainty, control, trust, safety, recognition, curiosity, or reduced anxiety?
@@ -160,7 +160,7 @@ After the model is identified, draw at least one concept relationship diagram. T
 - Which system is the source of truth?
 - Which parts are management-side concepts and which are runtime concepts?
 
-Use `references/diagram-patterns.md` for Mermaid templates.
+Choose the destination's native diagram form where suitable; use `references/diagram-patterns.md` for Mermaid when appropriate.
 
 For complex platform or multi-system products, also use `references/platform-patterns.md` for common modeling patterns.
 
@@ -276,7 +276,7 @@ Rules to check:
 - Permission matrix
 - Status machine
 - Required fields and validation
-- High-risk action confirmation
+- Impact review and necessary confirmation for materially risky consequences
 - Diff, preview, version, rollback, and release notes when changes are high risk
 - Audit trail: who, when, why, before, after
 - Notifications: trigger, audience, frequency, content, action links
@@ -305,8 +305,9 @@ Priority guidance:
 
 Milestone guidance:
 
-- M1: concepts, model, boundary, base chain.
-- M2: list/detail, basic operations, audit.
-- M3: new data onboarding, permission, admission, system integration.
-- M4: automation, alerting, governance.
-- M5: operational loop, forecasting, optimization.
+- Identify independent work streams and real interface/data/execution dependencies.
+- Split streams into verifiable capability increments: contract readiness, first usable path, core/batch execution, result/recovery, and acceptance as applicable.
+- Each node has a date/window, usable deliverable, acceptance signal, actual prerequisite, owner, and schedule basis.
+- Schedule independent work in parallel; dependencies constrain particular integration or acceptance nodes.
+- Align Roadmap lanes and date-scaled bars with the milestone table. Dates without staffing estimates are proposals.
+- Keep the number of streams/nodes and priority stages specific to the project; avoid identical large date bars masquerading as detail.

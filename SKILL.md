@@ -1,27 +1,35 @@
 ---
 name: junco
-description: Product design methodology based on Junco's "make a good product" approach. Use when an AI assistant or product practitioner needs to turn raw needs, stakeholder requests, operational pain points, platform/system ideas, or vague feature asks into high-quality product design through first-principles demand reflection, problem framing, user path analysis, concept definition, domain modeling, Mermaid concept relationship diagrams, system boundary diagrams, process flows, interaction rules, milestones, and acceptance criteria. The final delivery artifact is usually a reviewable PRD, but the skill's purpose is product design quality rather than template completion. Also use when reviewing or improving product plans and PRDs for clarity, model quality, diagrams, boundaries, permissions, risks, depth, delivery readiness, or when drafting and rewriting Chinese PRD 产品方案 and detailed page/module specifications in the user's established house style.
+description: First-principles product design, domain modeling, and PRD writing. Use to turn raw needs, operational pain, platform ideas, or product feedback into clear problems, user paths, concepts, ownership, rules, page content, flows, milestones, and acceptance criteria. Also use to review or revise existing PRDs, write Chinese 产品方案 in the user's established style, clarify metrics and batch workflows, or maintain product logic across documents and prototypes. Preserve the requested scope and distinguish confirmed facts, proposed design, open decisions, and verified delivery.
 ---
 
 # Junco
 
 ## Overview
 
-Use this skill to turn a raw demand into rigorous product design. Treat product work as: solving a real problem with minimal necessary cost, matching the user's thinking path, abstracting a clean model, defining the operating rules of the product world, and making the solution tangible through rules, flows, pages, and delivery plans. The final artifact may be a PRD, but the work is product design, not template completion.
+Solve a real problem with the minimum sufficient cost. Recover the user's thinking path, abstract a clean model, define the product's operating rules, then express them through flows, page content, and a reviewable PRD. The purpose is product design quality rather than filling a template.
 
-When receiving a user demand, do not assume the user's stated path is the right path. Treat it as a surface signal. First ask what first-principles problem, invariant constraint, user motivation, or system model issue is hidden behind it, then decide whether the requested implementation is still the simplest sufficient answer.
+Use the user's language. Read the current project context, latest decisions, source PRD, and requested destination before drafting. Treat an implementation request as a possible solution while preserving business boundaries that the user has already confirmed.
 
-Default to the user's language unless the user asks otherwise.
+For Chinese `产品方案`, page/module specifications, or PRD rewrites in the user's style, read `references/prd-product-solution-writing-style.md` completely. For writing, reviewing, or revising a PRD, also read `references/prd-writing-lessons.md`. These govern expression after the sequence problem -> model -> rules -> pages.
 
-When the task creates, rewrites, or reviews a PRD `产品方案`, `产品方案与系统架构`, or detailed page/module specification, read `references/prd-product-solution-writing-style.md` completely before drafting that section. Treat it as the user's house-style output contract. It governs how an already-derived product model is expressed; it does not replace first-principles reflection, concept modeling, boundary definition, or rule design. Preserve the sequence problem -> model -> rules -> pages, then apply the page/module writing style.
+Choose the form by the reader's task: relationships and flow need diagrams; repeated rules and executable items need tables; trends and distributions need charts; rationale needs concise prose. An existing document's structure, the user's explicit format, and native capabilities of the destination take priority.
 
-Use the expression priority: diagram before table, table before prose. Prefer Mermaid diagrams for relationships, flows, boundaries, states, and decisions; use tables for fields, permissions, rules, and acceptance criteria; use prose for rationale, tradeoffs, context, and exceptions.
+Use target-native editable diagrams when supported. Use Mermaid when it suits the host; load `references/diagram-patterns.md` for its style conventions. Verify actual rendering before claiming a preview. If rendering is unavailable, supply valid source with a short reading guide; publish rendered assets or native figures when the destination supports them. Node count is not a quality target: include the objects and control points needed to answer the diagram's question.
 
-Mermaid quality is part of PRD quality. Core diagrams should not be toy diagrams. They should expose enough domain structure to support review: actors, core objects, ownership, rules/control points, data/source-of-truth, lifecycle or exception handling where relevant. For `graph`, `flowchart`, and `stateDiagram` diagrams, use web-safe `classDef` and `class` statements from `references/diagram-patterns.md`; do not output default monochrome diagrams.
+## PRD Writing And Revision Standards
 
-Rendering compatibility is also part of PRD quality. Some host tools show Mermaid source code without rendering a preview. Never claim that a rendered preview exists unless the current tool actually renders or embeds one. When the target tool may not render Mermaid, still output a valid fenced `mermaid` code block, then add a short `Diagram Quick Read` after each non-trivial diagram: what the diagram answers, the main path, key branches or exceptions, and ownership/source-of-truth boundaries. If image or file-rendering tools are available and the user asks for a visual preview, generate and attach a rendered SVG/PNG while keeping the Mermaid source.
+- **Source and role:** distinguish real work needs from review feedback, UI choices, writing instructions, and assistant proposals. Record role, task, frequency, scale, pain, and desired outcome; identify synthesized needs rather than presenting them as interview quotes.
+- **Product semantics:** write what the object means, what the user does, and how the system responds. Turn feedback into positive responsibility and action rules. Keep necessary exclusions, permissions, and risk constraints; avoid copying prompt rules into the PRD or product UI.
+- **Evidence and uncertainty:** keep confirmed facts, proposed design, and unresolved business decisions distinguishable. Put blocking decisions in one decision table with owner, impact, and next step. Authorized routine layout and copy can be written directly as the proposed solution, without attaching `建议文案` to every control. Product pages use actual user-facing copy.
+- **Model and data:** distinguish planned, saved, submitted, executed, acknowledged, and current-state quantities. Define field source, scope, unit, time, version, and formula. Comparison population, visible subset, and modification set are separate contracts.
+- **Normal examples:** provide complete, internally consistent representative data. Identify sourced versus illustrative values in the review context. Genuine source gaps remain open decisions; confirmed error/empty states have their own designs. A tool failure is not a business state.
+- **Scale and action:** choose the workflow from real volume and cadence. Define batch input, full-batch validation, correction, submission scope, idempotency, result, and return path. Add a page or confirmation only when it serves a distinct decision or material consequence.
+- **Information and visual meaning:** separate immediate action guidance from static evidence and history. Group values by object and meaning, align before/after comparisons, place status with its object, and use semantic emphasis. Visual simplification retains the original information needed for decisions.
+- **Delivery and revision:** propagate changes to affected prose, tables, diagrams, prototypes, permissions, examples, and acceptance rules. Preserve withdrawn scope. Milestones are dated, verifiable capability increments with real dependencies and parallel work where possible.
+- **Readable revision:** prototype sync starts with regrouping changed rules before editing old bullets. Give each item one responsibility; formulas and shared scope have clear homes. Use editable native blocks and review the changed body at normal width and zoom, alongside screenshot consistency. See `references/prd-writing-lessons.md` for density repair and native maintenance.
 
-Default to full product-design mode for complex platform, system, workflow, governance, or operations products. Do not produce a lightweight outline unless the user explicitly asks for a brief. If source information is thin, proceed with explicit assumptions and open questions, but still design the model, rules, states, and acceptance path, then deliver it in PRD form when a document is needed.
+Project-specific objects, role counts, thresholds, color values, terminology, and batch sizes belong to that project's contract. The worked examples in the references illustrate methods; they are not global defaults.
 
 ## Core Principle
 
@@ -87,7 +95,7 @@ Use the full method from "make a good product", not a narrow keyword checklist.
 
 8. Express logic efficiently.
    - Product work is not "drawing screens". A prototype, diagram, table, or prose is only good if it lets each role know what should happen in each situation.
-   - Use diagram > table > prose. Avoid dumping unprocessed information or writing long text when a relationship diagram or rule table carries the logic more clearly.
+   - Choose the representation that carries the logic: diagrams for relationships and flows, tables for repeated rules and exact items, charts for quantitative patterns, and concise prose for judgment. User-requested forms and the destination take precedence over a blanket hierarchy.
 
 ## First-Principles Demand Reflection
 
@@ -120,7 +128,7 @@ Run this reflection before designing a solution, delivering a PRD, or writing a 
    - Use radical simplicity as a design pressure: reduce accidental complexity, but keep essential rules, boundaries, and risk controls explicit.
 
 5. Record the reflection.
-   - For PRDs, include a short demand reflection before goals: user request, surface symptom, first-principles problem, challenged assumptions, alternative solution paths, and chosen conclusion.
+   - For a new full PRD, include concise design reasoning in the appropriate context section: request, symptom, root problem, challenged assumptions, alternatives, and chosen conclusion. In a scoped revision, keep this reasoning in the working analysis unless it changes the requested section. Preserve already-confirmed business boundaries.
    - For reviews, call out when the PRD follows the user's requested path too literally and misses a simpler or more general solution.
    - If the user's path is still correct, explain why it is the simplest sufficient path after reflection.
 
@@ -185,7 +193,7 @@ Use this method when iterative product implementation reveals repeated UX, wordi
 Use this audit before designing pages, flows, confirmations, sync jobs, approvals, or exception handling. The goal is to prevent product logic from drifting into the wrong surface: a lightweight save action should not become a heavy conflict-resolution wizard; a runtime synchronization action should not hide material overwrite choices; a user page should not expose PRD reasoning or implementation notes.
 
 1. Name the product objects and their owners.
-   - For every core noun, define what it owns, what it does not own, and its source of truth.
+   - For every core noun, define its responsibility, source of truth, and relationship to adjacent objects. State an exclusion when it resolves an actual ambiguity.
    - Do not let two objects claim the same responsibility unless the relationship is explicit, such as policy -> applied instance, template -> generated item, or scope -> matched objects.
    - If a field or conflict depends on another object, place the decision where that object is changed or materialized.
 
@@ -194,7 +202,7 @@ Use this audit before designing pages, flows, confirmations, sync jobs, approval
    - Preview: calculates impact and exposes uncertainty before commitment; it should not secretly mutate state.
    - Apply/sync/publish/submit: materializes configuration into downstream objects or runtime behavior; this is where overwrite, skip, conflict, missing data, and retry decisions usually belong.
    - Runtime job: reacts to ongoing data changes after configuration is saved; users usually need history, errors, retry, and audit rather than a blocking wizard every time.
-   - Delete/archive: changes ownership or lifecycle; if dependent objects exist, the page must ask the user to choose the dependent-object handling policy.
+   - Delete/archive: changes ownership or lifecycle; define the handling of dependent objects. Ask for a choice when the product genuinely offers alternatives; otherwise show the established policy and its effect.
 
 3. Put conflict handling at the decision point that creates the conflict.
    - A conflict belongs to the action that changes the contested target.
@@ -215,7 +223,7 @@ Use this audit before designing pages, flows, confirmations, sync jobs, approval
 6. Match flow weight to risk.
    - Low-risk configuration save: lightweight validation, concise impact preview, simple success/failure feedback, and history link if asynchronous effects exist.
    - Medium-risk materialization: preview affected targets, show skipped/changed/new counts, ask for strategy where user choice matters, then submit.
-   - High-risk overwrite/delete/publish: require exact target identity, consequence, reason when needed, audit, notification, and recovery path.
+   - Materially risky operations: expose exact target identity, consequence, required user choice, audit, and recovery. Judge risk by effect and reversibility, rather than names such as bulk, save, or sync. A preview that already supports the final decision can be the submission surface.
    - Do not add steps merely to explain system behavior. Add steps only when the user must make or verify a decision.
 
 7. Define every page by the decision it supports.
@@ -230,194 +238,78 @@ Use this audit before designing pages, flows, confirmations, sync jobs, approval
 
 ## Workflow
 
-Follow this sequence when helping with requirements or PRDs.
+0. **Calibrate scope and evidence.** Determine whether the task is a new full PRD, a scoped section update, a review, a brief, or page-content design. Read the current document and sample style. Identify confirmed decisions, active proposals, withdrawn scope, and missing facts. Ask only for gaps that block dependent work; continue independent modeling. Use `references/prd-depth-rubric.md` for a full PRD or readiness review.
 
-0. Calibrate output depth and context.
-   - Decide whether the user needs full product design, review, outline, or brainstorming. If they ask for a PRD, assume the PRD should contain full product design unless they explicitly ask for a brief.
-   - Identify missing context early. Ask only when the gap blocks safe modeling; otherwise state assumptions and open questions in the PRD.
-   - Use `references/prd-depth-rubric.md` before drafting or reviewing a shareable PRD.
-   - If the deliverable includes a Chinese `产品方案`, detailed module design, page specification, or a request to rewrite in the user's PRD style, read `references/prd-product-solution-writing-style.md` completely before drafting. Apply it as a mandatory writing and completeness gate unless the user explicitly requests a different format.
-   - Treat "product design", "product proposal", "solution", "PRD", and "design this requirement" as full-product-design requests by default. Do not downgrade them into a short answer, executive summary, or phase outline unless the user explicitly asks for a brief.
+1. **Reframe the problem.** Identify requester, context, workaround, cause, frequency, scale, cost, and success signal. Test a simpler model, rule, data, or process solution when relevant. State goals, scope, and adjacent responsibility. Keep discovery reasoning in its own section or working notes.
 
-1. Reframe the request as a problem.
-   - Identify the requester, context, current workaround, pain, impact, and root cause.
-   - Treat the user's requested feature as a possible solution, not the requirement itself.
-   - Apply first-principles reflection: distinguish visible symptom, real constraint, inherited assumption, and the smallest condition that must change.
-   - Challenge whether the user's proposed implementation path is necessary, or whether a simpler general rule, model, data, or process change solves the same problem.
-   - Write explicit goals and non-goals.
+2. **Capture the role's work.** Describe daily tasks, decisions, constraints, authority, and desired outcome. Separate these from reviewer preferences and interface prescriptions. If roles merge, reconcile responsibilities, data scopes, approvals, notifications, and stories.
 
-2. Capture user thinking paths.
-   - Identify roles, daily behavior, responsibilities, anxieties, incentives, and decision points.
-   - Preserve existing user mental models when they are valuable.
-   - Call out where current paths are confusing, risky, slow, or over-coupled.
+3. **Define concepts and ownership.** Build a glossary of core objects, relationships, source systems, units, lifecycle, and similar concepts. Separate business objects from underlying implementation or physical objects. For a model change, list affected surfaces before editing them.
 
-3. Define concepts before functions.
-   - Create a glossary for every core noun.
-   - Distinguish similar concepts and name source-of-truth systems.
-   - Avoid vague shorthand; clear definitions reduce downstream communication cost.
+4. **Build the model and rules.** Define IDs, cardinality, version/history, state truth, deterministic validation, conflict handling, and read/write ownership. Run the Product Logic Ownership Audit. Use `references/platform-patterns.md` for complex platform modeling.
 
-4. Build the domain model.
-   - Identify entities, fields, relationships, states, ownership, data sources, and lifecycle.
-   - Separate generic kernel concepts from scenario-specific extensions.
-   - Watch for model smells: bulk editing as a workaround, business-only fields in a generic core, unclear source of truth, over-reliance on priority to resolve conflicts.
-   - Draw concept relationship diagrams before detailed module design when the requirement has multiple concepts, systems, or ownership boundaries.
-   - For complex platform or multi-system products, use `references/platform-patterns.md` for common modeling patterns before writing modules.
-   - Run the Product Logic Ownership Audit before proposing pages: map each save, preview, apply, sync, runtime job, delete, and history surface to the object and lifecycle stage that owns it.
+5. **Derive scenarios and stories.** Use role x object x situation. Cover main work, justified exceptions, restricted permissions, and recovery. Connect each story to value and an observable acceptance signal; label inferred needs by source status.
 
-5. Derive user stories from role x model.
-   - Use roles and entities to enumerate concrete paths.
-   - Keep each story valuable, small enough to estimate, and testable.
-   - Tie each story to user value and acceptance criteria.
+6. **Plan architecture and dependencies.** Define reused and new capabilities, upstream/downstream contracts, and tradeoffs. Diagram only the relationships or sequences that need visual explanation. A business flow's sequence does not imply that development streams must be scheduled serially.
 
-6. Plan the product architecture.
-   - Define product positioning, system boundaries, upstream/downstream dependencies, reused capabilities, and new capabilities.
-   - Prefer layered designs for complex platforms: kernel, scenario layer, control plane, delivery/runtime layer.
-   - State solution tradeoffs and the chosen conclusion when multiple options exist.
-   - Compare at least one simpler or more universal alternative when the user proposes a concrete implementation path.
-   - Use Mermaid diagrams to express system boundaries, layered architecture, data flow, and core sequence flows.
-   - Before writing a diagram, decide its question and ensure it includes enough nodes and relationships to answer that question without becoming a generic placeholder.
+7. **Define page content and copy.** Before drawing, specify entry/context, supported decision, information groups, main action, secondary actions, completion, and return path. Define relevant field sources/units/defaults/validation, action effects, state-dependent operations, and error recovery. Design dashboards around decisions and batch flows around actual volume. Keep UI copy free of brief, PRD reasoning, and review annotations. Express the solution in the house style after the model is stable.
 
-7. Design tangible functions and interactions.
-   - For each module, define page purpose, entry, fields, operations, states, validation, permissions, feedback, and audit.
-   - For every P0 module, include list/detail/form fields, operation rules, disabled states, empty/error/no-permission states, audit, and acceptance.
-   - After the domain model and product rules are stable, express each page in the order page/function module -> one or two sentences of purpose and boundary -> visible regions -> fields/actions/states. Do not start the product reasoning from pages merely because the final writing format is page-based.
-   - For each important field, action, and state, select the relevant atomic labels from control, source, enum, default, required, format, constraint, linkage, trigger, click destination, result, permission, calculation, validation, and exception. Do not mechanically include irrelevant labels, but do not leave implementation-critical values implicit.
-   - Treat specification completion and business-fact completion as different tasks. Never invent a default, enum, state transition, data source, permission, or post-action result merely to make the specification look complete. If the source does not establish it, write `待确认` and name the missing decision; if proposing a design, label it `建议方案` instead of presenting it as confirmed. When page-copy design is in scope and the source does not provide exact wording, label the proposed string `建议文案`.
-   - Write buttons as complete action chains: visibility and prerequisites -> click destination or mutation -> carried context -> validation -> success feedback and state change -> failure/retry/audit behavior.
-   - Write lists as decision surfaces, not column inventories. Define search/filter scope, default sort, field source and display, truncation/Tooltip/copy behavior, click destination, status-dependent operations, and empty/loading/error/no-permission behavior.
-   - Extract complex multi-party flows, lifecycle transitions, asynchronous callbacks, and downstream impact into a flowchart, sequence diagram, state machine, or impact matrix instead of burying them in long prose.
-   - Before adding a new page, check whether an existing page already supports the same user decision; merge duplicate flows and update the canonical flow instead of preserving two versions.
-   - Place conflict handling, overwrite/ignore strategy, missing-data recovery, and retry at the action that creates or discovers the issue; avoid spreading the same exception across save, sync, preview, and history surfaces.
-   - Convert concrete UI issues into interaction principles before writing gates: clarify user information, action closure, user friendliness, ambiguity risk, and data-to-action fit.
-   - Apply "diagram > table > prose": use diagrams where relationships or flows matter, tables where attributes or rule rows matter, and prose only to explain conclusions.
-   - Keep Mermaid diagrams concise, visually tidy, and styled with the web-safe palette in `references/diagram-patterns.md`; for `graph`, `flowchart`, and `stateDiagram`, styling is required.
-   - If Mermaid preview support is unknown or absent, pair each important Mermaid diagram with `Diagram Quick Read` so reviewers can understand the diagram without relying on renderer support.
-   - Text should explain logic and rules, not repeat screenshots.
+8. **Complete delivery rules.** Add permission/data-scope matrix, audit, notifications, dependencies, consistency, and recovery where applicable. Split priorities by closure, risk, dependency, and cost. Break work streams into first usable capability, integration, recovery, single-stream acceptance, and shared rollout milestones as applicable; give deliverable, date/window, owner, dependency, and exit criterion. Dates without staffing estimates are proposed schedules.
 
-8. Complete rules and delivery.
-   - Add permissions, audit, notification, rollback, gray release, migration, exception handling, and high-risk confirmation rules where relevant.
-   - Split P0/P1/P2 by closure, risk, dependency, and cost.
-   - Define milestones and acceptance criteria.
+9. **Review and deliver.** Check terminology, data arithmetic, stages, scope, story coverage, module usability, visual organization, rich-text formatting, and milestones using `references/review-checklist.md`. When editing a remote document, use its relevant skill, patch the current native structure, preserve adjacent content/styles/links, and read back changes. For visual changes verify both structure and rendered evidence. Report what is actually verified.
+
+Junco completes requirement abstraction, page content, and copy. Proceed to visual page design or implementation only within the user's requested scope and applicable project workflow. When the project requires Product Design and Arco before Figma, follow those gates; Junco does not replace the destination skills.
 
 ## Reference Files
 
-Load these files only when needed:
-
-- `references/prd-product-solution-writing-style.md`: mandatory house style for Chinese PRD `产品方案`, detailed module/page specifications, and PRD rewrites requested in the user's style; includes structure, atomic-spec templates, action/state rules, emphasis conventions, WIP cleanup, and a final checklist.
-- `references/methodology.md`: detailed demand-to-product-design method and analysis questions.
-- `references/diagram-patterns.md`: Mermaid diagram selection rules and reusable templates for concept relationships, architecture, flows, and state machines.
-- `references/prd-depth-rubric.md`: full-depth PRD gates, thin-PRD anti-patterns, and final self-review rules.
-- `references/platform-patterns.md`: common modeling patterns for complex platform products, including kernel/extension separation, layered architecture, lifecycle governance, views, and ownership.
-- `references/prd-template.md`: reusable PRD structure and table templates.
-- `references/review-checklist.md`: PRD quality review checklist and common anti-patterns.
+- `references/prd-writing-lessons.md`: required for PRD writing/revision/review; source handling, readable product semantics, metrics, batch scale, information grouping, parallel milestones, native maintenance, and scoped examples.
+- `references/prd-product-solution-writing-style.md`: required in full for Chinese page/module specifications; house style, atomic rules, before/after examples, typography, and document structure.
+- `references/methodology.md`: deeper first-principles discovery and modeling questions.
+- `references/prd-depth-rubric.md`: full-PRD completeness and scoped revision readiness.
+- `references/platform-patterns.md`: kernel/extensions, lifecycle governance, views, layers, and ownership.
+- `references/diagram-patterns.md`: Mermaid selection and styling when Mermaid is the appropriate format.
+- `references/prd-template.md`: adaptable document, role, metric, module, and milestone tables.
+- `references/review-checklist.md`: final logic, expression, scope, delivery, and evidence review.
 
 ## Output Expectations
 
-### Delivery Contract
+### Deliver The Requested Artifact
 
-The default deliverable is the full PRD body, not a summary of the PRD. Do not end with only "delivery features", "next steps", or a condensed overview when the user asked for product design, a product proposal, or a PRD.
+For a new full PRD, deliver the actual reviewable body, including domain-specific rules and testable acceptance. A section list or condensed decisions are insufficient. Without an external target, provide the body in the conversation unless another format is requested. With an external target, write it there and return a concise completion note, verified link, and relevant limitations.
 
-If no external document target is explicitly requested, write the complete PRD inline in the current response. If the response would be long, continue with the complete structure instead of compressing it into a summary; split only if the host tool forces a hard length limit, and then say exactly which sections are included in this part and which section should continue next.
+For an existing PRD or section-only request, preserve its useful outline and update the authorized scope. Complete the dependent rules that the change affects; do not rebuild unrelated chapters merely to match a heading count. For reviews, lead with substantive gaps, their impact, and concrete repairs. For an explicitly requested brief, deliver a brief that retains the important boundaries and dependencies.
 
-If an external document target is requested, write the full PRD to that target and then return only a short completion note with the document link and a validation summary. Do not claim the full PRD was written unless the document actually contains the full PRD body.
+### Full PRD Coverage
 
-Never substitute a short table, bullet summary, or "key decisions" section for the detailed PRD body. Summary sections may appear at the top, but they are additive and must be followed by the complete sections.
+Use these as coverage areas for a new full PRD, with headings adapted to the user's document:
 
-Some host models compress by default. Counter that explicitly: for a full PRD, use the required section set below, keep the section headings visible, and do not merge required sections into each other. If a required section seems not applicable, keep the heading and explain why it is not applicable.
+1. Background, current work, problem, and concise demand reflection.
+2. Goals, scope, and measurable success.
+3. Roles, work needs, scenarios, and user stories.
+4. Concepts, domain model, relationships, source of truth, and lifecycle.
+5. Product positioning, system responsibilities, architecture, and tradeoffs.
+6. Deterministic rules and detailed page/module solution.
+7. Permissions, object/data scope, approvals, audit, and notification.
+8. Data/interface dependencies, consistency, exceptions, and recovery.
+9. Priorities, milestones, risks, and rollout.
+10. Acceptance criteria and verification.
 
-When delivering the product design as a PRD, produce a structured document with these sections unless the user asks for a lighter output:
+Keep scenarios, detailed module rules, permissions, dependencies/recovery, and acceptance explicit and easy to locate. Completeness is measured by answered product questions, not a fixed number of headings, diagrams, nodes, or paragraphs. Explain material non-applicability rather than filling slots with invented facts.
 
-1. Demand Reflection And First-Principles Interpretation
-2. Background, Current Process, And Problem Definition
-3. Goals, Non-Goals, And Success Metrics
-4. User Roles And Stakeholders
-5. Usage Scenarios And User Stories
-6. Concepts And Glossary
-7. Domain Model, Entities, Fields, And Lifecycle
-8. Product Positioning And System Boundaries
-9. Product Solution And Architecture
-10. Key Interaction Rules And Decision Logic
-11. Detailed Module Design
-12. Permissions, Data Scope, And Role Matrix
-13. Audit, Notification, Dependencies, And Recovery
-14. Milestones, Scope, Risks, And Rollout
-15. Acceptance Criteria And QA Verification
+### Minimum Depth
 
-Do not omit sections 5, 11, 12, 13, or 15. These are common failure points in short outputs. User stories, usage scenarios, detailed module design, permissions, audit/dependency/recovery, and acceptance criteria must be explicit sections, not brief bullets hidden inside other sections.
+- Problem: actual work, root cause, impact, constraints, and chosen solution.
+- Roles and stories: responsibility, authority/data scope, cadence/scale, role-action-value-acceptance, and justified exceptional paths.
+- Concepts/model: owner, source of truth, cardinality, lifecycle, version, unit, and relationships between related quantities.
+- Rules: inputs, scope, precedence, calculation, validation, conflicts, permissions, and effects at each stage.
+- P0 modules: purpose, entry/context, relevant list/detail/form fields, closed action chains, state-dependent behavior, audit, and acceptance.
+- Metrics: decision served, source, population, unit, time/version, formula, precision, deduplication, update timing, and filter/drill-down relationship.
+- Delivery: independently verifiable capability increments, actual dependencies, proposed or committed dates, rollout, risks, and testable acceptance.
 
-### Product Solution House-Style Contract
-
-For Chinese PRDs, apply `references/prd-product-solution-writing-style.md` to sections 9 and 11. If the user explicitly asks to create or rewrite only the `产品方案` section, apply the same contract to that scoped deliverable without forcing unrelated PRD chapters.
-
-- Use the page or product-function module as the outer writing skeleton only after the problem, concepts, model, boundaries, and rules have been derived.
-- Start each page/module with one or two sentences explaining its purpose, supported decision, and responsibility boundary.
-- Organize the body by visible regions such as top actions, controls, metric cards, quick filters, list, detail, form, impact preview, action area, and records.
-- Use unordered lists and short verb-led statements inside each region. Avoid long paragraphs and do not expose demand reflection, brief text, PRD reasoning, reviewer notes, or implementation commentary in user-facing page copy.
-- When the destination supports the layout, use the three-column structure `产品模块 | 产品方案 | 原型示意`; otherwise preserve the same hierarchy with headings and lists.
-- Make fields traceable and executable: control, source, enum/range, default, required, format, constraint, linkage, display, and exception as relevant.
-- Make actions closed-loop: entry/visibility, prerequisite, click destination or mutation, context, validation, success, failure, retry, audit, and downstream state change as relevant.
-- Make states deterministic: enum, source of truth, entry condition, available actions, exit condition, display semantics, downstream effect, and reopen/rollback rule.
-- Do not fill missing business facts with plausible guesses. Mark unconfirmed defaults, enums, permissions, data sources, transitions, and results as `待确认`; mark optional design recommendations as `建议方案`; mark newly designed UI wording as `建议文案`.
-- Emphasize only high-value content: `🎯` for positioning, `⚠️` for hard constraints or boundaries, `ℹ️` for core mechanisms, `❗` for counterintuitive conclusions, and `待确认` for unresolved facts.
-- Remove WIP debris from final copy: dated change notes, strikethrough alternatives, unresolved conversational questions, duplicated sentences, spelling drift, and mixed terminology. Preserve them only when the user explicitly asks for change history or WIP annotations.
-
-### Minimum Depth Contract
-
-For full product-design mode, each required section must contain domain-specific substance:
-
-- Demand reflection: include user request, visible symptom, first-principles problem, challenged assumptions, at least one alternative path, and the chosen conclusion.
-- Problem definition: include current process, root cause, affected roles, frequency or impact, and scope boundary.
-- Goals and non-goals: include measurable outcomes where possible and explain why non-goals are excluded.
-- Concepts and glossary: define every core noun, owner, boundary, source of truth, and lifecycle relevance.
-- User roles and stakeholders: define each role's responsibility, motivation, authority, data scope, operational pressure, and success signal.
-- Usage scenarios and user stories: include concrete scenarios for the happy path, exception path, permission-limited path, and operational recovery path. Add user stories in the form role -> action -> value -> acceptance signal. Do not replace this with a generic persona list.
-- Domain model: include entities, key fields, relationships, lifecycle states, ownership, data sources, and deterministic rules.
-- Product solution: include system boundary, product architecture, solution tradeoffs, and why the chosen path is the minimum sufficient solution.
-- Key interaction rules and decision logic: include deterministic validation, branching, conflict handling, feedback timing, disabled states, and rollback or retry rules.
-- Detailed module design: for every P0 module, include purpose, entry, list/detail/form fields, operations, validations, states, disabled states, empty/error/no-permission behavior, audit, and acceptance criteria.
-- Permissions, data scope, and role matrix: include a table covering role, operation, object scope, data scope, approval requirement, disabled/no-permission state, and audit record.
-- Audit, notification, dependencies, and recovery: include read/write ownership, interface dependencies, fallback, notification, rollback, recovery, and consistency handling.
-- Milestones, rollout, and acceptance: include P0/P1/P2 rationale, dependencies, rollout, risks, and testable acceptance rows.
-
-Before finalizing, scan the output against this contract. If a section is only 1-2 generic bullets, a generic table, or a decision without fields/rules/states/acceptance, expand it before answering. If the PRD has fewer than 15 required section headings in full-product-design mode, it is incomplete.
-
-For a shareable PRD, each section must contain domain-specific content, not generic placeholder language. Do not leave a diagram section as "shown below" without an actual diagram. If a section is not applicable, write why it is not applicable.
-
-For medium or complex platform PRDs, include Mermaid diagrams in the PRD:
-
-- Concept relationship diagram
-- System boundary / layered architecture diagram
-- Core flow or sequence diagram
-- State machine diagram when lifecycle exists
-- Data ownership / source-of-truth diagram when multiple systems exchange data
-
-Keep diagrams compact but meaningful: one diagram answers one question, labels are short and business-readable, arrows are labeled with verbs, and overloaded diagrams should be split. For core concept, boundary, layered, and decision diagrams, a useful diagram usually has 8-14 meaningful nodes; fewer nodes are acceptable only when the domain is genuinely simple.
-
-When the output is intended for tools outside Codex, assume Mermaid may appear as source code only. For each important diagram, provide both the Mermaid block and a short `Diagram Quick Read`. Do not replace diagrams with prose, but make the prose sufficient for review when rendering is unavailable.
-
-Before finalizing a PRD, run the depth gates in `references/prd-depth-rubric.md`. A PRD is not ready if it only lists background, goals, a few concepts, CRUD modules, a simple permission table, and phases.
-
-When reviewing an existing PRD, lead with gaps and risks:
-
-- Problem clarity gaps
-- Concept/model ambiguity
-- Boundary or ownership issues
-- Missing user paths
-- Missing state, permission, audit, validation, or exception rules
-- Delivery, dependency, and acceptance gaps
+Use meaningful diagrams for concept relationships, system boundaries, core flows, and lifecycle when needed. Keep one diagram's question clear, label edges, and align source/ownership/states with the written rules. Verify the host's actual render or provide source and a reading guide when unavailable.
 
 ## Quality Bar
 
-A strong PRD should create four kinds of certainty:
+A reader should know why the problem matters, what each role does, how the objects and rules work, where data comes from, what changes after an action, and how delivery will be verified. Reviewers should locate the rule they need without interpreting prompt instructions or reading a dense paragraph twice.
 
-- Business certainty: why this problem matters and what value is expected.
-- User certainty: what each role does in each scenario.
-- Engineering certainty: model, states, rules, interfaces, permissions, and boundaries are implementable.
-- Delivery certainty: scope, phases, risks, and acceptance criteria are explicit.
-- First-principles certainty: the solution addresses the underlying problem rather than merely implementing the user's visible workaround.
-
-It should also have high information density: use diagrams instead of tables when relationships matter, tables instead of prose when rows and columns communicate faster, and concise prose only where judgment is needed.
-
-For product experience, a strong PRD should also create interaction certainty: each UI surface should make clear what information the user receives, what decision it supports, what action can close the loop, what fallback exists when data is missing or uncertain, and what ambiguity has been removed through wording, timing, and data choice.
-
-For the user's PRD house style, it should also create scanning certainty: reviewers should be able to locate the page purpose, each visible region, every important field/action/state rule, data source, constraint, destination, and exception without reading a dense paragraph twice.
+Treat a written proposal, updated document, static prototype, verified runtime behavior, and user acceptance as distinct evidence levels. Report the level actually reached.
