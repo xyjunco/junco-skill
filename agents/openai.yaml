@@ -1,4 +1,4 @@
 interface:
   display_name: "Junco"
   short_description: "First-principles product modeling and PRD writing"
-  default_prompt: "Use $junco to model the real problem and write or revise a clear, reviewable PRD in my established style, preserving the requested scope, confirmed decisions, and document format."
+  default_prompt: "Use $junco with $humanizer to model the problem, polish copy before writing documents or diagrams, and present the body in clear points while preserving the scope, confirmed decisions, and document format."

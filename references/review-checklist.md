@@ -51,24 +51,29 @@ Apply relevant checks to the requested scope. A passing PRD has clear business b
 - Interfaces identify provider/consumer, read/write truth, timing, consistency, version, and relevant failure/recovery behavior.
 - Risk handling exposes affected objects, consequences, required choices, and recovery; risk is not inferred from an action name alone.
 - Priorities reflect closure, risk, dependency, and cost.
-- Milestones have specific usable capability, dated window/cutoff, deliverable, acceptance signal, actual dependency, owner, and date basis.
+- Iteration milestones cover the main functions and state what users can do afterward, at the requested granularity. Field-level rules and coverage matrices remain in their proper places.
+- P0 forms an independently usable core path; later enhancements are separated by actual dependency and value, not by feature names. Detailed execution plans add grounded dates, owners, dependencies, and exit conditions when needed.
 - Independent work streams proceed in parallel; dependencies constrain specific nodes rather than serializing every stream.
 - Roadmap agrees with milestone dates, durations, overlap, and acceptance. Proposed schedule is distinguished from a staffed commitment.
-- Acceptance checks observable main paths, permissions, validation, dependency failure, recovery, audit, and data consistency.
+- Observable outcomes cover relevant main paths, permissions, failure/recovery, and consistency. A separate acceptance/test chapter is included when requested or needed, not to satisfy a template.
 
 ## Writing, Format, And Maintenance
 
-- Prose describes object responsibility, actions, rules, and results, rather than repeating prompt or review instructions.
-- Necessary exclusions remain accurate; long repeated negative constructions have been rewritten positively.
+- The required `humanizer` skill has been read and applied before each document or diagram pass, including revised headings, body text, tables, captions, and node/edge labels. Business meaning and useful list structure remain intact.
+- Body rules use short points, with two-level lists for grouped rules and ordered lists for steps. Parallel actions and conditions are easy to scan rather than buried in long paragraphs.
+- Prose/tables, captions, flowchart node/branch/edge text, and related prototype copy have been reviewed together for the affected module, including copy-only and screenshot syncs. See `prd-writing-lessons.md` section 8 for carrier coverage and readback.
+- Each carrier describes responsibility, action and result in product language rather than repeating prompt or review instructions. Before/after permissions, prerequisites, scope, stages, completion, idempotency and retry conditions remain equivalent; meaningful states and constraints retain their business meaning.
 - User sample voice, short sentences, stable terms, meaningful headings, and exact action copy are preserved.
+- Product prose uses familiar business terms and states user actions/results. Tool logs, review commentary, and completeness counts stay in working notes.
 - Chinese/English, numbers/units, punctuation, and date formats follow the document convention; IDs and code identifiers stay intact.
-- Ordinary prose/data retain normal weight; emphasis and color are local and semantic. Rich-text fonts, links, indentation, and adjacent content are preserved.
+- Ordinary prose/data retain normal weight. Under the user's usual PRD convention, emphasis is black bold and blue is reserved for hyperlinks/navigation triggers; save actions, selectors and priority labels remain distinct from navigation. Heading backgrounds and enum tags use the correct native level. Rich-text fonts, links, indentation, and adjacent content are preserved.
 - Diagram, table, chart, or prose is chosen by the information task and requested destination, rather than a blanket preference.
 - Figures answer one question and agree with models/rules. Native or Mermaid rendering is verified; source-only output is identified honestly.
 - Open business decisions are consolidated with source, impact, owner, and next step; routine UI copy carries no process-label prefix.
 - WIP debris, duplicate explanations, outdated alternatives, empty placeholders, and withdrawn features are absent from the current solution.
 - Remote edits use the relevant skill and current native structure. Unknown write results are read back before retries; concurrent edits and user deletions are preserved.
 - Affected text, structures, links, images/boards, and rendered layout are verified. Static, runtime, and user-acceptance evidence are reported separately.
+- Each affected carrier has current readback evidence; unread or pending carriers are identified and excluded from claims of verified consistency.
 
 ## Common Failure Signals
 
@@ -81,4 +86,7 @@ Apply relevant checks to the requested scope. A passing PRD has clear business b
 - A high-volume batch task implemented as repeated single-item forms.
 - Decorative charts/cards, dense scattered facts, or whitespace changes that discard required information.
 - Identical long date bars masquerading as detailed milestones.
+- An iteration plan expanded into a field/exception inventory, or compressed into vague labels with no user outcome.
+- All headings, controls and priority tags colored blue; text highlighting used to imitate a requested full-row background.
 - Text-only replacement claimed as full logic/visual verification.
+- Body copy passes while captions or embedded flowcharts retain old instructions; positive rewriting silently weakens an exclusive scope, permission, completion or retry condition.

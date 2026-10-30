@@ -1,6 +1,6 @@
 ---
 name: junco
-description: First-principles product design, domain modeling, and PRD writing. Use to turn raw needs, operational pain, platform ideas, or product feedback into clear problems, user paths, concepts, ownership, rules, page content, flows, milestones, and acceptance criteria. Also use to review or revise existing PRDs, write Chinese 产品方案 in the user's established style, clarify metrics and batch workflows, or maintain product logic across documents and prototypes. Preserve the requested scope and distinguish confirmed facts, proposed design, open decisions, and verified delivery.
+description: First-principles product design, domain modeling, and PRD writing. Use to turn raw needs, operational pain, platform ideas, or product feedback into clear problems, user paths, concepts, ownership, rules, page content, flows, milestones, and acceptance criteria. Also use to review or revise existing PRDs, write Chinese 产品方案 in the user's established style, clarify metrics and batch workflows, or maintain product logic across documents and prototypes. Requires the humanizer skill to polish copy before writing documents or diagrams. Preserve the requested scope and distinguish confirmed facts, proposed design, open decisions, and verified delivery.
 ---
 
 # Junco
@@ -11,11 +11,21 @@ Solve a real problem with the minimum sufficient cost. Recover the user's thinki
 
 Use the user's language. Read the current project context, latest decisions, source PRD, and requested destination before drafting. Treat an implementation request as a possible solution while preserving business boundaries that the user has already confirmed.
 
+Write the PRD for the people who use and build the product: who does what, under which conditions, and what happens afterward. Keep working analysis, coverage matrices, tool checks, and design-review history separate from the reader-facing document. Completeness is not a reason to publish every internal checklist.
+
 For Chinese `产品方案`, page/module specifications, or PRD rewrites in the user's style, read `references/prd-product-solution-writing-style.md` completely. For writing, reviewing, or revising a PRD, also read `references/prd-writing-lessons.md`. These govern expression after the sequence problem -> model -> rules -> pages.
 
 Choose the form by the reader's task: relationships and flow need diagrams; repeated rules and executable items need tables; trends and distributions need charts; rationale needs concise prose. An existing document's structure, the user's explicit format, and native capabilities of the destination take priority.
 
 Use target-native editable diagrams when supported. Use Mermaid when it suits the host; load `references/diagram-patterns.md` for its style conventions. Verify actual rendering before claiming a preview. If rendering is unavailable, supply valid source with a short reading guide; publish rendered assets or native figures when the destination supports them. Node count is not a quality target: include the objects and control points needed to answer the diagram's question.
+
+## Required Humanizer pass
+
+- `humanizer` is a required companion skill. Resolve it from the available-skills catalog and read its `SKILL.md`; use the installed location rather than a personal absolute path.
+- Before writing or revising a document, or creating or updating a diagram, apply `$humanizer` to the current copy. Cover body text, headings, tables, captions, and diagram labels before writing or rendering them. Review affected copy again when it changes.
+- Follow Humanizer's draft, audit, and final-rewrite process. Keep product facts, permissions, scope, enums, IDs, formulas, and relationships intact. Keep the working audit out of the delivered body unless requested.
+- Organize body content into short, meaningful points. Use two-level lists for grouped rules, ordered lists for steps, and tables for comparisons. Humanizer improves wording while preserving this structure; it should not merge useful points into long paragraphs or add filler labels to every bullet.
+- If Humanizer is unavailable, report the missing dependency. Continue independent analysis where useful, then resume writing or drawing once it is available. Claim the pass only after completing it.
 
 ## PRD Writing And Revision Standards
 
@@ -23,11 +33,11 @@ Use target-native editable diagrams when supported. Use Mermaid when it suits th
 - **Product semantics:** write what the object means, what the user does, and how the system responds. Turn feedback into positive responsibility and action rules. Keep necessary exclusions, permissions, and risk constraints; avoid copying prompt rules into the PRD or product UI.
 - **Evidence and uncertainty:** keep confirmed facts, proposed design, and unresolved business decisions distinguishable. Put blocking decisions in one decision table with owner, impact, and next step. Authorized routine layout and copy can be written directly as the proposed solution, without attaching `建议文案` to every control. Product pages use actual user-facing copy.
 - **Model and data:** distinguish planned, saved, submitted, executed, acknowledged, and current-state quantities. Define field source, scope, unit, time, version, and formula. Comparison population, visible subset, and modification set are separate contracts.
-- **Normal examples:** provide complete, internally consistent representative data. Identify sourced versus illustrative values in the review context. Genuine source gaps remain open decisions; confirmed error/empty states have their own designs. A tool failure is not a business state.
+- **Examples and copy:** prototypes use complete, coherent representative data. PRD examples and exact copy belong where they clarify behavior or are explicitly required. Apply the required Humanizer pass before document or diagram output. Genuine source gaps remain open decisions. A tool failure is not a business state.
 - **Scale and action:** choose the workflow from real volume and cadence. Define batch input, full-batch validation, correction, submission scope, idempotency, result, and return path. Add a page or confirmation only when it serves a distinct decision or material consequence.
 - **Information and visual meaning:** separate immediate action guidance from static evidence and history. Group values by object and meaning, align before/after comparisons, place status with its object, and use semantic emphasis. Visual simplification retains the original information needed for decisions.
-- **Delivery and revision:** propagate changes to affected prose, tables, diagrams, prototypes, permissions, examples, and acceptance rules. Preserve withdrawn scope. Milestones are dated, verifiable capability increments with real dependencies and parallel work where possible.
-- **Readable revision:** prototype sync starts with regrouping changed rules before editing old bullets. Give each item one responsibility; formulas and shared scope have clear homes. Use editable native blocks and review the changed body at normal width and zoom, alongside screenshot consistency. See `references/prd-writing-lessons.md` for density repair and native maintenance.
+- **Delivery and revision:** propagate changes to affected prose, tables, captions, diagrams, prototypes, permissions, examples, and acceptance rules. Review their shared product meaning, including copy-only and screenshot updates; see `references/prd-writing-lessons.md` sections 2 and 8. Preserve withdrawn scope. Iteration milestones describe functional scope and user outcomes; a detailed execution schedule adds supported dates, owners, dependencies, and exit criteria when requested.
+- **Readable revision:** group rules before editing bullets. Keep page behavior, iteration scope, and implementation detail at their own levels. Write body content as short points with familiar business nouns, useful list hierarchy, native editable blocks, and sparse emphasis. Bold does not imply blue; follow the document's link/navigation color convention. See `references/prd-writing-lessons.md` for density repair and native maintenance.
 
 Project-specific objects, role counts, thresholds, color values, terminology, and batch sizes belong to that project's contract. The worked examples in the references illustrate methods; they are not global defaults.
 
@@ -238,7 +248,7 @@ Use this audit before designing pages, flows, confirmations, sync jobs, approval
 
 ## Workflow
 
-0. **Calibrate scope and evidence.** Determine whether the task is a new full PRD, a scoped section update, a review, a brief, or page-content design. Read the current document and sample style. Identify confirmed decisions, active proposals, withdrawn scope, and missing facts. Ask only for gaps that block dependent work; continue independent modeling. Use `references/prd-depth-rubric.md` for a full PRD or readiness review.
+0. **Calibrate scope and evidence.** Determine whether the task is a new full PRD, a scoped section update, a review, a brief, or page-content design. Load the required Humanizer skill for copy work. Read the current document and sample style. Identify confirmed decisions, active proposals, withdrawn scope, and missing facts. For PRD sync, inventory the related text carriers in the affected module using `references/prd-writing-lessons.md` section 8; keep edits within the authorized scope. Ask only for gaps that block dependent work; continue independent modeling. Use `references/prd-depth-rubric.md` for a full PRD or readiness review.
 
 1. **Reframe the problem.** Identify requester, context, workaround, cause, frequency, scale, cost, and success signal. Test a simpler model, rule, data, or process solution when relevant. State goals, scope, and adjacent responsibility. Keep discovery reasoning in its own section or working notes.
 
@@ -252,11 +262,11 @@ Use this audit before designing pages, flows, confirmations, sync jobs, approval
 
 6. **Plan architecture and dependencies.** Define reused and new capabilities, upstream/downstream contracts, and tradeoffs. Diagram only the relationships or sequences that need visual explanation. A business flow's sequence does not imply that development streams must be scheduled serially.
 
-7. **Define page content and copy.** Before drawing, specify entry/context, supported decision, information groups, main action, secondary actions, completion, and return path. Define relevant field sources/units/defaults/validation, action effects, state-dependent operations, and error recovery. Design dashboards around decisions and batch flows around actual volume. Keep UI copy free of brief, PRD reasoning, and review annotations. Express the solution in the house style after the model is stable.
+7. **Define page content and copy.** Before drawing, specify entry/context, supported decision, information groups, main action, secondary actions, completion, and return path. Define relevant field sources/units/defaults/validation, action effects, state-dependent operations, and error recovery. Design dashboards around decisions and batch flows around actual volume. Apply Humanizer to the copy before writing the document or drawing labels. Keep body rules in short points and UI copy free of brief, PRD reasoning, and review annotations.
 
-8. **Complete delivery rules.** Add permission/data-scope matrix, audit, notifications, dependencies, consistency, and recovery where applicable. Split priorities by closure, risk, dependency, and cost. Break work streams into first usable capability, integration, recovery, single-stream acceptance, and shared rollout milestones as applicable; give deliverable, date/window, owner, dependency, and exit criterion. Dates without staffing estimates are proposed schedules.
+8. **Complete delivery rules.** Specify permissions, dependencies, consistency, and recovery where they affect the product. Split priorities by the first independently usable core path and later improvements, not by feature names. For iteration planning, state each iteration's main functions and user outcome; use internal coverage checks to avoid omissions without copying every field and exception into the milestone table. Add a detailed schedule only at the requested level, with supported dates and actual dependencies.
 
-9. **Review and deliver.** Check terminology, data arithmetic, stages, scope, story coverage, module usability, visual organization, rich-text formatting, and milestones using `references/review-checklist.md`. When editing a remote document, use its relevant skill, patch the current native structure, preserve adjacent content/styles/links, and read back changes. For visual changes verify both structure and rendered evidence. Report what is actually verified.
+9. **Review and deliver.** Check terminology, data arithmetic, stages, scope, story coverage, module usability, visual organization, rich-text formatting, and milestones using `references/review-checklist.md`. When editing a remote document, use its relevant skill, patch the current native structure, preserve adjacent content/styles/links, and read back changes. For PRD sync, verify the final version of every inventoried carrier and semantic equivalence of rewritten constraints; identify unread or pending items. For visual changes verify both structure and rendered evidence. Report what is actually verified.
 
 Junco completes requirement abstraction, page content, and copy. Proceed to visual page design or implementation only within the user's requested scope and applicable project workflow. When the project requires Product Design and Arco before Figma, follow those gates; Junco does not replace the destination skills.
 
@@ -275,7 +285,7 @@ Junco completes requirement abstraction, page content, and copy. Proceed to visu
 
 ### Deliver The Requested Artifact
 
-For a new full PRD, deliver the actual reviewable body, including domain-specific rules and testable acceptance. A section list or condensed decisions are insufficient. Without an external target, provide the body in the conversation unless another format is requested. With an external target, write it there and return a concise completion note, verified link, and relevant limitations.
+For a new full PRD, deliver the actual reviewable body with domain-specific behavior and observable outcomes. A section list alone is insufficient. A separate acceptance/test chapter is useful when requested or necessary for the work, not a mandatory way to prove completeness. Without an external target, provide the body in the conversation unless another format is requested. With an external target, write it there and return the important change and an accurate link; report material verification limits briefly.
 
 For an existing PRD or section-only request, preserve its useful outline and update the authorized scope. Complete the dependent rules that the change affects; do not rebuild unrelated chapters merely to match a heading count. For reviews, lead with substantive gaps, their impact, and concrete repairs. For an explicitly requested brief, deliver a brief that retains the important boundaries and dependencies.
 
@@ -294,7 +304,7 @@ Use these as coverage areas for a new full PRD, with headings adapted to the use
 9. Priorities, milestones, risks, and rollout.
 10. Acceptance criteria and verification.
 
-Keep scenarios, detailed module rules, permissions, dependencies/recovery, and acceptance explicit and easy to locate. Completeness is measured by answered product questions, not a fixed number of headings, diagrams, nodes, or paragraphs. Explain material non-applicability rather than filling slots with invented facts.
+These are coverage questions, not mandatory chapters. Keep relevant scenarios, module rules, permissions, dependencies, recovery, and outcomes easy to locate. Design reasoning can remain in working notes; detailed acceptance can be separate when needed. Completeness is measured by answered product questions, not headings, diagrams, rule counts, or document length. Respect the requested outline and brevity.
 
 ### Minimum Depth
 
@@ -304,7 +314,7 @@ Keep scenarios, detailed module rules, permissions, dependencies/recovery, and a
 - Rules: inputs, scope, precedence, calculation, validation, conflicts, permissions, and effects at each stage.
 - P0 modules: purpose, entry/context, relevant list/detail/form fields, closed action chains, state-dependent behavior, audit, and acceptance.
 - Metrics: decision served, source, population, unit, time/version, formula, precision, deduplication, update timing, and filter/drill-down relationship.
-- Delivery: independently verifiable capability increments, actual dependencies, proposed or committed dates, rollout, risks, and testable acceptance.
+- Delivery: iteration scope and the user capability it enables; add execution dependencies, supported dates, rollout, risks, and acceptance detail when the assignment needs them.
 
 Use meaningful diagrams for concept relationships, system boundaries, core flows, and lifecycle when needed. Keep one diagram's question clear, label edges, and align source/ownership/states with the written rules. Verify the host's actual render or provide source and a reading guide when unavailable.
 

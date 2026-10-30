@@ -4,6 +4,9 @@ Use diagrams to express concept relationships, system boundaries, flows, and rul
 
 Use this reference when Mermaid is appropriate for the destination. Prefer target-native editable diagrams when requested or supported. Choose diagrams for relationships/flows, tables for precise repeated rules, charts for quantitative patterns, and concise prose for judgment.
 
+- Before creating or updating a diagram, load and apply the required `humanizer` skill to its title, captions, node labels, and edge labels. Polish the copy before drawing or rendering it; review changed labels again on later passes.
+- Keep business terms, IDs, cardinalities, ownership, conditions, and arrow meaning intact. Use concise labels and short points for reading notes.
+
 1. Use diagrams for relationships, ownership, system boundaries, layers, lifecycle, decisions, and flows.
 2. Use tables for fields, permissions, validations, rule rows, priorities, milestones, and acceptance criteria.
 3. Use prose for rationale, tradeoffs, context, exception explanation, and conclusions.

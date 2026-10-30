@@ -11,6 +11,8 @@ Use this for drafting a full PRD or assessing readiness. Full means domain-speci
 
 A summary that replaces a requested full PRD is incomplete. A detailed scoped revision does not become incomplete because it has fewer than a fixed number of chapters.
 
+Depth is different from published volume. Readers need the relevant behavior and outcome; internal reasoning, field inventories, and verification matrices do not all belong in the body. A milestone summary can stay short while the page solution carries the necessary detailed rules. A separate acceptance chapter depends on the requested purpose, rather than the word "full".
+
 ## Depth Dimensions
 
 | Dimension | Thin Output | Reviewable Output |
@@ -23,7 +25,7 @@ A summary that replaces a requested full PRD is incomplete. A detailed scoped re
 | Modules | Columns and buttons | Purpose, carried context, information groups, complete actions, states, return path, and acceptance |
 | Permissions | Checkmarks | Role x action/state x object/data scope x approval x feedback x audit |
 | Batch | Many single forms | Actual workload, input throughput, whole-batch validation, correction, execution scope, idempotency, and result |
-| Delivery | Large module bars | Verifiable capability nodes, dates/basis, deliverables, real dependencies, parallel work, and acceptance |
+| Delivery | Vague phase labels or a copied field/exception inventory | Iteration functions and user outcomes; grounded schedule, dependencies, parallel work and exit conditions when requested |
 | Expression | Prompt rules or dense paragraphs | Business-readable responsibility/action/result, consistent terms, semantic emphasis, and appropriate figures/tables |
 | Evidence | Claims of completion | Actual written artifact, readback, rendered checks where needed, and precise verification level |
 
@@ -41,7 +43,7 @@ A summary that replaces a requested full PRD is incomplete. A detailed scoped re
 10. Does every page support a useful decision, with a next action and return/recovery path?
 11. Does the batch mechanism fit the cadence and workload, including full-batch constraints across pages?
 12. Are action guidance, static evidence, comparison, and history organized by meaning?
-13. Are milestones small enough to demonstrate or accept a capability? Do dependencies and parallel streams match the actual work?
+13. Does each iteration state the main functions and what users can do afterward, without repeating every page rule? Does a requested execution schedule use actual dependencies, estimates and parallel work?
 14. Are canonical prose, figures, prototypes, permissions, examples, and acceptance synchronized after changes?
 15. Do delivery claims match the evidence, with proposed dates and unverified runtime behavior distinguished?
 
@@ -71,7 +73,7 @@ Prefer a target-native editable diagram where supported; use styled Mermaid when
 | Data traceable | Population, unit, time/version, source, formula, arithmetic | Define canonical metrics and complete representative data |
 | Modules usable | Decision, groups, closed action, permission, return/recovery | Fill behavior gaps rather than adding decorative pages |
 | Batch throughput fits | Full-batch validation and exact execution set | Redesign from workload instead of multiplying single forms |
-| Delivery concrete | Capability nodes, dates/basis, dependency, exit signal | Split broad bars and expose parallel work |
+| Delivery concrete | Iteration scope and user outcome; supported schedule detail when needed | Replace vague labels with usable increments, or condense an over-detailed task inventory |
 | Expression readable | Positive product semantics, stable terms and formatting | Rewrite long clauses and prompt-like rules |
-| Acceptance testable | Observable scenario outcomes and data consistency | Add domain-specific checks |
+| Outcomes testable | Observable scenario results and data consistency; separate acceptance table when useful | Clarify behavior, adding a dedicated check plan only where needed |
 | Artifact verified | Readback and rendered evidence for visual changes | Verify target and report limitations accurately |

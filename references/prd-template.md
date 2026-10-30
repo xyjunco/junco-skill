@@ -2,9 +2,14 @@
 
 Use this as an adaptable template for a new full PRD. Preserve an existing document's useful outline for scoped revisions. Cover the applicable problem, scenarios, model, rules, permissions, dependencies, and acceptance questions; completeness is not a fixed heading count. Explain material non-applicability rather than inventing facts to fill rows. Use the user's language and established style.
 
+This is a bank of coverage prompts, not a required published outline. For a PRD that explains use and development, start with the necessary background, users/stories, model, and page solution; add other sections only when they answer a real question. Keep internal reasoning, coverage matrices, and tool checks out of the canonical body. Reuse the three-column product-solution form when it matches the user's document, with actual prototypes aligned to their modules.
+
+- Apply the required `humanizer` skill before each writing, revision, or diagram pass, including headings, table copy, captions, and diagram labels. Preserve facts and product rules.
+- Organize body content in short points. Use two-level lists for grouped rules, ordered lists for steps, and tables for comparisons; keep brief context as prose.
+
 Expression rule: use diagrams for relationships/flows, tables for repeated rules and executable items, charts for quantitative patterns, and concise prose for judgment. Prefer the target's native editable form where supported. Mermaid examples below apply when Mermaid suits the host; replace example nouns and remove irrelevant branches. Verify rendering and keep styling consistent.
 
-Depth rule: a full PRD must not stop at background, goals, glossary, CRUD bullets, permissions, and phases. It must expose demand reflection and the implementation contract: first-principles problem, challenged assumptions, domain model, decision rules, lifecycle, fields, operations, states, dependencies, exceptions, audit, and acceptance.
+Depth rule: a full PRD must explain the relevant domain behavior rather than stop at generic CRUD bullets. Do the first-principles reasoning internally; publish the conclusions and tradeoffs needed by readers. Specify fields, operations, states, permissions, and exceptions where they affect the product, without turning every checklist item into a chapter or milestone.
 
 ## 0. Document Information
 
@@ -19,7 +24,7 @@ Depth rule: a full PRD must not stop at background, goals, glossary, CRUD bullet
 | RD / FE / QA / Design / Ops |  |
 | Related docs |  |
 
-## 1. Demand Reflection And First-Principles Interpretation
+## 1. Demand Reflection And First-Principles Interpretation (Working Notes When Appropriate)
 
 ### User Request
 
@@ -408,11 +413,13 @@ Audit must record:
 
 ### Milestones
 
-| Work Stream / Capability Node | Start / End Or Deadline | Usable Capability / Deliverable | Exit / Acceptance Signal | Actual Dependency | Owner / Date Basis |
-|---|---|---|---|---|---|
-|  |  |  |  |  |  |
+| Iteration | Priority | Main Functions | User Outcome |
+|---|---|---|---|
+|  |  |  |  |
 
-Break each stream into independently verifiable increments such as contract readiness, first usable path, core execution, result/recovery, and stream acceptance, then shared integration and rollout where needed. Schedule independent work in parallel; tie dependencies to specific integration or acceptance nodes. Do not substitute identical long module bars for capability milestones. Dates without staffing estimates are proposed schedules. Roadmap lanes and date-scaled bars must agree with this table.
+Use the requested iteration count and group the main functions by usable capability. Each iteration needs a few concrete user actions and a direct outcome, not a copy of every field, state, permission, and exception. Check feature coverage internally. P0 must support the core work independently; later capabilities enhance it when their dependency allows.
+
+For a requested execution schedule, add grounded dates, owners, real dependencies, and exit conditions in a separate detailed plan. Schedule independent work in parallel; constrain specific integration nodes rather than serializing every stream. Dates without estimates remain proposals. A Roadmap, if needed, must agree with the schedule.
 
 ## 12. Risks And Open Decisions
 
@@ -420,7 +427,9 @@ Break each stream into independently verifiable increments such as contract read
 |---|---|---|---|---|---|
 |  |  |  |  |  |  |
 
-## 13. Acceptance Criteria
+## 13. Acceptance Criteria (When Requested Or Needed)
+
+Use a separate table when it helps implementation or release decisions. Otherwise keep observable outcomes in the product rules and use the review checklist internally; avoid adding a generic validation chapter to prove the document is complete.
 
 | Scenario | Preconditions | Operation | Expected Result | Verification |
 | --- | --- | --- | --- | --- |

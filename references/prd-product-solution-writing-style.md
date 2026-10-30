@@ -28,6 +28,8 @@ Treat this style as an expression and completeness contract, not as a product-di
 - Preserve uncertainty about real defaults, enums, permissions, sources, transitions, and effects. A template slot is not evidence of a business fact.
 - Read `prd-writing-lessons.md` for source classification, product semantics, data/batch contracts, and native-document maintenance.
 - If the user explicitly requests another structure, preserve the completeness rules while adapting the presentation.
+- Write for users and engineering: who acts, what the page shows, what changes, and what result they get. Keep review history and internal coverage/verification bookkeeping outside the product body. Follow the latest clarified style rather than mechanically expanding the template.
+- Apply the required Humanizer pass before each document or diagram output. Present body content as short, meaningful points; preserve this structure when polishing wording.
 
 ## 2. Core Writing Formula
 
@@ -68,6 +70,8 @@ Use a concept table before page details when nouns may be confused. Define:
 - Lifecycle relevance.
 - Difference from similar concepts.
 
+When a page architecture is needed, place it at the start of the product-solution section so readers can locate the modules before reading their interactions. Preserve an existing agreed order for the rest of the document.
+
 ### 3.2 Three-Column Product-Solution Structure
 
 When the destination supports a wide layout, use:
@@ -81,6 +85,8 @@ Use the columns as follows:
 - `产品模块`: name the page, flow step, drawer, dialog, or submodule.
 - `产品方案`: contain the full structured specification, not a summary.
 - `原型示意`: align the relevant visual with the written module.
+
+Include the actual prototype or diagram alongside its module when the destination supports it. An external Figma link alone does not replace a requested embedded prototype; the middle column still contains the interaction rules. Use representative views and concise state explanations instead of a separate large image for every state.
 
 If the destination does not support wide tables, keep the same hierarchy with headings and unordered lists.
 
@@ -114,6 +120,8 @@ Use region headings such as:
 - 执行结果
 
 Use noun phrases for headings. Use action-led statements for content.
+
+Prefer familiar names for lists, details, and results. A heading should help locate the function, not explain the design argument. Write body rules in short points, grouped in a two-level list where needed. Keep brief context as prose; move parallel actions and conditions into lists rather than dense paragraphs.
 
 ### 3.4 Page Purpose And Boundary
 
@@ -160,6 +168,8 @@ For each important field, action, state, card, metric, filter, or table column, 
 - 异常
 
 Do not mechanically write every label for every object. Include the labels needed to remove implementation ambiguity. Keep each native list item focused on one responsibility. For prototype-to-PRD sync and dense rule repair, apply the regrouping and single-source guidance in `prd-writing-lessons.md` sections 2 and 8 before editing blocks.
+
+Examples are optional in product prose: use one when it resolves an actual ambiguity. Complete sample data in a prototype does not require repeating examples under every rule. Exact fixed copy is appropriate for buttons, states, errors, or explicitly required text.
 
 When a required business fact is not grounded in the source, record the missing decision and its effect in the decision table. For example: `新建后的状态及可执行动作：由对象负责人确认，影响提交入口`.
 
@@ -452,7 +462,17 @@ Avoid:
 
 Preserve the destination's established font, heading hierarchy, indentation, and semantic colors. Keep ordinary prose and data at normal weight; emphasize short action labels, important thresholds, risks, and conclusions locally. Do not bold whole paragraphs or color every quoted noun. Preserve native links and unrelated rich-text runs during revision.
 
-Normalize Chinese/English, number/unit, punctuation, and date spacing according to the document's convention. Keep IDs, code identifiers, paths, and domains unchanged.
+For this user's usual PRD style, distinguish these levels unless the current document specifies otherwise:
+
+| Content | Treatment |
+|---|---|
+| Chapter and iteration headings | Normal heading hierarchy and alignment; black text |
+| Body group headings | If requested, a full-width light-blue paragraph/container background, centered bold black text; not text-only highlighting |
+| Ordinary emphasis and action references | Local black bold text; save, modal, Tab, Radio, collapse, and priority labels do not become links merely because they are interactive |
+| Hyperlinks and actual navigation triggers | Blue emphasis on the link/trigger itself; a page name mentioned as context or destination is not automatically a link |
+| Enum values | Native tags, or the document's established inline-code equivalent; keep the value intact |
+
+This is PRD typography, not a replacement for the product UI's button/status colors. Never invent a URL to justify blue text. Normalize Chinese/English, number/unit, punctuation, and date spacing according to the document's convention. Put requested padding outside inline labels; keep IDs, code identifiers, paths, domains, and complete timestamps unchanged.
 
 Optional callouts follow the existing style: `🎯` for purpose, `⚠️` for material constraints, `ℹ️` for mechanisms, and `❗` for a confirmed counterintuitive conclusion. Use them only when they improve scanning. Put unresolved business decisions in a consolidated decision table rather than decorating every field.
 
@@ -593,6 +613,7 @@ Preserve change history only when the user explicitly asks for a WIP or revision
 - [ ] Start every page/module with purpose and responsibility boundary.
 - [ ] Split the body by visible page regions.
 - [ ] Align each visual with the corresponding written module.
+- [ ] Keep batch entry and scope discoverable under its owning module; distinguish a single record, all records under the current object, and records under selected objects.
 
 ### Fields And Components
 
@@ -628,10 +649,14 @@ Preserve change history only when the user explicitly asks for a WIP or revision
 
 ### Expression
 
+- [ ] Apply Humanizer to document copy and diagram labels before output; preserve product meaning and useful list structure.
 - [ ] Use unordered lists and short verb-led statements.
 - [ ] Use noun phrases for headings.
 - [ ] Put exact button, prompt, and status copy in `「」`.
 - [ ] Remove WIP debris, duplicated wording, spelling errors, and term drift.
 - [ ] Keep emphasis sparse and semantic; verify rich-text colors, font weight, spacing, links, and rendered layout.
-- [ ] Use positive product semantics and preserve real boundaries.
+- [ ] Distinguish chapter headings, full-row body group backgrounds, ordinary black emphasis, navigation blue, and native enum tags; do not apply one style to every title or clickable control.
+- [ ] Keep Milestone at iteration scope and user-outcome level; use coverage checks internally instead of copying every field and exception into it.
+- [ ] Review affected prose/tables, captions, flowchart nodes/branches/edges, and related prototype copy together, including copy-only or screenshot syncs; follow `prd-writing-lessons.md` section 8 for carrier readback and coverage.
+- [ ] Write responsibility, action, and result; compare before/after permission, conditions, scope, completion and retry rules so positive wording preserves real boundaries.
 - [ ] Propagate model/term changes to affected diagrams and prototypes; keep withdrawn scope out of the current solution.

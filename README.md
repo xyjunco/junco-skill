@@ -122,17 +122,19 @@ Junco 的 PRD 不应停留在背景、目标、概念、CRUD、权限表和阶�
 
 ### PRD 写作与迭代
 
-按问题 → 模型 → 规则 → 页面内容与实际文案设计，再使用目标工具的技能交付。正文写业务对象、责任、动作和结果；用户诉求描述实际工作，评审意见归入方案，归纳出的诉求注明来源。沿用用户样文，保留当前结构、确认决定与授权范围。
-
-区分确认事实、方案、未决决定与验证结果。常规文案与布局作为可评审方案写出；未决业务事实集中记录依据、影响、负责人和下一步。页面展示实际文案，需求、brief、PRD 推理与评审说明留在工作文档。
-
-指标定义来源、单位、时点、版本和公式；计算总体、可见范围和执行集合分别定义。正常样例完整可对账，实际异常单独设计。批量机制按频率、规模与来源选择，明确全批校验、纠错、提交范围、幂等、结果与返回路径。
-
-强调与颜色具有业务语义，沿用原生格式。修订先按规则职责整理内容，再更新受影响的正文、图示、原型、权限与验收，保持用户最新范围。里程碑拆到有交付物、日期、依赖和验收的能力节点，并行安排独立工作；建议排期与交付承诺分别表述。远端文档原位维护后回读，并按实际取得的结构、渲染或运行证据报告验证情况。
+- **每次写文档、画图前使用 Humanizer。** 文档新写、修订和图示更新都先润色文案，再写入或绘制；覆盖标题、正文、表格、图注、节点和连线。保留业务含义及列表结构。
+- **正文分点，一点讲清一件事。** 同组规则用二级列表，步骤用有序列表，对比用表格。正文讲清谁做什么、得到什么结果，工作推理和工具检查留在工作记录。
+- 按问题 → 模型 → 规则 → 页面内容与实际文案设计，再使用目标工具的技能交付。沿用用户样文，保留当前结构、确认决定与授权范围；用户诉求写实际工作，评审意见写入方案，归纳的诉求注明来源。
+- 区分确认事实、方案、未决决定与验证结果。常规文案与布局作为可评审方案写出；未决业务事实集中记录依据、影响、负责人和下一步。页面展示实际文案，需求、brief 和 PRD 推理留在工作文档。
+- 指标写清来源、单位、时点、版本和公式，分别定义计算总体、可见范围和执行集合。正常样例完整可对账；批量操作写清校验、纠错、提交范围、幂等、结果和返回路径。
+- 普通重点与导航链接使用不同强调方式；标题、原生枚举标签和空格沿用文档规范。原型与对应模块放在一起，正文示例仅在解释规则时使用。
+- Milestone 按迭代说明主要功能和用户目标，P0 先让主链路独立可用。字段与异常细节留在产品方案；需要研发排期时再补有依据的日期、负责人和依赖。修订后回读相关正文与原型，按实际取得的证据报告结果。
 
 详细规范见 [PRD 写作与迭代规范](references/prd-writing-lessons.md)、[产品方案写作风格](references/prd-product-solution-writing-style.md) 和 [检查清单](references/review-checklist.md)。
 
 ### 安装
+
+先在同一运行环境中安装并注册 `humanizer` skill，确保模型能够找到并读取它。Humanizer 是必需依赖，由使用者单独安装。
 
 将仓库克隆到你使用的模型工具或智能体框架的 skills / prompts 目录：
 
@@ -173,8 +175,10 @@ git pull
 
 ### 依赖与边界
 
-Junco 是产品设计和 PRD 方法论技能，本身不依赖 Figma、本地 UI 组件库或代码运行环境。
+Junco 是产品设计和 PRD 方法论技能。文档与图示文案依赖 `humanizer` skill，Figma、本地 UI 组件库和代码运行环境按任务需要使用。
 
+- 每次写文档或画图前使用 Humanizer 润色当前文案，业务事实、权限、范围、枚举和对象关系保持准确。
+- Humanizer 缺失时说明依赖情况，先推进可独立完成的分析，补齐后继续写文档或画图。
 - 如果只做需求分析、PRD 设计或产品逻辑审查，不需要 Figma。
 - Junco 先完成需求抽象、页面展示内容和实际文案；后续视觉设计或实现遵从用户范围与项目流程。
 - 如果项目要求先进行 Product Design 页面设计、再输出 Figma，应依次完成 Junco → Product Design → `arco-design` / Figma。这是适用项目的流程要求，不是 Junco 的全局依赖。
@@ -312,17 +316,19 @@ The `Feedback-to-Rule Method` helps convert implementation feedback into reusabl
 
 ### PRD Writing And Revision
 
-Follow problem → model → rules → page content and actual copy, then use the destination's skill to deliver the result. Describe business objects, responsibilities, actions, and outcomes. User needs describe real work; review feedback belongs in the solution, and synthesized needs are identified by source. Preserve the user's sample style, current structure, confirmed decisions, and authorized scope.
-
-Distinguish confirmed facts, proposed design, unresolved decisions, and verified results. Write routine copy and layout as a reviewable proposal; consolidate missing business decisions with evidence, impact, owner, and next step. Product pages show actual UI copy; requests, briefs, PRD reasoning, and review notes stay in working documents.
-
-Define each metric's source, unit, time, version, and formula. Keep the comparison population, visible subset, and modification set separate. Normal examples must be complete and internally consistent; actual exceptions receive separate designs. Choose batch workflows by cadence, scale, and input source, then define whole-batch validation, correction, submission scope, idempotency, results, and return path.
-
-Preserve native formatting and use emphasis and color semantically. Regroup changed rules before revision, then update affected text, figures, prototypes, permissions, and acceptance while preserving the latest scope. Milestones have deliverables, dates, real dependencies, and acceptance signals, with independent work in parallel; distinguish proposed dates from delivery commitments. Read back remote edits and report the structural, rendered, or runtime evidence actually obtained.
+- **Use Humanizer before every document or diagram pass.** Polish copy before writing, revising, drawing, or updating. Include headings, body text, tables, captions, nodes, and edge labels. Preserve product meaning and useful list structure.
+- **Write the body in clear points, one subject per point.** Use two-level lists for grouped rules, ordered lists for steps, and tables for comparisons. Explain who acts and what they achieve; keep working analysis and tool checks in working notes.
+- Follow problem → model → rules → page content and actual copy, then use the destination's skill. Preserve the user's sample style, current structure, confirmed decisions, and scope. User needs describe real work, review feedback belongs in the solution, and synthesized needs retain their source.
+- Distinguish confirmed facts, proposed design, unresolved decisions, and verified results. Draft routine copy and layout as a reviewable proposal; record missing business decisions with evidence, impact, owner, and next step. Product pages show actual UI copy; briefs and PRD reasoning stay in working documents.
+- Define each metric's source, unit, time, version, and formula. Keep the calculation population, visible subset, and modification set separate. Use coherent sample data; define batch validation, correction, submission scope, idempotency, results, and return path.
+- Distinguish ordinary emphasis from navigation links. Follow the document's heading, native enum-tag, and spacing conventions. Align prototypes with their modules and include prose examples where they clarify a rule.
+- Iteration milestones state main functions and user outcomes, with an independently usable P0 core path. Keep field and exception detail in the page solution. Add supported dates, owners, and dependencies when scheduling is needed. Read back affected prose and prototypes after revisions and report the evidence obtained.
 
 See [PRD writing and revision standards](references/prd-writing-lessons.md), [product-solution writing style](references/prd-product-solution-writing-style.md), and the [review checklist](references/review-checklist.md).
 
 ### Installation
+
+Install and register the `humanizer` skill in the same runtime so the model can find and read it. Humanizer is required and installed separately.
 
 Clone this repository into the skills / prompts directory used by your model tool or agent framework:
 
@@ -363,8 +369,10 @@ Use junco to abstract this prototype feedback into reusable product rules and up
 
 ### Dependencies And Boundaries
 
-Junco is a product design and PRD methodology skill. It does not require Figma, local UI libraries, or a code runtime.
+Junco is a product design and PRD methodology skill. Document and diagram copy requires the `humanizer` skill. Figma, local UI libraries, and a code runtime depend on the task.
 
+- Use Humanizer before each document or diagram pass. Preserve facts, permissions, scope, enums, and object relationships while polishing copy.
+- If Humanizer is missing, report the dependency and continue independent analysis; resume writing or drawing once it is available.
 - For requirement analysis, PRD design, or product logic review, Figma is not required.
 - Junco first completes requirement abstraction, page content, and actual UI copy. Further visual design or implementation follows the user's scope and project workflow.
 - Where the project requires Product Design page design before Figma output, follow Junco → Product Design → `arco-design` / Figma. This is a requirement of the applicable project, not a global Junco dependency.
